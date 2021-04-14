@@ -5,7 +5,10 @@ void Communicator::startHandleRequests()
 	// create listening socket for accepting clients
 	this->m_serverSocket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (this->m_serverSocket == INVALID_SOCKET)
-		throw std::exception(__FUNCTION__ " - socket creation");
+	{
+		std::cout << "Server stopped working. Error on socket creation." << std::endl;
+		exit(1);
+	}
 	this->bindAndListen();
 
 	// accept clients
@@ -13,7 +16,10 @@ void Communicator::startHandleRequests()
 	{
 		SOCKET clientSocket = accept(this->m_serverSocket, NULL, NULL);
 		if (clientSocket == INVALID_SOCKET)
-			throw std::exception(__FUNCTION__ " - accept client");
+		{
+			std::cout << "Server stopped working. Error on client accept." << std::endl;
+			exit(1);
+		}
 		// handle client conversation
 		std::thread(&Communicator::handleNewClient, this, clientSocket).detach();
 	}
@@ -35,31 +41,42 @@ void Communicator::bindAndListen()
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
 	int socketResult = 0;
-	// add client with login state to map
-	std::unique_lock<std::mutex> clientMapLock(this->m_clientMapMutex);
-	this->m_clients[clientSocket] = new LoginRequestHandler;
-	clientMapLock.unlock();
+	this->addClient(clientSocket, new LoginRequestHandler);
 
 	// send hello message
 	const char* msg = "hello";
 	socketResult = send(clientSocket, msg, strlen(msg), 0);
 	if (socketResult == INVALID_SOCKET)
-		throw std::exception(__FUNCTION__ " - send msg");
+	{
+		this->deleteClient(clientSocket);
+		return;
+	}
 
 	// receive hello message
 	char receivedMessage[MESSAGE_LENGTH + 1] = { 0 };
 	socketResult = recv(clientSocket, receivedMessage, MESSAGE_LENGTH, 0);
 	if (socketResult == INVALID_SOCKET)
-		throw std::exception(__FUNCTION__ "- receive msg");
+	{
+		this->deleteClient(clientSocket);
+		return;
+	}
 
 	// print result and close connection
 	std::cout << "received message: " << receivedMessage << std::endl;
-	closesocket(clientSocket);
-	// delete from map
-	clientMapLock.lock();
+	this->deleteClient(clientSocket);
+}
+
+void Communicator::addClient(SOCKET clientSocket, IRequestHandler* requestHandler)
+{
+	std::lock_guard<std::mutex> clientMapLock(this->m_clientMapMutex);
+	this->m_clients[clientSocket] = requestHandler;
+}
+
+void Communicator::deleteClient(SOCKET clientSocket)
+{
+	std::lock_guard<std::mutex> clientMapLock(this->m_clientMapMutex);
 	delete this->m_clients[clientSocket];
 	this->m_clients.erase(clientSocket);
-
 }
 
 Communicator::~Communicator()
