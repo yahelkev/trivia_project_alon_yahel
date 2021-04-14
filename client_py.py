@@ -2,34 +2,54 @@
 import socket
 import sys
 
-try:
-	s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-	print ("Socket successfully created")
-except socket.error as err:
-	print ("socket creation failed with error %s" %(err))
+MSG_SIZE = 5  
+MAX_PORT = 65535
+MIN_PORT = 1024
+HOOST_IP = '127.0.0.1'
 
-port = 0
-while (port < 1024  or port > 65535):
-	port = int(input("enter port number (1024 - 65535):"))
+def openSocket():
+	try:
+		res = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+		print ("Socket successfully created")
+		return res
 
-print("connecting...")
+	except socket.error as err:
+		print ("socket creation failed with error %s" %(err))
+		sys.exit()
 
-try:
-	host_ip = '127.0.0.1'
-except socket.gaierror:
-	print ("there was an error resolving the host")
-	sys.exit()
+def getPortFromUser():
+	result = 0
+	while (result < MIN_PORT  or result > MAX_PORT):
+		try:
+			result = int(input("enter port number (%d - %d):"%(MIN_PORT, MAX_PORT)))
+		except ValueError:
+			print("Oops!  That was no valid number.  Try again...")
+	return result
 
-try:
-	s.connect((host_ip, port))
-except:
-	print("can not connect to server on port: %d" %port)
-	sys.exit()
+def connectToServer(server_socket, port):
+	print("connecting...")
+	try:
+		server_socket.connect((HOOST_IP, port))
+	except:
+		print("can not connect to server on port: %d" %port)
+		sys.exit()
 
-msg = ""
-while(msg != "hello"):
-	msg = input("enter message(hello to send): ")[:5]
-	print("you enterd: %s"%msg)
+def getMasseg():
+	msg = ""
+	while(msg != "hello"):
+		msg = input("enter message(hello to send): ")[:MSG_SIZE]
+		print("you enterd: %s"%msg)
+	return msg
 
-s.sendall(msg.encode())
-print("msg from server:" + s.recv(1024).decode())
+def main():
+	server_socket = openSocket()
+	port = getPortFromUser()
+	connectToServer(server_socket, port)
+
+	msg = getMasseg()
+
+	server_socket.sendall(msg.encode())
+	print("msg from server:" + server_socket.recv(MSG_SIZE).decode())
+
+if __name__ == "__main__":
+    main()
