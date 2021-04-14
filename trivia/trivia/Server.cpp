@@ -3,7 +3,7 @@
 void Server::run()
 {
 	// start communication
-	std::thread(&Communicator::startHandleRequests, this->m_communicator).detach();
+	std::thread(&Communicator::startHandleRequests, &this->m_communicator).detach();
 	// run until "exit" input
 	std::string input = "";
 	while(input != "exit")
