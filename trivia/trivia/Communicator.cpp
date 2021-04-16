@@ -77,6 +77,7 @@ void Communicator::deleteClient(SOCKET clientSocket)
 	std::lock_guard<std::mutex> clientMapLock(this->m_clientMapMutex);
 	delete this->m_clients[clientSocket];
 	this->m_clients.erase(clientSocket);
+	closesocket(clientSocket);
 }
 
 Communicator::~Communicator()
