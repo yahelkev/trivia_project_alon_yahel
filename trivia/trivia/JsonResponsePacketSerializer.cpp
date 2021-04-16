@@ -5,7 +5,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LoginResponse response)
 	json content = {
 		{"status", response.status}
 	};
-	return createResponseBuffer(1, content);
+	return createResponseBuffer(LOGIN, content);
 }
 
 Buffer JsonResponsePacketSerializer::serializeResponse(SignupResponse response)
@@ -13,7 +13,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(SignupResponse response)
 	json content = {
 		{"status", response.status}
 	};
-	return createResponseBuffer(2, content);
+	return createResponseBuffer(SIGNUP, content);
 }
 
 Buffer JsonResponsePacketSerializer::serializeResponse(ErrorResponse response)
@@ -21,7 +21,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(ErrorResponse response)
 	json content = {
 		{"message", response.message}
 	};
-	return createResponseBuffer(0, content);
+	return createResponseBuffer(ERROR, content);
 }
 
 Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
@@ -33,15 +33,8 @@ Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& conte
 	// create buffer
 	Buffer buffer;
 	buffer.push_back(code);
-	buffer.insert(buffer.end(), contentLengthBytes, contentLengthBytes + 4);
+	buffer.insert(buffer.end(), contentLengthBytes, contentLengthBytes + CONTENT_LENGTH_BYTES);
 	buffer.insert(buffer.end(), jsonDump.begin(), jsonDump.end());
-
-	for (const Byte& b : buffer)
-		std::cout << (int)b << " ";
-	std::cout << std::endl;
-	for (const Byte& b : buffer)
-		std::cout << b;
-	std::cout << std::endl << std::endl;
 
 	return buffer;
 }
