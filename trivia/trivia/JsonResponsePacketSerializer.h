@@ -1,5 +1,8 @@
 #pragma once
 #include "MessageStructs.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 class JsonResponsePacketSerializer
 {
