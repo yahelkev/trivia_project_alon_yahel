@@ -7,9 +7,7 @@
 #include <thread>
 #include "LoginRequestHandler.h"
 
-#define PORT 6666
 #define IFACE 0
-#define MESSAGE_LENGTH 5
 
 class Communicator
 {
@@ -24,6 +22,11 @@ class Communicator
 	void addClient(SOCKET, IRequestHandler*);
 	// function removes an existing client
 	void deleteClient(SOCKET);
+	// function gets a request from client in the trivia protocol
+	RequestInfo getRequest(SOCKET);
+	// functions get/set requestHandler from the client map
+	IRequestHandler* getRequestHandler(SOCKET);
+	void setRequestHandler(SOCKET, IRequestHandler*);
 public:
 	~Communicator();
 	// function starts communication with clients
