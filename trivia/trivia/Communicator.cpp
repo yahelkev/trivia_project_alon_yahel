@@ -7,7 +7,7 @@ void Communicator::startHandleRequests()
 	this->m_serverSocket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (this->m_serverSocket == INVALID_SOCKET)
 	{
-		std::cout << "Server stopped working. Error on socket creation." << std::endl;
+		std::cout << "Server stopped working. ERROR_CODE on socket creation." << std::endl;
 		exit(1);
 	}
 	this->bindAndListen();
@@ -18,7 +18,7 @@ void Communicator::startHandleRequests()
 		SOCKET clientSocket = accept(this->m_serverSocket, NULL, NULL);
 		if (clientSocket == INVALID_SOCKET)
 		{
-			std::cout << "Server stopped working. Error on client accept." << std::endl;
+			std::cout << "Server stopped working. ERROR_CODE on client accept." << std::endl;
 			exit(1);
 		}
 		// handle client conversation

@@ -48,4 +48,4 @@ typedef struct
 typedef struct
 {
 	std::string message;
-} ErrorResponse;
+} ERROR_CODEResponse;

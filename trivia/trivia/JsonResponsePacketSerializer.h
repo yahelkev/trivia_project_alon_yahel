@@ -6,6 +6,6 @@ class JsonResponsePacketSerializer
 public:
 	static Buffer serializeResponse(LoginResponse);
 	static Buffer serializeResponse(SignupResponse);
-	static Buffer serializeResponse(ErrorResponse);
+	static Buffer serializeResponse(ERROR_CODEResponse);
 };
 

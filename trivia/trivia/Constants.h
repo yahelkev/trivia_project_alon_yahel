@@ -7,7 +7,7 @@
 
 enum
 {
-	ERROR = 0,
+	ERROR_CODE = 0,
 	LOGIN = 1,
 	SIGNUP = 2
 };
