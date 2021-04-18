@@ -20,6 +20,10 @@ class Communicator
 	void bindAndListen();
 	// function handles conversation with a client
 	void handleNewClient(SOCKET);
+	// function adds a new client to the map
+	void addClient(SOCKET, IRequestHandler*);
+	// function removes an existing client
+	void deleteClient(SOCKET);
 public:
 	~Communicator();
 	// function starts communication with clients
