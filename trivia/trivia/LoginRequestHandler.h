@@ -4,6 +4,6 @@
 class LoginRequestHandler : public IRequestHandler
 {
 public:
-	virtual bool isRequestRelevant(RequestInfo) { return true; }
+	virtual bool isRequestRelevant(RequestInfo);
 	virtual RequestResult handleRequest(RequestInfo) { return { Buffer(), nullptr }; }
 };

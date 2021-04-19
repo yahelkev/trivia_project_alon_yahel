@@ -4,9 +4,17 @@
 #include "Server.h"
 #include <iostream>
 #include <fstream>
+#include "Constants.h"
+#include "JsonRequestPacketDeserializer.h"
 
 int main()
 {
+	const char* cstr = "10003{ \"password\": \"12331\", \"username\": \"lolyy\" }";
+	std::cout << cstr << std::endl;
+	std::vector<Byte> vec(cstr, cstr + strlen(cstr));
+	LoginRequest p = JsonRequestPacketDeserializer::deserializeLoginRequest(vec);
+	p.password;
+	p.username;
 	try
 	{
 		std::cout << "Starting..." << std::endl;
