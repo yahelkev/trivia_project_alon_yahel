@@ -6,11 +6,19 @@ MSG_SIZE = 5
 MAX_PORT = 65535
 MIN_PORT = 1024
 HOST_IP = '127.0.0.1'
+REQUEST_CODE_BYTES = 1
+CONTENT_LENGTH_BYTES = 4
 
 # has request headers which will get input
 REQUESTS = {
-	"login": ["username", "password"],
-	"signup": ["username", "password", "email"]
+	"login": {
+		"keys": ["username", "password"],
+		"code": 1
+	},
+	"signup": {
+		"keys": ["username", "password", "email"],
+		"code": 2
+	},
 }
 
 def openSocket():
@@ -41,16 +49,30 @@ def connectToServer(server_socket, port):
 		sys.exit()
 
 def getMassage():
+	""" function gets input for a request from user
+	returns request code and content"""
 	request = input("choose a request (" + ", ".join(REQUESTS.keys()) + "): ")
 	if request not in REQUESTS.keys():
 		print("invalid request!")
 		raise ValueError
 	# get input for request keys
-	requestInput = []
-	for key in REQUESTS[request]:
-		requestInput += [input("Enter %s: " % key)]
-	print("%s - %s" % (", ".join(REQUESTS[request]), ", ".join(requestInput)))
-	# return json
+	request_input = []
+	for key in REQUESTS[request]["keys"]:
+		request_input += [input("Enter %s: " % key)]
+	# return message info
+	return (REQUESTS[request]["code"], fillJson(REQUESTS[request], request_input))
+
+def fillJson(keys, values):
+	"""function fills a json object with the specified keys and values"""
+	dictionary = dict(zip(keys, values))
+	return json.dumps(dictionary)
+
+def sendRequest(server_socket, code, content):
+	"""function sends a request to the server in the trivia protocol"""
+	encoded_request = code.to_bytes(REQUEST_CODE_BYTES, "big")
+	encoded_request += len(content).to_bytes(CONTENT_LENGTH_BYTES, "big")
+	encoded_request += content.encode()
+	server_socket.sendall(encoded_request)
 
 def main():
 	server_socket = openSocket()
@@ -58,10 +80,10 @@ def main():
 	connectToServer(server_socket, port)
 
 	try:
-		msg = getMassage()
+		req = getMassage()
 	except ValueError:
 		return
-	server_socket.sendall(msg.encode())
+	sendRequest(server_socket, *req)
 	print("msg from server:" + server_socket.recv(MSG_SIZE).decode())
 
 if __name__ == "__main__":
