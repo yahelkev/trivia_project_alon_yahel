@@ -2,7 +2,7 @@ import socket
 import json
 import sys
 
-MSG_SIZE = 5  
+MSG_SIZE = 1024
 MAX_PORT = 65535
 MIN_PORT = 1024
 HOST_IP = '127.0.0.1'
@@ -74,6 +74,11 @@ def sendRequest(server_socket, code, content):
 	encoded_request += content.encode()
 	server_socket.sendall(encoded_request)
 
+def getResponse(server_socket):
+	"""function receives response from server and returns it's json content"""
+	msg = server_socket.recv(MSG_SIZE)
+	return json.loads(msg.decode()[REQUEST_CODE_BYTES + CONTENT_LENGTH_BYTES:])
+
 def main():
 	server_socket = openSocket()
 	port = getPortFromUser()
@@ -84,7 +89,7 @@ def main():
 	except ValueError:
 		return
 	sendRequest(server_socket, *req)
-	print("msg from server:" + server_socket.recv(MSG_SIZE).decode())
+	print(getResponse(server_socket))
 
 if __name__ == "__main__":
 	main()
