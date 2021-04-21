@@ -7,9 +7,9 @@ using json = nlohmann::json;
 
 class JsonRequestPacketDeserializer
 {
-	static int fourByteVecToDecimal(Buffer vec);
 	static json getJson(Buffer vec);
 public:
+	static int fourByteVecToDecimal(Buffer vec);
 	//deserialize a login request
 	static LoginRequest deserializeLoginRequest(Buffer);
 	//deserialize a singup request

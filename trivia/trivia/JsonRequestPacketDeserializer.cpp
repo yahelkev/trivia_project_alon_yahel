@@ -2,8 +2,13 @@
 
 int JsonRequestPacketDeserializer::fourByteVecToDecimal(Buffer buffer)
 {
-	std::string bufAsString(buffer.begin() + 1, buffer.begin() + 1 + CONTENT_LENGTH_BYTES);
-	int result = std::stoi(bufAsString);
+	
+	int result = 0;
+	for (int i = 0; i < CONTENT_LENGTH_BYTES; i++)
+	{
+		result |= buffer[CONTENT_LENGTH_BYTES - i] << i* BYTE_SIZE;
+	}
+
 	return result;
 }
 
