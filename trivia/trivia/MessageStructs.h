@@ -10,7 +10,7 @@ class IRequestHandler;
 // requests
 typedef struct
 {
-	unsigned char id;
+	Byte id;
 	time_t receivalTime;
 	Buffer jsonBuffer;
 } RequestInfo;
