@@ -21,7 +21,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(ErrorResponse response)
 	json content = {
 		{"message", response.message}
 	};
-	return createResponseBuffer(ERROR, content);
+	return createResponseBuffer(ERROR_CODE, content);
 }
 
 Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
