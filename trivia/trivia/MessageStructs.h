@@ -37,12 +37,12 @@ typedef struct
 
 typedef struct
 {
-	bool status;
+	unsigned int status;
 } LoginResponse;
 
 typedef struct
 {
-	bool status;
+	unsigned int status;
 } SignupResponse;
 
 typedef struct

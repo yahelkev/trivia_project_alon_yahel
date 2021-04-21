@@ -53,6 +53,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		}
 		catch (...)
 		{
+			std::cout << "Client " << clientSocket << " was discconected!" << std::endl;
 			this->deleteClient(clientSocket);
 			return;
 		}
@@ -114,7 +115,7 @@ RequestInfo Communicator::getRequest(SOCKET clientSocket)
 	requestInfo.jsonBuffer.insert(requestInfo.jsonBuffer.end(), content, content + contentLength);
 	// set time
 	requestInfo.receivalTime = time(nullptr);
-
+	delete [] content;
 	return requestInfo;
 }
 

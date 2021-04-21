@@ -12,15 +12,9 @@ int JsonRequestPacketDeserializer::fourByteVecToDecimal(Buffer buffer)
 	return result;
 }
 
-json JsonRequestPacketDeserializer::getJson(Buffer msg)
-{
-	int dataSize = fourByteVecToDecimal(msg);
-	return json::parse(msg.begin() + CONTENT_LENGTH_BYTES + 1, msg.begin() + CONTENT_LENGTH_BYTES + 1 + dataSize);
-}
-
 LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(Buffer msg)
 {
-	json jsonData = getJson(msg);
+	json jsonData = json::parse(msg);
 	LoginRequest result;
 	result.password = jsonData["password"];
 	result.username = jsonData["username"];
@@ -29,7 +23,7 @@ LoginRequest JsonRequestPacketDeserializer::deserializeLoginRequest(Buffer msg)
 
 SignupRequest JsonRequestPacketDeserializer::deserializeSignupRequest(Buffer msg)
 {
-	json jsonData = getJson(msg);
+	json jsonData = json::parse(msg);
 	SignupRequest result;
 	result.password = jsonData["password"];
 	result.username = jsonData["username"];
