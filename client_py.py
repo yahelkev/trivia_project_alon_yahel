@@ -8,6 +8,7 @@ MIN_PORT = 1024
 HOST_IP = '127.0.0.1'
 REQUEST_CODE_BYTES = 1
 CONTENT_LENGTH_BYTES = 4
+EXIT_INPUT = ["exit", "quit"]
 
 # has request headers which will get input
 REQUESTS = {
@@ -60,17 +61,20 @@ def getMassage():
 	for key in REQUESTS[request]["keys"]:
 		request_input += [input("Enter %s: " % key)]
 	# return message info
-	return (REQUESTS[request]["code"], fillJson(REQUESTS[request], request_input))
+	return (REQUESTS[request]["code"], fillJson(REQUESTS[request]["keys"], request_input))
 
 def fillJson(keys, values):
 	"""function fills a json object with the specified keys and values"""
+	print(keys, values)
 	dictionary = dict(zip(keys, values))
+	print(dictionary)
 	return json.dumps(dictionary)
 
 def sendRequest(server_socket, code, content):
 	"""function sends a request to the server in the trivia protocol"""
 	encoded_request = code.to_bytes(REQUEST_CODE_BYTES, "big")
 	encoded_request += len(content).to_bytes(CONTENT_LENGTH_BYTES, "big")
+	print(content)
 	encoded_request += content.encode()
 	server_socket.sendall(encoded_request)
 
@@ -88,7 +92,7 @@ def main():
 		req = getMassage()
 	except ValueError:
 		return
-	sendRequest(server_socket, *req)
+	sendRequest(server_socket, req[0], req[1])
 	print(getResponse(server_socket))
 
 if __name__ == "__main__":
