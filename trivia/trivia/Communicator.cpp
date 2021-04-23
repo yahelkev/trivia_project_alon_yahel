@@ -1,4 +1,5 @@
 #include "Communicator.h"
+#include "Constants.h"
 
 void Communicator::startHandleRequests()
 {
@@ -6,7 +7,7 @@ void Communicator::startHandleRequests()
 	this->m_serverSocket = ::socket(AF_INET, SOCK_STREAM, IPPROTO_TCP);
 	if (this->m_serverSocket == INVALID_SOCKET)
 	{
-		std::cout << "Server stopped working. Error on socket creation." << std::endl;
+		std::cout << "Server stopped working. ERROR_CODE on socket creation." << std::endl;
 		exit(1);
 	}
 	this->bindAndListen();
@@ -17,7 +18,7 @@ void Communicator::startHandleRequests()
 		SOCKET clientSocket = accept(this->m_serverSocket, NULL, NULL);
 		if (clientSocket == INVALID_SOCKET)
 		{
-			std::cout << "Server stopped working. Error on client accept." << std::endl;
+			std::cout << "Server stopped working. ERROR_CODE on client accept." << std::endl;
 			exit(1);
 		}
 		// handle client conversation
@@ -40,30 +41,37 @@ void Communicator::bindAndListen()
 
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
-	int socketResult = 0;
 	this->addClient(clientSocket, new LoginRequestHandler);
 
-	// send hello message
-	const char* msg = "hello";
-	socketResult = send(clientSocket, msg, strlen(msg), 0);
-	if (socketResult == INVALID_SOCKET)
+	while (true)
 	{
-		this->deleteClient(clientSocket);
-		return;
-	}
+		RequestInfo requestInfo;
+		// read request from socket
+		try
+		{
+			requestInfo = this->getRequest(clientSocket);
+		}
+		catch (...)
+		{
+			std::cout << "Client " << clientSocket << " was discconected!" << std::endl;
+			this->deleteClient(clientSocket);
+			return;
+		}
 
-	// receive hello message
-	char receivedMessage[MESSAGE_LENGTH + 1] = { 0 };
-	socketResult = recv(clientSocket, receivedMessage, MESSAGE_LENGTH, 0);
-	if (socketResult == INVALID_SOCKET)
-	{
-		this->deleteClient(clientSocket);
-		return;
-	}
+		// process request
+		IRequestHandler* requestHandler = this->getRequestHandler(clientSocket);
+		RequestResult requestResult = requestHandler->handleRequest(requestInfo);
+		// set new handler
+		this->setRequestHandler(clientSocket, requestResult.newHandler);
 
-	// print result and close connection
-	std::cout << "received message: " << receivedMessage << std::endl;
-	this->deleteClient(clientSocket);
+		// send response
+		int socketResult = send(clientSocket, (char*)requestResult.response.data(), requestResult.response.size(), 0);
+		if (socketResult == INVALID_SOCKET || !socketResult)
+		{
+			this->deleteClient(clientSocket);
+			return;
+		}
+	}
 }
 
 void Communicator::addClient(SOCKET clientSocket, IRequestHandler* requestHandler)
@@ -78,6 +86,52 @@ void Communicator::deleteClient(SOCKET clientSocket)
 	delete this->m_clients[clientSocket];
 	this->m_clients.erase(clientSocket);
 	closesocket(clientSocket);
+}
+
+RequestInfo Communicator::getRequest(SOCKET clientSocket)
+{
+	RequestInfo requestInfo = { 0 };
+	// read request code
+	int socketResult = recv(clientSocket, (char*)&requestInfo.id, REQUEST_CODE_BYTES, 0);
+	if (socketResult == INVALID_SOCKET || !socketResult)
+	{
+		throw std::exception();
+	}
+	// read content length
+	int contentLength = 0;
+	socketResult = recv(clientSocket, (char*)&contentLength, CONTENT_LENGTH_BYTES, 0);
+	if (socketResult == INVALID_SOCKET || !socketResult)
+	{
+		throw std::exception();
+	}
+	// read content
+	char* content = new char[contentLength];
+	socketResult = recv(clientSocket, content, contentLength, 0);
+	if (socketResult == INVALID_SOCKET || !socketResult)
+	{
+		delete [] content;
+		throw std::exception();
+	}
+	// set content in buffer
+	requestInfo.jsonBuffer.insert(requestInfo.jsonBuffer.end(), content, content + contentLength);
+	// set time
+	requestInfo.receivalTime = time(nullptr);
+	delete [] content;
+	return requestInfo;
+}
+
+IRequestHandler* Communicator::getRequestHandler(SOCKET clientSocket)
+{
+	std::lock_guard<std::mutex> lock(this->m_clientMapMutex);
+	return this->m_clients[clientSocket];
+}
+
+void Communicator::setRequestHandler(SOCKET clientSocket, IRequestHandler* newHandler)
+{
+	std::lock_guard<std::mutex> lock(this->m_clientMapMutex);
+	// delete previous handler and set new one
+	delete this->m_clients[clientSocket];
+	this->m_clients[clientSocket] = newHandler;
 }
 
 Communicator::~Communicator()
