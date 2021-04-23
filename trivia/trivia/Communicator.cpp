@@ -66,7 +66,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 
 		// send response
 		int socketResult = send(clientSocket, (char*)requestResult.response.data(), requestResult.response.size(), 0);
-		if (socketResult == INVALID_SOCKET)
+		if (socketResult == INVALID_SOCKET || !socketResult)
 		{
 			this->deleteClient(clientSocket);
 			return;
@@ -93,22 +93,23 @@ RequestInfo Communicator::getRequest(SOCKET clientSocket)
 	RequestInfo requestInfo = { 0 };
 	// read request code
 	int socketResult = recv(clientSocket, (char*)&requestInfo.id, REQUEST_CODE_BYTES, 0);
-	if (socketResult == INVALID_SOCKET)
+	if (socketResult == INVALID_SOCKET || !socketResult)
 	{
 		throw std::exception();
 	}
 	// read content length
 	int contentLength = 0;
 	socketResult = recv(clientSocket, (char*)&contentLength, CONTENT_LENGTH_BYTES, 0);
-	if (socketResult == INVALID_SOCKET)
+	if (socketResult == INVALID_SOCKET || !socketResult)
 	{
 		throw std::exception();
 	}
 	// read content
 	char* content = new char[contentLength];
-	socketResult = recv(clientSocket, (char*)&contentLength, contentLength, 0);
-	if (socketResult == INVALID_SOCKET)
+	socketResult = recv(clientSocket, content, contentLength, 0);
+	if (socketResult == INVALID_SOCKET || !socketResult)
 	{
+		delete [] content;
 		throw std::exception();
 	}
 	// set content in buffer
