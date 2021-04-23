@@ -21,6 +21,9 @@ REQUESTS = {
 		"code": 2
 	},
 }
+# class for exit input exception
+class ExitException(Exception):
+	pass
 
 def openSocket():
 	try:
@@ -53,7 +56,10 @@ def getMassage():
 	""" function gets input for a request from user
 	returns request code and content"""
 	request = input("choose a request (" + ", ".join(REQUESTS.keys()) + "): ")
+	# check non-request input
 	if request not in REQUESTS.keys():
+		if request in EXIT_INPUT:
+			raise ExitException
 		print("invalid request!")
 		raise ValueError
 	# get input for request keys
@@ -65,16 +71,13 @@ def getMassage():
 
 def fillJson(keys, values):
 	"""function fills a json object with the specified keys and values"""
-	print(keys, values)
 	dictionary = dict(zip(keys, values))
-	print(dictionary)
 	return json.dumps(dictionary)
 
 def sendRequest(server_socket, code, content):
 	"""function sends a request to the server in the trivia protocol"""
-	encoded_request = code.to_bytes(REQUEST_CODE_BYTES, "big")
-	encoded_request += len(content).to_bytes(CONTENT_LENGTH_BYTES, "big")
-	print(content)
+	encoded_request = code.to_bytes(REQUEST_CODE_BYTES, "little")
+	encoded_request += len(content).to_bytes(CONTENT_LENGTH_BYTES, "little")
 	encoded_request += content.encode()
 	server_socket.sendall(encoded_request)
 
@@ -88,12 +91,20 @@ def main():
 	port = getPortFromUser()
 	connectToServer(server_socket, port)
 
-	try:
-		req = getMassage()
-	except ValueError:
-		return
-	sendRequest(server_socket, req[0], req[1])
-	print(getResponse(server_socket))
+	while True:
+		try:
+			req = getMassage()
+		except ValueError:
+			return
+		except ExitException:
+			break
+		sendRequest(server_socket, req[0], req[1])
+		try:
+			print(getResponse(server_socket))
+		except:
+			print("unexpected response from server")
+
+	server_socket.close()
 
 if __name__ == "__main__":
 	main()
