@@ -9,7 +9,7 @@ class RequestHandlerFactory
 {
 public:
 	RequestHandlerFactory() = default;
-	RequestHandlerFactory(IDatabase*);
+	RequestHandlerFactory(IDatabase* database) :m_database(database) {};
 	LoginRequestHandler* createLoginRequestHandler();
 	MenuRequestHandler* createMenuRequestHandler();
 	LoginManager& getLoginManager();
