@@ -12,6 +12,6 @@ public:
 	virtual bool doesPasswordMatch(std::string username, std::string password) { return true; }
 	virtual bool addNewUser(std::string username, std::string password, std::string email) { return true; }
 private:
-	sqlite3* _database;
+	//sqlite3* _database;
 };
 

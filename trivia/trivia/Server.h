@@ -12,7 +12,7 @@ class Server
 	RequestHandlerFactory m_handlerFactory;
 public:
 	void run();
-	Server() : m_handlerFactory(RequestHandlerFactory(m_database)), m_communicator(m_handlerFactory) {};
-	//~Server();
+	Server() : m_database(new SqliteDatabase()), m_handlerFactory(RequestHandlerFactory(m_database)), m_communicator(m_handlerFactory) {};
+	~Server() { delete m_database; };
 };
 
