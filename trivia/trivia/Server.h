@@ -7,11 +7,9 @@
 class Server
 {
 	Communicator m_communicator;
-	IDatabase* m_database;
-	RequestHandlerFactory m_handlerFactory;
+	//IDatabase* m_database;
+	//RequestHandlerFactory m_handlerFactory;
 public:
 	void run();
-	Server() : m_communicator(m_handlerFactory) {}
-	//~Server();
 };
 
