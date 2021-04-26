@@ -26,27 +26,48 @@ SqliteDatabase::~SqliteDatabase()
     sqlite3_close(this->_database);
 }
 
-bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
+bool SqliteDatabase::doesUserExist(std::string username)
+{
+    return this->valueQuery("SELECT COUNT(*) FROM Users WHERE username = \"" + username + "\";") != "0";
+}
+
+bool SqliteDatabase::doesPasswordMatch(std::string username, std::string password)
+{
+    return this->valueQuery("SELECT password FROM Users WHERE username = \"" + username + "\";") == password;
+}
+
+bool SqliteDatabase::addNewUser(std::string username, std::string password, std::string email)
+{
+    this->executeQuery("INSERT INTO Users (username, password, email) VALUES ("
+        "\"" + username + "\","
+        "\"" + password + "\","
+        "\"" + email + "\");"
+    );
+    return true;
+}
+
+void SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     char* errorMsg = nullptr;
-    bool empty = true;
-    void* data[3] = { callback, callbackData, &empty };
-    int res = sqlite3_exec(this->_database, sql.c_str(),
-        // callback
-        [](void* data, int argc, char** argv, char** cols)
-        {
-            // get data from param
-            callbackFunction callback = (callbackFunction)((void**)data)[0];
-            void* callbackData = ((void**)data)[1];
-            bool& empty = *(bool*)((void**)data)[2];
-            empty = false;
-            // call original callback
-            return callback(callbackData, argc, argv, cols);
-        },
-        data, &errorMsg);
+    int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, &errorMsg);
     if (res != SQLITE_OK)
     {
         throw std::exception(("SQL ERROR: " + std::string(errorMsg)).c_str());
     }
-    return !empty;
+}
+
+std::string SqliteDatabase::valueQuery(const std::string& sql)
+{
+    std::string value = "";
+    // execute statement
+    this->executeQuery(sql, [](void* data, int argc, char** argv, char** cols)
+        {
+            // get one value
+            if (argc == 1)
+                *(std::string*)data = argv[0];
+            return 0;
+        }, 
+        &value
+    );
+    return value;
 }
