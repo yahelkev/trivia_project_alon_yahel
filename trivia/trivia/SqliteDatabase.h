@@ -1,5 +1,6 @@
 #pragma once
 #include <io.h>
+#include <mutex>
 #include "IDatabase.h"
 #include "sqlite3.h"
 
@@ -19,6 +20,7 @@ private:
 	// function gets one value from the database as a string.
 	std::string valueQuery(const std::string& sql);
 
+	std::mutex _databaseMutex;
 	sqlite3* _database;
 };
 
