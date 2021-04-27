@@ -41,7 +41,7 @@ void Communicator::bindAndListen()
 
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
-	this->addClient(clientSocket, new LoginRequestHandler);
+	this->addClient(clientSocket, this->m_handlerFactory.createLoginRequestHandler());
 
 	while (true)
 	{
