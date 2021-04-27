@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include <vector>
+#include <mutex>
 #include "LoggedUser.h"
 #include "IDatabase.h"
 
@@ -16,5 +17,8 @@ public:
 private:
 	IDatabase* m_database;
 	std::vector<LoggedUser> m_loggedUsers;
+	std::mutex m_lggedUsersMutex;
+	std::mutex m_database_mutex;
+
 };
 
