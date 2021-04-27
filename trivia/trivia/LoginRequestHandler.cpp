@@ -3,7 +3,7 @@
 
 
 LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& factory):
-	m_handlerFactory(factory), m_loginManager(m_handlerFactory.getLoginManager()){
+	m_handlerFactory(factory), m_loginManager(factory.getLoginManager()){
 }
 
 bool LoginRequestHandler::isRequestRelevant(RequestInfo rqstInfo)
