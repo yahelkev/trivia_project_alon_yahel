@@ -7,6 +7,18 @@ bool LoginManager::signup(const std::string& username, const std::string& passwo
 	{
 		return false;
 	}
+	// check info
+	const std::regex username_check(".+");	// at least one char
+	const std::regex password_check("[a-zA-Z0-9!@#$%^&*]{8,}");	// at least 8 letters, numbers or special symbols
+	const std::regex email_check("([a-zA-Z0-9]+[!#$%&'*+-/=?^_`{|]?)*[a-zA-Z0-9]@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+");	// based on "https://help.returnpath.com/hc/en-us/articles/220560587-What-are-the-rules-for-email-address-syntax-"
+	if (!std::regex_match(username, username_check) ||
+		!std::regex_match(password, password_check) ||
+		!std::regex_match(email, email_check))
+	{
+		// at least one parameter isn't valid
+		return false;
+	}
+	// try to add to database
 	return m_database->addNewUser(username, password, email);
 }
 

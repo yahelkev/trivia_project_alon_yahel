@@ -1,5 +1,5 @@
 #pragma once
-
+#include <regex>
 #include <algorithm>
 #include <vector>
 #include <mutex>
