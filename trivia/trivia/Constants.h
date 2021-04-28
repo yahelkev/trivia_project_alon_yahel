@@ -5,6 +5,7 @@
 #define REQUEST_CODE_BYTES 1
 #define CONTENT_LENGTH_BYTES 4
 #define BYTE_SIZE 8
+#define DB_PATH "../TriviaDatabase.sqlite"
 
 enum
 {

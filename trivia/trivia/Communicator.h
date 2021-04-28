@@ -6,6 +6,7 @@
 #include <WinSock2.h>
 #include <thread>
 #include "LoginRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
 #define IFACE 0
 
@@ -14,6 +15,7 @@ class Communicator
 	SOCKET m_serverSocket;
 	std::mutex m_clientMapMutex;
 	std::map<SOCKET, IRequestHandler*> m_clients;
+	RequestHandlerFactory& m_handlerFactory;
 	// function prepares listening socket for accepting clients
 	void bindAndListen();
 	// function handles conversation with a client
@@ -28,6 +30,7 @@ class Communicator
 	IRequestHandler* getRequestHandler(SOCKET);
 	void setRequestHandler(SOCKET, IRequestHandler*);
 public:
+	Communicator(RequestHandlerFactory& handlerFactory) : m_handlerFactory(handlerFactory) {}
 	~Communicator();
 	// function starts communication with clients
 	void startHandleRequests();

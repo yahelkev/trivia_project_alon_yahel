@@ -11,5 +11,7 @@ public:
 	virtual bool isRequestRelevant(RequestInfo) = 0;
 	//proccesses the request and returns a resones and the next state
 	virtual RequestResult handleRequest(RequestInfo) = 0;
+	//loges out user
+	virtual void abortSignout() {};
 };
 

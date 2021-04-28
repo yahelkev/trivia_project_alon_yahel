@@ -5,7 +5,7 @@
 #include <iostream>
 #include <fstream>
 
-int main()
+int checkLeak()
 {
 	try
 	{
@@ -21,5 +21,18 @@ int main()
 	catch (...)
 	{
 		std::cout << "Unknown exception in main !" << std::endl;
+	}
+	return 0;
+}
+int main()
+{
+	checkLeak();
+	if (_CrtDumpMemoryLeaks())
+	{
+		std::cout << "Memory leaks!\n";
+	}
+	else
+	{
+		std::cout << "No leaks\n";
 	}
 }

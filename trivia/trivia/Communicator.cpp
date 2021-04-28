@@ -41,7 +41,7 @@ void Communicator::bindAndListen()
 
 void Communicator::handleNewClient(SOCKET clientSocket)
 {
-	this->addClient(clientSocket, new LoginRequestHandler);
+	this->addClient(clientSocket, this->m_handlerFactory.createLoginRequestHandler());
 
 	while (true)
 	{
@@ -54,6 +54,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		catch (...)
 		{
 			std::cout << "Client " << clientSocket << " was discconected!" << std::endl;
+			this->getRequestHandler(clientSocket)->abortSignout();
 			this->deleteClient(clientSocket);
 			return;
 		}
@@ -68,6 +69,7 @@ void Communicator::handleNewClient(SOCKET clientSocket)
 		int socketResult = send(clientSocket, (char*)requestResult.response.data(), requestResult.response.size(), 0);
 		if (socketResult == INVALID_SOCKET || !socketResult)
 		{
+			this->getRequestHandler(clientSocket)->abortSignout();
 			this->deleteClient(clientSocket);
 			return;
 		}
