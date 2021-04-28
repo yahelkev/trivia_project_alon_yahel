@@ -16,7 +16,7 @@ public:
 	virtual bool addNewUser(std::string username, std::string password, std::string email);
 private:
 	// function executes a sql query in the opened database. throws exception on error.
-	void executeQuery(const std::string& sql, callbackFunction callback = nullptr, void* callbackData = nullptr);
+	bool executeQuery(const std::string& sql, callbackFunction callback = nullptr, void* callbackData = nullptr);
 	// function gets one value from the database as a string.
 	std::string valueQuery(const std::string& sql);
 
