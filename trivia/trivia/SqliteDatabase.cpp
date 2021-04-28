@@ -48,6 +48,7 @@ bool SqliteDatabase::addNewUser(std::string username, std::string password, std:
 
 void SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
+    std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
     char* errorMsg = nullptr;
     int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, &errorMsg);
     if (res != SQLITE_OK)
