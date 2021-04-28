@@ -38,37 +38,35 @@ bool SqliteDatabase::doesPasswordMatch(std::string username, std::string passwor
 
 bool SqliteDatabase::addNewUser(std::string username, std::string password, std::string email)
 {
-    this->executeQuery("INSERT INTO Users (username, password, email) VALUES ("
+    return this->executeQuery("INSERT INTO Users (username, password, email) VALUES ("
         "\"" + username + "\","
         "\"" + password + "\","
         "\"" + email + "\");"
     );
-    return true;
 }
 
-void SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
+bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
     char* errorMsg = nullptr;
     int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, &errorMsg);
-    if (res != SQLITE_OK)
-    {
-        throw std::exception(("SQL ERROR: " + std::string(errorMsg)).c_str());
-    }
+    return res == SQLITE_OK;
 }
 
 std::string SqliteDatabase::valueQuery(const std::string& sql)
 {
     std::string value = "";
     // execute statement
-    this->executeQuery(sql, [](void* data, int argc, char** argv, char** cols)
-    {
-        // get one value
-        if (argc == 1)
-            *(std::string*)data = argv[0];
-        return 0;
-    },
+    bool completeSuccesfully = this->executeQuery(sql, [](void* data, int argc, char** argv, char** cols)
+        {
+            // get one value
+            if (argc == 1)
+                *(std::string*)data = argv[0];
+            return 0;
+        },
         &value
-        );
+    );
+    if (!completeSuccesfully)
+        return "";
     return value;
 }
