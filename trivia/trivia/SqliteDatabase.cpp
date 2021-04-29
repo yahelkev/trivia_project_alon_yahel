@@ -18,10 +18,10 @@ SqliteDatabase::SqliteDatabase(std::string dbPath)
             "CREATE TABLE IF NOT EXISTS Questions("
             "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             "question TEXT NOT NULL,"
+            "answer0 TEXT NOT NULL,"
             "answer1 TEXT NOT NULL,"
             "answer2 TEXT NOT NULL,"
             "answer3 TEXT NOT NULL,"
-            "answer4 TEXT NOT NULL,"
             "correct_answer INTEGER NOT NULL"
             ");"
         );

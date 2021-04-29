@@ -81,6 +81,9 @@
     <ClCompile Include="LoggedUser.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="Question.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -133,6 +136,9 @@
     </ClInclude>
     <ClInclude Include="IDatabase.h">
       <Filter>Header Files\Database</Filter>
+    </ClInclude>
+    <ClInclude Include="Question.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
