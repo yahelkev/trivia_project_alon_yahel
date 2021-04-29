@@ -24,6 +24,36 @@ Buffer JsonResponsePacketSerializer::serializeResponse(ErrorResponse response)
 	return createResponseBuffer(ERROR_CODE, content);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(LOGOUT, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse)
+{
+	return Buffer();
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(JOIN_ROOM, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(CREATE_ROOM, content);
+}
+
+
 Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
 {
 	std::string jsonDump = content.dump();
