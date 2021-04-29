@@ -10,10 +10,19 @@ SqliteDatabase::SqliteDatabase(std::string dbPath)
     {   // new db, create tables
         this->executeQuery(
             "CREATE TABLE IF NOT EXISTS Users("
-            "id INTEGER PRIMARY KEY,"
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             "username TEXT NOT NULL,"
             "password TEXT NOT NULL,"
             "email TEXT"
+            ");"
+            "CREATE TABLE IF NOT EXISTS Questions("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "question TEXT NOT NULL,"
+            "answer1 TEXT NOT NULL,"
+            "answer2 TEXT NOT NULL,"
+            "answer3 TEXT NOT NULL,"
+            "answer4 TEXT NOT NULL,"
+            "correct_answer INTEGER NOT NULL"
             ");"
         );
     }
