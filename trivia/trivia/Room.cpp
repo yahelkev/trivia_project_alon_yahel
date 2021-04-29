@@ -34,3 +34,19 @@ std::vector<std::string> Room::getAllUsers()
     }
     return result;
 }
+
+RoomData Room::getMetaData()
+{
+    return this->m_metadata;
+}
+
+Room& Room::operator=(const Room& other)
+{
+    this->m_metadata.id = other.m_metadata.id;
+    this->m_metadata.isActive = other.m_metadata.isActive;
+    this->m_metadata.maxPlayers = other.m_metadata.maxPlayers;
+    this->m_metadata.name = other.m_metadata.name;
+    this->m_metadata.numOfQuestionsInGame = other.m_metadata.numOfQuestionsInGame;
+    this->m_metadata.timePerQuestion = other.m_metadata.timePerQuestion;
+    return *this;
+}

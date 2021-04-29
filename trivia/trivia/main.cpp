@@ -5,6 +5,8 @@
 #include <iostream>
 #include <fstream>
 
+#include "RoomManager.h"
+
 int checkLeak()
 {
 	try
@@ -26,7 +28,12 @@ int checkLeak()
 }
 int main()
 {
-	checkLeak();
+	RoomManager l;
+	l.creatRoom(LoggedUser("lool"), RoomData{});
+	l.creatRoom(LoggedUser("lool"), RoomData{});
+	l.deleteRoom(0);
+	l.deleteRoom(0);
+	//checkLeak();
 	if (_CrtDumpMemoryLeaks())
 	{
 		std::cout << "Memory leaks!\n";
