@@ -1,8 +1,13 @@
 #pragma once
 #include <io.h>
 #include <mutex>
+#include <fstream>
 #include "IDatabase.h"
 #include "sqlite3.h"
+#include "Constants.h"
+#include "json.hpp"
+
+using json = nlohmann::json;
 
 typedef int(*callbackFunction)(void*, int, char**, char**);
 
@@ -22,6 +27,8 @@ private:
 	std::string valueQuery(const std::string& sql);
 	// callback adds question to a list passed in data
 	static int pushQuestion(void* data, int argc, char** argv, char** cols);
+	// function inserts questions to database from a json file specified in Constants.h
+	void insertQuestions();
 
 	std::mutex _databaseMutex;
 	sqlite3* _database;
