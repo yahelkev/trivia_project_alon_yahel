@@ -32,9 +32,42 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse response)
 	return createResponseBuffer(LOGOUT, content);
 }
 
-Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse)
+Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse response)
 {
-	return Buffer();
+	std::string rooms_data = "";
+	for (auto room : response.rooms)
+	{
+		rooms_data += "{" + room.name + ":" + std::to_string(room.id) + "},";
+	}
+	//removes last ','
+	if (!rooms_data.empty())
+	{
+		rooms_data.pop_back();
+	}
+
+	json content = {
+		{"Rooms", rooms_data}
+	};
+	return createResponseBuffer(GET_ROOM, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse response)
+{
+	std::string players_names = "";
+	for (auto player : response.players)
+	{
+		players_names += player + ",";
+	}
+	//removes last ','
+	if (!players_names.empty())
+	{
+		players_names.pop_back();
+	}
+
+	json content = {
+		{"PlayersInRoom", players_names}
+	};
+	return createResponseBuffer(GET_PLAYERS_IN_ROOM, content);
 }
 
 Buffer JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse response)
