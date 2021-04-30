@@ -86,6 +86,22 @@ Buffer JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse respon
 	return createResponseBuffer(CREATE_ROOM, content);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(GetHighScoreResponse response)
+{
+	json content = {
+		{"HighScores", response.statistics}
+	};
+	return createResponseBuffer(HIGH_SCORE, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatsResponse response)
+{
+	json content = {
+		{"UserStatistics", response.statistics}
+	};
+	return createResponseBuffer(USER_STATISTICS, content);
+}
+
 
 Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
 {
