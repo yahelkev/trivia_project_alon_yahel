@@ -1,22 +1,102 @@
 [
     {
-        "question": "question1",
+        "question": "Which country has the most neighboring countries?",
         "answers": [
-            "a",
-            "b",
-            "c",
-            "d"
+            "China",
+            "USA",
+            "Africa",
+            "Germany"
+        ],
+        "correctAnswer": 0
+    },
+    {
+        "question": "Which fruit has the highest water content?",
+        "answers": [
+            "Oranges",
+            "Grapes",
+            "Watermelons",
+            "Strawberries"
         ],
         "correctAnswer": 2
     },
     {
-        "question": "question2",
+        "question": "How many eyes do most spiders have?",
         "answers": [
-            "a",
-            "b",
-            "c",
-            "d"
+            "2",
+            "6",
+            "8",
+            "12"
+        ],
+        "correctAnswer": 2
+    },
+    {
+        "question": "How many bones are there in the human body?",
+        "answers": [
+            "168",
+            "206",
+            "248",
+            "312"
         ],
         "correctAnswer": 1
+    },
+    {
+        "question": "What shouldn't you do to gremlins?",
+        "answers": [
+            "Tickle them",
+            "Play them music",
+            "Give them food",
+            "Get them wet"
+        ],
+        "correctAnswer": 3
+    },
+    {
+        "question": "What's the current world record for a 100 meter sprint?",
+        "answers": [
+            "9.58 seconds",
+            "9.64 seconds",
+            "9.72 seconds",
+            "9.84 seconds"
+        ],
+        "correctAnswer": 0
+    },
+    {
+        "question": "In what year did the twin towers fall?",
+        "answers": [
+            "1996",
+            "1999",
+            "2001",
+            "2023"
+        ],
+        "correctAnswer": 2
+    },
+    {
+        "question": "What caused the extinction of the dinosaurs?",
+        "answers": [
+            "Air pollution",
+            "The impact of an astroid",
+            "Aliens",
+            "Fractures in a tectonic plate"
+        ],
+        "correctAnswer": 2
+    },
+    {
+        "question": "When did disneyland first open?",
+        "answers": [
+            "2001",
+            "1988",
+            "1964",
+            "1955"
+        ],
+        "correctAnswer": 3
+    },
+    {
+        "question": "How much of the surface area of the earth is water?",
+        "answers": [
+            "29%",
+            "53%",
+            "71%",
+            "83%"
+        ],
+        "correctAnswer": 2
     }
 ]
