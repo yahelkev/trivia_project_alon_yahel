@@ -54,6 +54,21 @@ bool SqliteDatabase::addNewUser(std::string username, std::string password, std:
     );
 }
 
+std::list<Question> SqliteDatabase::getQuestions(int questionCount)
+{
+    std::list<Question> questionList;
+    // get random questions
+    this->executeQuery("SELECT * FROM Questions ORDER BY RANDOM() LIMIT " + std::to_string(questionCount) + ";",
+        this->pushQuestion, &questionList);
+    return questionList;
+}
+int SqliteDatabase::pushQuestion(void* data, int argc, char** argv, char** cols)
+{
+    std::list<Question>& questionList = *(std::list<Question>*)data;
+    questionList.push_back(Question(argc, argv, cols));
+    return 0;
+}
+
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
