@@ -30,7 +30,7 @@ unsigned int RoomManager::getRoomState(int ID)
 	{
 		return	m_rooms[ID].getMetaData().isActive;
 	}
-	throw std::exception("Room isn't active");
+	throw std::exception("Room wan't found");
 }
 
 std::vector<RoomData> RoomManager::getRooms()
