@@ -20,6 +20,13 @@ public:
 	virtual bool doesPasswordMatch(std::string username, std::string password);
 	virtual bool addNewUser(std::string username, std::string password, std::string email);
 	virtual std::list<Question> getQuestions(int questionCount);
+
+	virtual float getAverageAnswerTime(const std::string& username) { return 0; }
+	virtual int getNumOfCorrectAnswers(const std::string& username) { return 0; }
+	virtual int getNumOfTotalAnswers(const std::string& username) { return 0; }
+	virtual int getNumOfPlayerGames(const std::string& username) { return 0; }
+	virtual UserStatistics getUserStatistics(const std::string& username) { return { 0 }; }
+	virtual std::list<UserStatistics> getHighScores() { return std::list<UserStatistics>(); }
 private:
 	// function executes a sql query in the opened database. throws exception on error.
 	bool executeQuery(const std::string& sql, callbackFunction callback = nullptr, void* callbackData = nullptr);
