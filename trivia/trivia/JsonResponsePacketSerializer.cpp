@@ -34,38 +34,28 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse response)
 
 Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse response)
 {
-	std::string rooms_data = "";
+	json rooms_data = json::object();
 	for (auto room : response.rooms)
 	{
-		rooms_data += "{" + room.name + ":" + std::to_string(room.id) + "},";
-	}
-	//removes last ','
-	if (!rooms_data.empty())
-	{
-		rooms_data.pop_back();
+		rooms_data.push_back({ room.name , room.id });
 	}
 
 	json content = {
-		{"Rooms", rooms_data}
+		{ "Rooms", rooms_data }
 	};
-	return createResponseBuffer(GET_ROOM, content);
+	return createResponseBuffer(GET_ROOMS, content);
 }
 
 Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse response)
 {
-	std::string players_names = "";
+	json players_names = json::array();
 	for (auto player : response.players)
 	{
-		players_names += player + ",";
-	}
-	//removes last ','
-	if (!players_names.empty())
-	{
-		players_names.pop_back();
+		players_names.push_back(player);
 	}
 
 	json content = {
-		{"PlayersInRoom", players_names}
+		{ "PlayersInRoom", players_names }
 	};
 	return createResponseBuffer(GET_PLAYERS_IN_ROOM, content);
 }
