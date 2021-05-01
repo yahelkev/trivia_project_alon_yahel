@@ -7,6 +7,7 @@
 #define BYTE_SIZE 8
 #define DB_PATH "../TriviaDatabase.sqlite"
 #define QUESTION_FILE_PATH "../questions.json"
+#define HIGHSCORES_USER_COUNT "5"
 
 enum
 {

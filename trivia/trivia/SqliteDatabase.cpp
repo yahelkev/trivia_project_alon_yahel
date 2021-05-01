@@ -75,14 +75,56 @@ std::list<Question> SqliteDatabase::getQuestions(int questionCount)
     std::list<Question> questionList;
     // get random questions
     this->executeQuery("SELECT * FROM Questions ORDER BY RANDOM() LIMIT " + std::to_string(questionCount) + ";",
-        this->pushQuestion, &questionList);
+        this->pushCallback<Question>, &questionList);
     return questionList;
 }
-int SqliteDatabase::pushQuestion(void* data, int argc, char** argv, char** cols)
+float SqliteDatabase::getAverageAnswerTime(const std::string& username)
 {
-    std::list<Question>& questionList = *(std::list<Question>*)data;
-    questionList.push_back(Question(argc, argv, cols));
-    return 0;
+    return std::stof(this->valueQuery(
+        "SELECT average_answer_time FROM Statistics WHERE "
+        "user_id = (SELECT id FROM Users WHERE username = " + username + ");"
+    ));
+}
+int SqliteDatabase::getNumOfCorrectAnswers(const std::string& username)
+{
+    return std::stoi(this->valueQuery(
+        "SELECT correct_answers FROM Statistics WHERE "
+        "user_id = (SELECT id FROM Users WHERE username = " + username + ");"
+    ));
+}
+int SqliteDatabase::getNumOfTotalAnswers(const std::string& username)
+{
+    return std::stoi(this->valueQuery(
+        "SELECT total_answers FROM Statistics WHERE "
+        "user_id = (SELECT id FROM Users WHERE username = " + username + ");"
+    ));
+}
+int SqliteDatabase::getNumOfPlayerGames(const std::string& username)
+{
+    return std::stoi(this->valueQuery(
+        "SELECT game_count FROM Statistics WHERE "
+        "user_id = (SELECT id FROM Users WHERE username = " + username + ");"
+    ));
+}
+
+UserStatistics SqliteDatabase::getUserStatistics(const std::string& username)
+{
+    UserStatistics statistics;
+    // get random questions
+    this->executeQuery(
+        "SELECT * FROM Statistics WHERE "
+        "user_id = (SELECT id FROM Users WHERE username = " + username + ");",
+        this->createObjectCallback<UserStatistics>, &statistics);
+    return statistics;
+}
+
+std::list<UserStatistics> SqliteDatabase::getHighScores()
+{
+    std::list<UserStatistics> statisticsList;
+    // get random questions
+    this->executeQuery("SELECT * FROM Statistics ORDER BY user_id LIMIT " HIGHSCORES_USER_COUNT ";",
+        this->pushCallback<UserStatistics>, &statisticsList);
+    return statisticsList;
 }
 
 void SqliteDatabase::insertQuestions()

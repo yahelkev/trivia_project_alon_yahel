@@ -2,7 +2,7 @@
 #include <string>
 #include <list>
 #include "Question.h"
-#include "MessageStructs.h"
+#include "UserStatistics.h"
 
 class IDatabase
 {

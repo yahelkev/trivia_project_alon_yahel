@@ -49,12 +49,3 @@ typedef struct
 {
 	std::string message;
 } ErrorResponse;
-
-// other
-typedef struct
-{
-	float averageAnswerTime;
-	int correctAnswers;
-	int totalAnswers;
-	int gameCount;
-} UserStatistics;

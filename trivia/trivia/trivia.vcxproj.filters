@@ -84,6 +84,9 @@
     <ClCompile Include="Question.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="UserStatistics.cpp">
+      <Filter>Source Files\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -138,6 +141,9 @@
       <Filter>Header Files\Database</Filter>
     </ClInclude>
     <ClInclude Include="Question.h">
+      <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="UserStatistics.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
