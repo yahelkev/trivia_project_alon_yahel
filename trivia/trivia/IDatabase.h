@@ -3,6 +3,7 @@
 #include <list>
 #include "Question.h"
 #include "UserStatistics.h"
+#include "StatisticsManager.h"
 
 class IDatabase
 {

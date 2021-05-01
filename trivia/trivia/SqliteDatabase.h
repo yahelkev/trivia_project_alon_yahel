@@ -6,6 +6,7 @@
 #include "sqlite3.h"
 #include "Constants.h"
 #include "json.hpp"
+#include "StatisticsManager.h"
 
 using json = nlohmann::json;
 
@@ -40,6 +41,8 @@ private:
 	static int createObjectCallback(void* data, int argc, char** argv, char** cols);
 	// function inserts questions to database from a json file specified in Constants.h
 	void insertQuestions();
+	// sqlite user defined function to compare high scores
+	static void scoreFunction(sqlite3_context*, int, sqlite3_value**);
 
 	std::mutex _databaseMutex;
 	sqlite3* _database;

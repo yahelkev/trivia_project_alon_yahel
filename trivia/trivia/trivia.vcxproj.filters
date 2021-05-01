@@ -87,6 +87,9 @@
     <ClCompile Include="UserStatistics.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="StatisticsManager.cpp">
+      <Filter>Source Files\Managers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -145,6 +148,9 @@
     </ClInclude>
     <ClInclude Include="UserStatistics.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="StatisticsManager.h">
+      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

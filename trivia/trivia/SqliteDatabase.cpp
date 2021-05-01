@@ -40,6 +40,22 @@ SqliteDatabase::SqliteDatabase(std::string dbPath)
     }
     if (!success)
         throw std::exception("Opening Database Failed...");
+
+    // add user defined functions to database
+    // function score for finding highscores
+    int a = sqlite3_create_function(this->_database, "SCORE", 4, SQLITE_UTF8, NULL,
+        &SqliteDatabase::scoreFunction, NULL, NULL);
+}
+void SqliteDatabase::scoreFunction(sqlite3_context* context, int argc, sqlite3_value** argv)
+{
+    if (argc != 4)
+    {
+        sqlite3_result_null(context);
+        return;
+    }
+    // return from score formula
+    sqlite3_result_double(context, StatisticsManager::scoreFormula(sqlite3_value_double(argv[0]), 
+        sqlite3_value_int(argv[1]), sqlite3_value_int(argv[2]), sqlite3_value_int(argv[3])));
 }
 
 SqliteDatabase::~SqliteDatabase()
@@ -122,7 +138,8 @@ std::list<UserStatistics> SqliteDatabase::getHighScores()
 {
     std::list<UserStatistics> statisticsList;
     // get random questions
-    this->executeQuery("SELECT * FROM Statistics ORDER BY user_id LIMIT " HIGHSCORES_USER_COUNT ";",
+    this->executeQuery("SELECT * FROM Statistics ORDER BY SCORE(average_answer_time, correct_answers, total_answers, game_count) "
+        "LIMIT " HIGHSCORES_USER_COUNT ";",
         this->pushCallback<UserStatistics>, &statisticsList);
     return statisticsList;
 }
@@ -154,8 +171,7 @@ void SqliteDatabase::insertQuestions()
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
-    char* errorMsg = nullptr;
-    int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, &errorMsg);
+    int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, nullptr);
     return res == SQLITE_OK;
 }
 

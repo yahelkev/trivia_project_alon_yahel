@@ -1,7 +1,9 @@
 #pragma once
 #include "IDatabase.h"
 #include "UserStatistics.h"
+#include "Constants.h"
 
+class IDatabase;
 class StatisticsManager
 {
 public:
