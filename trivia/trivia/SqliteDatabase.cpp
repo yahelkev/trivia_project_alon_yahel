@@ -24,7 +24,17 @@ SqliteDatabase::SqliteDatabase(std::string dbPath)
             "answer3 TEXT NOT NULL,"
             "correct_answer INTEGER NOT NULL"
             ");"
+            "CREATE TABLE IF NOT EXISTS Statistics("
+            "user_id INTEGER PRIMARY KEY,"
+            "correct_answers INTEGER DEFAULT 0,"
+            "total_answers INTEGER DEFAULT 0,"
+            "game_count INTEGER DEFAULT 0,"
+            "average_answer_time FLOAT DEFAULT 0,"
+            "FOREIGN KEY(user_id) REFERENCES Users(id) ON DELETE CASCADE"
+            ");"
         );
+        // enforce foreign key constraint
+        this->executeQuery("PRAGMA foreign_keys = ON;");
         // insert questions from file
         this->insertQuestions();
     }
@@ -49,10 +59,14 @@ bool SqliteDatabase::doesPasswordMatch(std::string username, std::string passwor
 
 bool SqliteDatabase::addNewUser(std::string username, std::string password, std::string email)
 {
-    return this->executeQuery("INSERT INTO Users (username, password, email) VALUES ("
+    return this->executeQuery(
+        // add user
+        "INSERT INTO Users (username, password, email) VALUES ("
         "\"" + username + "\","
         "\"" + password + "\","
         "\"" + email + "\");"
+        // add statistics
+        "INSERT INTO Statistics (user_id) VALUES ((SELECT MAX(id) FROM Users));"
     );
 }
 
