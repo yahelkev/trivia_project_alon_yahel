@@ -13,5 +13,11 @@ public:
 	static LoginRequest deserializeLoginRequest(Buffer);
 	//deserialize a singup request
 	static SignupRequest deserializeSignupRequest(Buffer);
+
+	//2.0.0
+	static GetPlayersInRoomRequest deserializeGetPlayersRequest(Buffer);
+	static JoinRoomRequest deserializeJoinRoomRequest(Buffer);
+	static CreateRoomRequest deserializeCreateRoomRequest(Buffer);
+
 };
 
