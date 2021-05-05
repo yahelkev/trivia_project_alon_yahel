@@ -12,7 +12,7 @@ UserStatistics::UserStatistics(int argc, char** argv, char** cols)
 		}
 		else if (strcmp(cols[i], "correct_answers") == 0)
 		{
-			this->_averageAnswerTime = atoi(argv[i]);
+			this->_correctAnswers = atoi(argv[i]);
 		}
 		else if (strcmp(cols[i], "total_answers") == 0)
 		{
@@ -47,6 +47,11 @@ int UserStatistics::getTotalAnswers() const
 int UserStatistics::getGameCount() const
 {
 	return this->_gameCount;
+}
+
+std::string UserStatistics::getUsername() const
+{
+	return this->_username;
 }
 
 UserStatistics& UserStatistics::operator=(const UserStatistics& other)

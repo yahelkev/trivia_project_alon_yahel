@@ -129,7 +129,7 @@ UserStatistics SqliteDatabase::getUserStatistics(const std::string& username)
     // get random questions
     this->executeQuery(
         "SELECT Statistics.*, Users.username FROM Statistics INNER JOIN Users ON Statistics.user_id = Users.id WHERE "
-        "Users.username = \"" + username + "\");",
+        "Users.username = \"" + username + "\";",
         this->createObjectCallback<UserStatistics>, &statistics);
     return statistics;
 }
@@ -173,6 +173,7 @@ bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callb
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
     int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, nullptr);
+    const char* err = sqlite3_errmsg(this->_database);
     return res == SQLITE_OK;
 }
 

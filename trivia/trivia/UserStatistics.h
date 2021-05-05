@@ -14,6 +14,7 @@ public:
 	int getCorrectAnswers() const;
 	int getTotalAnswers() const;
 	int getGameCount() const;
+	std::string getUsername() const;
 
 	UserStatistics& operator=(const UserStatistics& other);
 private:

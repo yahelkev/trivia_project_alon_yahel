@@ -7,7 +7,11 @@ class IDatabase;
 class StatisticsManager
 {
 public:
+	StatisticsManager(IDatabase* database) : m_database(database) {}
+	// function scores statistics of a user, used to find the highest scores.
 	static float scoreFormula(float averageAnswerTime, int correctAnswers, int totalAnswers, int gameCount);
+	static float scoreFormula(const UserStatistics& statistics);
+
 	std::vector<std::string> getHighScores();
 	std::vector<std::string> getUserStatistics(const std::string& username);
 private:
