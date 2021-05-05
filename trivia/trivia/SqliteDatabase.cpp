@@ -173,7 +173,6 @@ bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callb
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
     int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, nullptr);
-    const char* err = sqlite3_errmsg(this->_database);
     return res == SQLITE_OK;
 }
 

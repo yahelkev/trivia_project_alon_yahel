@@ -26,6 +26,9 @@ std::vector<std::string> StatisticsManager::getHighScores()
 
 std::vector<std::string> StatisticsManager::getUserStatistics(const std::string& username)
 {
+	if (!this->m_database->doesUserExist(username))
+		throw std::exception("User does not exists");
+
 	UserStatistics statistics = this->m_database->getUserStatistics(username);
 	std::vector<std::string> statisticsDisplay;
 	// add rows of info
