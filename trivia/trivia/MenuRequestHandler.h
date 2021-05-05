@@ -9,8 +9,10 @@ class MenuRequestHandler : public IRequestHandler
 public:
 	MenuRequestHandler(RequestHandlerFactory& factory, LoggedUser user);
 
-	virtual bool isRequestRelevant(RequestInfo) { return true; }
-	virtual RequestResult handleRequest(RequestInfo) { return RequestResult(); }
+	virtual bool isRequestRelevant(RequestInfo);
+	virtual RequestResult handleRequest(RequestInfo);
+
+	virtual void abortSignout();
 private:
 	LoggedUser m_user;
 	RoomManager& m_roomManager;

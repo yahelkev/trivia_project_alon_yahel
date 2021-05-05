@@ -8,7 +8,7 @@ LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& factory):
 
 bool LoginRequestHandler::isRequestRelevant(RequestInfo rqstInfo)
 {
-	return rqstInfo.id == 1 || rqstInfo.id == 2;
+	return rqstInfo.id == LOGIN || rqstInfo.id == SIGNUP;
 }
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo requesrInfo)
