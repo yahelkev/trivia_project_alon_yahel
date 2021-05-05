@@ -22,6 +22,10 @@ UserStatistics::UserStatistics(int argc, char** argv, char** cols)
 		{
 			this->_gameCount = atoi(argv[i]);
 		}
+		else if (strcmp(cols[i], "username") == 0)
+		{
+			this->_username = argv[i];
+		}
 	}
 }
 

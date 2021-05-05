@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include <string.h>
 #include <stdlib.h>
 
@@ -16,6 +17,7 @@ public:
 
 	UserStatistics& operator=(const UserStatistics& other);
 private:
+	std::string _username;
 	float _averageAnswerTime;
 	int _correctAnswers;
 	int _totalAnswers;

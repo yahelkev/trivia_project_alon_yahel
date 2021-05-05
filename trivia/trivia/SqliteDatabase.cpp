@@ -128,8 +128,8 @@ UserStatistics SqliteDatabase::getUserStatistics(const std::string& username)
     UserStatistics statistics;
     // get random questions
     this->executeQuery(
-        "SELECT * FROM Statistics WHERE "
-        "user_id = (SELECT id FROM Users WHERE username = " + username + ");",
+        "SELECT Statistics.*, Users.username FROM Statistics INNER JOIN Users ON Statistics.user_id = Users.id WHERE "
+        "Users.username = \"" + username + "\");",
         this->createObjectCallback<UserStatistics>, &statistics);
     return statistics;
 }
@@ -138,7 +138,8 @@ std::list<UserStatistics> SqliteDatabase::getHighScores()
 {
     std::list<UserStatistics> statisticsList;
     // get random questions
-    this->executeQuery("SELECT * FROM Statistics ORDER BY SCORE(average_answer_time, correct_answers, total_answers, game_count) "
+    this->executeQuery("SELECT statistics.*, Users.username FROM Statistics INNER JOIN Users ON Statistics.user_id = Users.id "
+        "ORDER BY SCORE(average_answer_time, correct_answers, total_answers, game_count) "
         "LIMIT " HIGHSCORES_USER_COUNT ";",
         this->pushCallback<UserStatistics>, &statisticsList);
     return statisticsList;
