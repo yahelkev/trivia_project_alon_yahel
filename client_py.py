@@ -20,6 +20,34 @@ REQUESTS = {
 		"keys": ["username", "password", "email"],
 		"code": 2
 	},
+	"logout": {
+		"keys": [],
+		"code": 3
+	},
+	"get rooms": {
+		"keys": [],
+		"code": 4
+	},
+	"get players in room": {
+		"keys": ["roomId"],
+		"code": 5
+	},
+	"join room": {
+		"keys": ["roomId"],
+		"code": 6
+	},
+	"create room": {
+		"keys": ["answerTimeout", "maxUsers", "questionCount", "roomName"],
+		"code": 7
+	},
+	"get high scores": {
+		"keys": [],
+		"code": 8
+	},
+	"get statistics": {
+		"keys": [],
+		"code": 9
+	},
 }
 # class for exit input exception
 class ExitException(Exception):
