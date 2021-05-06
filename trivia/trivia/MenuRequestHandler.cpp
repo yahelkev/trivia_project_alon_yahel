@@ -61,11 +61,19 @@ RequestResult MenuRequestHandler::getRooms(RequestInfo)
 
 RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 {
+	Buffer responseBuffer;
 	// deserialize response
 	GetPlayersInRoomRequest request = JsonRequestPacketDeserializer::deserializeGetPlayersRequest(requestInfo.jsonBuffer);
 	// get response and return
-	std::vector<std::string> players = this->m_roomManager.getRoom(request.roomId).getAllUsers();
-	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse{ players });
+	if (this->m_roomManager.doesRoomExist(request.roomId))
+	{	// get list of players
+		std::vector<std::string> players = this->m_roomManager.getRoom(request.roomId).getAllUsers();
+		responseBuffer = JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse{ players });
+	}
+	else
+	{	// room doesn't exists, return error
+		responseBuffer = responseBuffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Room doesn't exist!" });
+	}
 	return RequestResult{ responseBuffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
@@ -89,10 +97,18 @@ RequestResult MenuRequestHandler::getHighScores(RequestInfo)
 
 RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 {
-	JoinRoomRequest request =  JsonRequestPacketDeserializer::deserializeJoinRoomRequest(requestInfo.jsonBuffer);
+	JoinRoomRequest request = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(requestInfo.jsonBuffer);
+	Buffer responseBuffer;
 	// join room and return response
-	bool res = this->m_roomManager.getRoom(request.roomId).addUser(this->m_user);
-	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse{ res ? (unsigned int)1 : 0 });
+	if (this->m_roomManager.doesRoomExist(request.roomId))
+	{	// add user
+		bool res = this->m_roomManager.getRoom(request.roomId).addUser(this->m_user);
+		responseBuffer = JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse{ res ? (unsigned int)1 : 0 });
+	}
+	else
+	{	// room doesn't exists, return error
+		responseBuffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Room doesn't exist!" });
+	}
 	return RequestResult{ responseBuffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 

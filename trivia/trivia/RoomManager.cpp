@@ -51,3 +51,8 @@ Room& RoomManager::getRoom(roomID id)
 	return this->m_rooms[id];
 }
 
+bool RoomManager::doesRoomExist(roomID id)
+{
+	return this->m_rooms.find(id) != this->m_rooms.end();
+}
+

@@ -19,5 +19,7 @@ public:
 	std::vector<RoomData> getRooms();
 	// return room by id
 	Room& getRoom(roomID);
+	// check if a room id exists
+	bool doesRoomExist(roomID);
 };
 
