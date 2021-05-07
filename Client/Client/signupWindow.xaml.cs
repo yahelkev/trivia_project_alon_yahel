@@ -14,14 +14,26 @@ using System.Windows.Shapes;
 
 namespace Client
 {
-    /// <summary>
-    /// Interaction logic for signupWindow.xaml
-    /// </summary>
     public partial class signupWindow : Window
     {
-        public signupWindow()
+        private Communicator _communicator;
+        public signupWindow(Communicator communicator)
         {
             InitializeComponent();
+            _communicator = communicator;
+        }
+        private void signup(object sender, RoutedEventArgs e)
+        {
+            SignupResponse response = _communicator.signup(inputUserName.Text, inputPassword.Text, inputemail.Text);
+            if (response.status == 0)
+            {
+                MessageBox.Show("Something went wrong");
+            }
+            this.Close();
+        }
+        private void cancel(object sender, RoutedEventArgs e)
+        {
+            this.Close();
         }
     }
 }

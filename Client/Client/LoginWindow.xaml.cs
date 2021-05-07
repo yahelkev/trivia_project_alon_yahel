@@ -37,7 +37,7 @@ namespace Client
         }
 		private void signup(object sender, RoutedEventArgs e)
 		{
-			signupWindow menu = new signupWindow();
+			signupWindow menu = new signupWindow(_communicator);
 			menu.ShowDialog();
 		}
 	}
