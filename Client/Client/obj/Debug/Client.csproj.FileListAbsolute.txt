@@ -16,3 +16,5 @@ C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\LoginWindow.bam
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\bin\Debug\Newtonsoft.Json.dll
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\bin\Debug\Newtonsoft.Json.xml
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\Client.csproj.CopyComplete
+C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\MenuWindow.g.cs
+C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\MenuWindow.baml

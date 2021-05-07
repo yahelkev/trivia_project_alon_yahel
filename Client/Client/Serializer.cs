@@ -14,26 +14,26 @@ namespace Client
 			return new ASCIIEncoding().GetBytes(JsonConvert.SerializeObject(request));
 		}
 	}
-	struct LoginRequest
+	public struct LoginRequest
 	{
 		public string username;
 		public string password;
 	}
-	struct SignupRequest
+	public struct SignupRequest
 	{
 		public string username;
 		public string password;
 		public string email;
 	}
-	struct GetPlayersInRoomRequest
+	public struct GetPlayersInRoomRequest
 	{
 		public uint roomID;
 	}
-	struct JoinRoomRequest
+	public struct JoinRoomRequest
 	{
 		public uint roomID;
 	}
-	struct CreateRoomRequest
+	public struct CreateRoomRequest
 	{
 		public string roomName;
 		public uint maxUsers;

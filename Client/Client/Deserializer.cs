@@ -15,52 +15,52 @@ namespace Client
 			return JsonConvert.DeserializeObject<Response>(responseString);
 		}
 	}
-	struct LoginResponse
+	public struct LoginResponse
 	{
 		public uint status;
 	}
-	struct SignupResponse
+	public struct SignupResponse
 	{
 		public uint status;
 	}
-	struct LogoutResponse
+	public struct LogoutResponse
 	{
 		public uint status;
 	}
-	struct JoinRoomResponse
+	public struct JoinRoomResponse
 	{
 		public uint status;
 	}
-	struct CreateRoomResponse
+	public struct CreateRoomResponse
 	{
 		public uint status;
 	}
-	struct GetRoomsResponse
+	public struct GetRoomsResponse
 	{
 		public uint status;
 		public RoomData[] rooms;
 	}
-	struct GetPlayersInRoomResponse
+	public struct GetPlayersInRoomResponse
 	{
 		public string[] players;
 	}
-	struct GetHighScoresResponse
+	public struct GetHighScoresResponse
 	{
 		public uint status;
 		public string[] statistics;
 	}
-	struct GetPersonalStatistics
+	public struct GetPersonalStatisticsResponse
 	{
 		public uint status;
 		public string[] statistics;
 	}
-	struct ErrorResponse
+	public struct ErrorResponse
 	{
 		public string message;
 	}
 	
-	// data structs
-	struct RoomData
+	// data public structs
+	public struct RoomData
 	{
 		public string name;
 		public uint id;
