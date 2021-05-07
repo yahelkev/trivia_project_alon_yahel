@@ -15,14 +15,30 @@ using System.Windows.Shapes;
 
 namespace Client
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
 	public partial class LoginWindow : Window
 	{
+		private Communicator _communicator;
 		public LoginWindow()
 		{
-			InitializeComponent();
+			_communicator = new Communicator();
+		}
+		private void login(object sender, RoutedEventArgs e)
+        {
+			LoginResponse response = _communicator.login(inputUserName.Text, inputPassword.Text);
+			if(response.status == 1)
+            {
+				MenuWindow menu = new MenuWindow(_communicator);
+				menu.ShowDialog();
+			}
+            else
+            {
+				MessageBox.Show("Incorrect password");
+            }
+        }
+		private void signup(object sender, RoutedEventArgs e)
+		{
+			signupWindow menu = new signupWindow();
+			menu.ShowDialog();
 		}
 	}
 }

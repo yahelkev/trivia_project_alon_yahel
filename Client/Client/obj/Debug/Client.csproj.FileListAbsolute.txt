@@ -38,3 +38,5 @@ C:\Magshimim\year-B\c++\trivia_project_alon_yahel\Client\Client\obj\Debug\Client
 C:\Magshimim\year-B\c++\trivia_project_alon_yahel\Client\Client\obj\Debug\Client.csproj.CopyComplete
 C:\Magshimim\year-B\c++\trivia_project_alon_yahel\Client\Client\obj\Debug\Client.exe
 C:\Magshimim\year-B\c++\trivia_project_alon_yahel\Client\Client\obj\Debug\Client.pdb
+C:\Magshimim\year-B\c++\trivia_project_alon_yahel\Client\Client\obj\Debug\signupWindow.g.cs
+C:\Magshimim\year-B\c++\trivia_project_alon_yahel\Client\Client\obj\Debug\signupWindow.baml
