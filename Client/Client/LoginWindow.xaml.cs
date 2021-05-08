@@ -20,11 +20,11 @@ namespace Client
 	/// </summary>
 	public partial class LoginWindow : Window
 	{
-		private Communicator communicator;
+		private Communicator _communicator;
 		public LoginWindow()
 		{
-			communicator = new Communicator();
-			
+			_communicator = new Communicator();
+			_communicator.login("a", "b");
 			InitializeComponent();
 		}
 	}
