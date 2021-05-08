@@ -20,7 +20,7 @@
         <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="email:"/>
         <TextBox Name= "inputUserName" Grid.Column="1"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
         <TextBox Name= "inputPassword" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
-        <TextBox Name= "inputemail" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
+        <TextBox Name= "inputEmail" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
         <Button Content="signup"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
