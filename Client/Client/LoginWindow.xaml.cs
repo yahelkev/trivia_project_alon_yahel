@@ -23,6 +23,11 @@ namespace Client
 		public LoginWindow()
 		{
 			InitializeComponent();
+			new MenuWindow(new Communicator()).ShowDialog();
+		}
+		public LoginWindow(bool temp)
+		{
+			InitializeComponent();
 		}
 	}
 }

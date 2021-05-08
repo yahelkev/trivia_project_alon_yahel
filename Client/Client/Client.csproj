@@ -62,6 +62,9 @@
     <Compile Include="MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="RequestWorker.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Serializer.cs" />
     <Page Include="LoginWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
