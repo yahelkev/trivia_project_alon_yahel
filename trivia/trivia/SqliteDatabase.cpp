@@ -10,12 +10,23 @@ SqliteDatabase::SqliteDatabase(std::string dbPath)
     {   // new db, create tables
         this->executeQuery(
             "CREATE TABLE IF NOT EXISTS Users("
-            "id INTEGER PRIMARY KEY,"
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
             "username TEXT NOT NULL,"
             "password TEXT NOT NULL,"
             "email TEXT"
             ");"
+            "CREATE TABLE IF NOT EXISTS Questions("
+            "id INTEGER PRIMARY KEY AUTOINCREMENT,"
+            "question TEXT NOT NULL,"
+            "answer0 TEXT NOT NULL,"
+            "answer1 TEXT NOT NULL,"
+            "answer2 TEXT NOT NULL,"
+            "answer3 TEXT NOT NULL,"
+            "correct_answer INTEGER NOT NULL"
+            ");"
         );
+        // insert questions from file
+        this->insertQuestions();
     }
     if (!success)
         throw std::exception("Opening Database Failed...");
@@ -43,6 +54,45 @@ bool SqliteDatabase::addNewUser(std::string username, std::string password, std:
         "\"" + password + "\","
         "\"" + email + "\");"
     );
+}
+
+std::list<Question> SqliteDatabase::getQuestions(int questionCount)
+{
+    std::list<Question> questionList;
+    // get random questions
+    this->executeQuery("SELECT * FROM Questions ORDER BY RANDOM() LIMIT " + std::to_string(questionCount) + ";",
+        this->pushQuestion, &questionList);
+    return questionList;
+}
+int SqliteDatabase::pushQuestion(void* data, int argc, char** argv, char** cols)
+{
+    std::list<Question>& questionList = *(std::list<Question>*)data;
+    questionList.push_back(Question(argc, argv, cols));
+    return 0;
+}
+
+void SqliteDatabase::insertQuestions()
+{
+    // open file
+    std::ifstream questionFile(QUESTION_FILE_PATH);
+    if (!questionFile.is_open())
+        return;
+    // read json
+    json questionJson;
+    questionFile >> questionJson;
+    questionFile.close();
+    // insert questions into database
+    std::string sql = "INSERT INTO Questions (question, answer0, answer1, answer2, answer3, correct_answer) VALUES ";
+    for (const json& question : questionJson)
+    {
+        sql += '(' + question["question"].dump() + ',';
+        // add answers
+        for (const json& answer : question["answers"])
+            sql += answer.dump() + ',';
+        sql += question["correctAnswer"].dump() + "),";
+    }
+    sql.pop_back();
+    this->executeQuery(sql + ';');
 }
 
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
