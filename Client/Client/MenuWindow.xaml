@@ -20,9 +20,9 @@
 			</TextBlock>
 			<Button Name="JoinRoom">Join Room</Button>
 			<Button Name="CreateRoom">Create Room</Button>
-			<Button Name="MyStats">My Stats</Button>
-			<Button Name="HighScores">High Scores</Button>
-			<Button Margin="5,5,5,15" Name="Logout" Click="Logout_Click">Logout</Button>
+			<Button Click="UserStats_Click">My Stats</Button>
+			<Button Click="HighScores_Click">High Scores</Button>
+			<Button Margin="5,5,5,15" Click="Logout_Click">Logout</Button>
 		</StackPanel>
 	</Viewbox>
 </Window>

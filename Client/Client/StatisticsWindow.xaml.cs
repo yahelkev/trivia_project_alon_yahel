@@ -10,26 +10,23 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace Client
 {
-	/// <summary>
-	/// Interaction logic for MainWindow.xaml
-	/// </summary>
-	public partial class LoginWindow : Window
+	public partial class StatisticsWindow : Window
 	{
-		public LoginWindow()
+		public StatisticsWindow(string title, string[] statistics)
 		{
 			InitializeComponent();
-			var a = new MenuWindow(new Communicator());
-			Close();
-			a.ShowDialog();
+			// set values
+			Title.Text = title;
+			Statistics.Text = string.Join("\n", statistics);
 		}
-		public LoginWindow(Communicator communicator)
+
+		private void CloseWindow_Click(object sender, RoutedEventArgs e)
 		{
-			InitializeComponent();
+			Close();
 		}
 	}
 }
