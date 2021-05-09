@@ -18,7 +18,7 @@
 			<TextBlock HorizontalAlignment="Center" FontSize="14" Margin="0,5,0,5">
 				<Bold>Main Menu</Bold>
 			</TextBlock>
-			<Button Name="JoinRoom">Join Room</Button>
+			<Button Click="JoinRoom_Click">Join Room</Button>
 			<Button Name="CreateRoom">Create Room</Button>
 			<Button Click="UserStats_Click">My Stats</Button>
 			<Button Click="HighScores_Click">High Scores</Button>

@@ -20,3 +20,5 @@ C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\MenuWindow.g.cs
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\MenuWindow.baml
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\StatisticsWindow.g.cs
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\StatisticsWindow.baml
+C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\JoinRoomWindow.g.cs
+C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\JoinRoomWindow.baml

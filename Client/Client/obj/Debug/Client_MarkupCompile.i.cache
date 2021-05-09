@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\App.xaml
-31727563011
+41703265799
 
-12-1615658456
+13-1137277307
 14491484184
-StatisticsWindow.xaml;LoginWindow.xaml;MenuWindow.xaml;
+JoinRoomWindow.xaml;StatisticsWindow.xaml;LoginWindow.xaml;MenuWindow.xaml;
 
 False
 

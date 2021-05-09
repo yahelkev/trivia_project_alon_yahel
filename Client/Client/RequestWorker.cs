@@ -8,7 +8,7 @@ using System.ComponentModel;
 namespace Client
 {
 	// class wraps BackgroundWorker class to make it work with different methods
-	class RequestWorker
+	public class RequestWorker
 	{
 		DoWorkEventHandler _currentDoWork;
 		RunWorkerCompletedEventHandler _currentRunWorkerCompleted;
@@ -21,14 +21,14 @@ namespace Client
 		}
 
 		// function activates the worker with the specified methods if it isn't busy. returns whether it started the request or ignored it.
-		public bool Run(DoWorkEventHandler doWork, RunWorkerCompletedEventHandler runWorkerCompleted)
+		public bool Run(DoWorkEventHandler doWork, RunWorkerCompletedEventHandler runWorkerCompleted, object argument = null)
 		{
 			if (_worker.IsBusy)
 				return false;
 			// start request
 			_currentDoWork = doWork;
 			_currentRunWorkerCompleted = runWorkerCompleted;
-			_worker.RunWorkerAsync();
+			_worker.RunWorkerAsync(argument);
 			return true;
 		}
 		// background worker methods

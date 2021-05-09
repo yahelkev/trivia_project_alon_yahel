@@ -71,8 +71,6 @@ namespace Client
 		private void UserStatsWork(object sender, DoWorkEventArgs e)
 		{
 			GetPersonalStatisticsResponse response = _communicator.getUserStatistics();
-			response.status = 1;
-			response.statistics = new string[] { "stat1: 5" };
 			e.Result = response;
 		}
 		private void UserStatsComplete(object sender, RunWorkerCompletedEventArgs e)
@@ -82,6 +80,29 @@ namespace Client
 				OpenWindow(new StatisticsWindow("Your Statistics", response.statistics));
 			else
 				MessageBox.Show("Failed to get your statistics", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+		}
+
+		// join room button
+		private void JoinRoom_Click(object sender, RoutedEventArgs e)
+		{
+			_worker.Run(JoinRoomWork, JoinRoomComplete);
+		}
+		private void JoinRoomWork(object sender, DoWorkEventArgs e)
+		{
+			GetRoomsResponse response = _communicator.getRooms();
+			response.status = 1;
+			response.rooms = new RoomData[2];
+			response.rooms[0] = new RoomData { id = 1, isActive = 0, maxPlayers = 5, numOfQuestions = 10, timePerQuestion = 3, name="room1" };
+			response.rooms[1] = new RoomData { id = 3, isActive = 0, maxPlayers = 7, numOfQuestions = 15, timePerQuestion = 6, name="room2" };
+			e.Result = response;
+		}
+		private void JoinRoomComplete(object sender, RunWorkerCompletedEventArgs e)
+		{
+			GetRoomsResponse response = (GetRoomsResponse)e.Result;
+			if (response.status == 1)
+				SwitchWindow(new JoinRoomWindow(_communicator, response.rooms));
+			else
+				MessageBox.Show("Failed to get list of rooms", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
 
 		// function switches this window to another window (keeps this open)
