@@ -6,6 +6,7 @@
 #define CONTENT_LENGTH_BYTES 4
 #define BYTE_SIZE 8
 #define DB_PATH "../TriviaDatabase.sqlite"
+#define QUESTION_FILE_PATH "../questions.json"
 
 enum
 {
