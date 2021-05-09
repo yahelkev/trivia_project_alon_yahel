@@ -15,9 +15,9 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	switch (requestInfo.id)
 	{
 	case LOGOUT:
-		return signout(requestInfo);
+		return signout();
 	case GET_ROOMS:
-		return getRooms(requestInfo);
+		return getRooms();
 	case GET_PLAYERS_IN_ROOM:
 		return getPlayersInRoom(requestInfo);
 	case JOIN_ROOM:
@@ -25,9 +25,9 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 	case CREATE_ROOM:
 		return createRoom(requestInfo);
 	case HIGH_SCORE:
-		return getHighScores(requestInfo);
+		return getHighScores();
 	case USER_STATISTICS:
-		return getPersonalStatistics(requestInfo);
+		return getPersonalStatistics();
 	default:
 	{
 		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });
@@ -41,16 +41,16 @@ void MenuRequestHandler::abortSignout()
 	this->m_handlerFactory.getLoginManager().logout(this->m_user.getUsername());
 }
 
-RequestResult MenuRequestHandler::signout(RequestInfo requestInfo)
+RequestResult MenuRequestHandler::signout()
 {
 	// logout from manager
 	bool result = this->m_handlerFactory.getLoginManager().logout(this->m_user.getUsername());
 	// send response
-	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(LoginResponse{ result ? (unsigned int)1 : 0 });
+	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(LogoutResponse{ result ? (unsigned int)1 : 0 });
 	return RequestResult{ responseBuffer , this->m_handlerFactory.createLoginRequestHandler() };
 }
 
-RequestResult MenuRequestHandler::getRooms(RequestInfo)
+RequestResult MenuRequestHandler::getRooms()
 {
 	// get list of rooms
 	std::vector<RoomData> rooms = this->m_roomManager.getRooms();
@@ -77,7 +77,7 @@ RequestResult MenuRequestHandler::getPlayersInRoom(RequestInfo requestInfo)
 	return RequestResult{ responseBuffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
-RequestResult MenuRequestHandler::getPersonalStatistics(RequestInfo)
+RequestResult MenuRequestHandler::getPersonalStatistics()
 {
 	// get statistics
 	std::vector<std::string> statistics = this->m_statisticsManager.getUserStatistics(this->m_user.getUsername());
@@ -86,7 +86,7 @@ RequestResult MenuRequestHandler::getPersonalStatistics(RequestInfo)
 	return RequestResult{ responseBuffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }
 
-RequestResult MenuRequestHandler::getHighScores(RequestInfo)
+RequestResult MenuRequestHandler::getHighScores()
 {
 	// get statistics
 	std::vector<std::string> highScores = this->m_statisticsManager.getHighScores();
@@ -119,5 +119,4 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	bool res = this->m_roomManager.createRoom(this->m_user, RoomData{0, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false});
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse{ res ? (unsigned int)1 : 0 });
 	return RequestResult{ responseBuffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
-	return RequestResult();
 }

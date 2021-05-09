@@ -19,11 +19,11 @@ private:
 	StatisticsManager& m_statisticsManager;
 	RequestHandlerFactory& m_handlerFactory;
 
-	RequestResult signout(RequestInfo);
-	RequestResult getRooms(RequestInfo);
+	RequestResult signout();
+	RequestResult getRooms();
 	RequestResult getPlayersInRoom(RequestInfo);
-	RequestResult getPersonalStatistics(RequestInfo);
-	RequestResult getHighScores(RequestInfo);
+	RequestResult getPersonalStatistics();
+	RequestResult getHighScores();
 	RequestResult joinRoom(RequestInfo);
 	RequestResult createRoom(RequestInfo);
 };
