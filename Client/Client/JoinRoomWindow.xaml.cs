@@ -19,6 +19,14 @@ namespace Client
 			updateRoomList();
 		}
 
+		private uint getRoomId(string roomName)
+		{
+			foreach (RoomData room in _roomData)
+				if (room.name == roomName)
+					return room.id;
+			return uint.MaxValue;
+		}
+
 		private void updateRoomList()
 		{
 			RoomList.Items.Clear();
@@ -67,10 +75,7 @@ namespace Client
 		{
 			// get room id
 			string roomName = (string)RoomList.SelectedItem;
-			uint id = ~0u;
-			foreach (RoomData room in _roomData)
-				if (room.name == roomName)
-					id = room.id;
+			uint id = getRoomId(roomName);
 			// get player list
 			bool canRun = _worker.Run(PlayerListWork, PlayerListComplete, id);
 			if (canRun) // wasn't already in progress
@@ -102,9 +107,28 @@ namespace Client
 				RoomList_SelectionChanged(null, null);	// update again
 		}
 
+		// join room request
 		private void Join_Click(object sender, RoutedEventArgs e)
 		{
-			MessageBox.Show("Not implemented yet");
+			_worker.Run(JoinWork, JoinComplete, getRoomId(_lastSelection));
+		}
+		private void JoinWork(object sender, DoWorkEventArgs e)
+		{
+			// get rooms request
+			JoinRoomResponse response = _communicator.joinRoom((uint)e.Argument);
+			e.Result = response.status;
+		}
+		private void JoinComplete(object sender, RunWorkerCompletedEventArgs e)
+		{
+			if((uint)e.Result == 0)
+			{
+				MessageBox.Show("Can't join room", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+			}
+			// change window
+			Window window = new RoomWindow(_communicator, getRoomId(_lastSelection), _lastSelection, false);
+			Close();
+			window.ShowDialog();
 		}
 	}
 }

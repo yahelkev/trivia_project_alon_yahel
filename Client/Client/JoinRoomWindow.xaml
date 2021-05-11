@@ -13,8 +13,6 @@
 		<TextBlock DockPanel.Dock="Top" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Center" Name="PlayersTitle" Visibility="Collapsed">PLayers:</TextBlock>
 		<Border Margin="10,5,10,10" DockPanel.Dock="Top" Background="GhostWhite" BorderBrush="#bbb" BorderThickness="1" Name="PlayerBorder" Visibility="Collapsed">
 			<StackPanel Margin="5,2,0,2" Name="PlayerList" DockPanel.Dock="Top" Height="Auto">
-				<TextBlock>HI :)</TextBlock>
-				<TextBlock>HI :)</TextBlock>
 			</StackPanel>
 		</Border>
 		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
