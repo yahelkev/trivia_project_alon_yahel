@@ -23,7 +23,7 @@ namespace Client
 		public LoginWindow()
 		{
 			InitializeComponent();
-			var a = new RoomWindow(new Communicator(), 1, "hello", true);
+			var a = new CreateRoomWindow(new Communicator());
 			Close();
 			a.ShowDialog();
 		}

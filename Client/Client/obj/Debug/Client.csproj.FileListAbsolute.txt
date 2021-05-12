@@ -24,3 +24,5 @@ C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\JoinRoomWindow.
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\JoinRoomWindow.baml
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\RoomWindow.g.cs
 C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\RoomWindow.baml
+C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\CreateRoomWindow.g.cs
+C:\GitProjects\trivia_project_alon_yahel\Client\Client\obj\Debug\CreateRoomWindow.baml
