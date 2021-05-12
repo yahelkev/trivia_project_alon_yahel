@@ -122,11 +122,6 @@ typedef struct
 	unsigned int status;
 } CreateRoomResponse;
 
-typedef struct
-{
-	unsigned int status;
-} CreateRoomResponse;
-
 // waiting room
 typedef struct
 {
