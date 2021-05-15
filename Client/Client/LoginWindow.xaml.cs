@@ -21,6 +21,14 @@ namespace Client
 	{
 		private Communicator _communicator;
 		private BackgroundWorker _worker = new BackgroundWorker();
+
+		public LoginWindow(Communicator communicator)
+		{
+			InitializeComponent();
+			_communicator = communicator;
+			_worker.DoWork += do_work;
+			_worker.RunWorkerCompleted += work_complete;
+		}
 		public LoginWindow()
 		{
 			InitializeComponent();
