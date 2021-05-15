@@ -40,18 +40,22 @@ namespace Client
 		}
 		private byte[] sendMsg(int code, byte[] msg)
 		{
+			//creates the msg
 			byte[] buffer = new byte[REQUEST_CODE_BYTES + CONTENT_LENGTH_BYTES + msg.Length];
 			buffer[0] = (byte)code;
 			BitConverter.GetBytes(msg.Length).CopyTo(buffer, REQUEST_CODE_BYTES);
 			msg.CopyTo(buffer, REQUEST_CODE_BYTES + CONTENT_LENGTH_BYTES);
+			//sends to server
 			_clientStream.Write(buffer, 0, buffer.Length);
 			_clientStream.Flush();
+			//gets response (only the json)
 			byte[] msgCode = new byte[REQUEST_CODE_BYTES];
 			byte[] contentLength = new byte[CONTENT_LENGTH_BYTES];
 			_clientStream.Read(msgCode, 0, REQUEST_CODE_BYTES);
 			_clientStream.Read(contentLength, 0, CONTENT_LENGTH_BYTES);
 			buffer = new byte[BitConverter.ToInt32(contentLength, 0)];
 			_clientStream.Read(buffer,0, BitConverter.ToInt32(contentLength, 0));
+			//if somthing whent wrong
 			if(msgCode[0] == (int)MSG_CODES.ERROR_CODE)
             {
 				
