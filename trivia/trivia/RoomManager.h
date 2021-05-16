@@ -10,7 +10,7 @@ class RoomManager
 	static roomID _freeID;
 public:
 	//creats a room
-	bool createRoom(LoggedUser, RoomData);
+	roomID createRoom(LoggedUser, RoomData);
 	//deletes a room
 	bool deleteRoom(int ID);
 	//returns room state (game is on or not)

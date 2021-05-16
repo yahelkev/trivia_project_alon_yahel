@@ -8,6 +8,8 @@
 #define DB_PATH "../TriviaDatabase.sqlite"
 #define QUESTION_FILE_PATH "../questions.json"
 
+#define INVALID_ROOM 0
+
 enum
 {
 	ERROR_CODE = 0,
