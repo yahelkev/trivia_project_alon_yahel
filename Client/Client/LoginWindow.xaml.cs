@@ -31,8 +31,6 @@ namespace Client
 		}
 		public LoginWindow()
 		{
-			_communicator = new Communicator();
-			_communicator.login("a", "b");
 			InitializeComponent();
 			_communicator = new Communicator();
 			_worker.DoWork += do_work;
