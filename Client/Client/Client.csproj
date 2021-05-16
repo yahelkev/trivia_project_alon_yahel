@@ -58,11 +58,40 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="CreateRoomWindow.xaml.cs">
+      <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Deserializer.cs" />
+    <Compile Include="JoinRoomWindow.xaml.cs">
+      <DependentUpon>JoinRoomWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="RequestWorker.cs" />
+    <Compile Include="RoomWindow.xaml.cs">
+      <DependentUpon>RoomWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="StatisticsWindow.xaml.cs">
+      <DependentUpon>StatisticsWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="MenuWindow.xaml.cs">
       <DependentUpon>MenuWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Serializer.cs" />
+    <Page Include="CreateRoomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="JoinRoomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="RoomWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="StatisticsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Compile Include="signupWindow.xaml.cs">
       <DependentUpon>signupWindow.xaml</DependentUpon>
     </Compile>
