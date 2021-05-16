@@ -1,6 +1,7 @@
 #pragma once
 #include "RoomAdminRequestHandler.h"
 
+class RequestHandlerFactory;
 class RoomMemberRequestHandler : public RoomAdminRequestHandler
 {
 public:
@@ -11,5 +12,6 @@ public:
 protected:
 	// change leave room functionality
 	virtual RequestResult leaveRoom(RequestInfo);
+	virtual IRequestHandler* copyHandler();
 };
 

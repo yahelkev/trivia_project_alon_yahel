@@ -90,6 +90,15 @@
     <ClCompile Include="StatisticsManager.cpp">
       <Filter>Source Files\Managers</Filter>
     </ClCompile>
+    <ClCompile Include="Question.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomAdminRequestHandler.cpp">
+      <Filter>Source Files\RequestHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomMemberRequestHandler.cpp">
+      <Filter>Source Files\RequestHandlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -151,6 +160,15 @@
     </ClInclude>
     <ClInclude Include="StatisticsManager.h">
       <Filter>Header Files\Managers</Filter>
+    </ClInclude>
+    <ClInclude Include="Question.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomAdminRequestHandler.h">
+      <Filter>Header Files\RequestHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMemberRequestHandler.h">
+      <Filter>Header Files\RequestHandlers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

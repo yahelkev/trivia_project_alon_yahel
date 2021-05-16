@@ -13,7 +13,8 @@ public:
 protected:
 	// shared functionality between admin and member
 	virtual RequestResult leaveRoom(RequestInfo);
-	virtual void getRoomState(RequestInfo);
+	virtual RequestResult getRoomState(RequestInfo);
+	virtual IRequestHandler* copyHandler();
 
 	roomID m_roomID;
 	LoggedUser m_user;
