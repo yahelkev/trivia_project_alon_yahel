@@ -1,5 +1,5 @@
 #include "RequestHandlerFactory.h"
-#include "RoomMemberRequestHandler.h"
+#include "RoomAdminRequestHandler.h"
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {

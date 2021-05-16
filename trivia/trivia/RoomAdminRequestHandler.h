@@ -1,9 +1,9 @@
 #pragma once
-#include "IRequestHandler.h"
+#include "RoomMemberRequestHandler.h"
 #include "RequestHandlerFactory.h"
 
 class RequestHandlerFactory;
-class RoomAdminRequestHandler : public IRequestHandler
+class RoomAdminRequestHandler : public RoomMemberRequestHandler
 {
 public:
 	RoomAdminRequestHandler(RequestHandlerFactory& factory, LoggedUser user, unsigned int roomID);
@@ -11,17 +11,9 @@ public:
 	virtual bool isRequestRelevant(RequestInfo);
 	virtual RequestResult handleRequest(RequestInfo);
 protected:
-	// shared functionality between admin and member
-	virtual RequestResult leaveRoom(RequestInfo);
-	virtual RequestResult getRoomState(RequestInfo);
+	virtual RequestResult leaveRoom();
 	virtual IRequestHandler* copyHandler();
-
-	roomID m_roomID;
-	LoggedUser m_user;
-	RoomManager& m_roomManager;
-	RequestHandlerFactory& m_handlerFactory;
 private:
-	// can only be accessed by admin
-	RequestResult startGame(RequestInfo);
+	RequestResult startGame();
 };
 

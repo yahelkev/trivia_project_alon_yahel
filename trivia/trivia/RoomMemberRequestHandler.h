@@ -1,17 +1,25 @@
 #pragma once
-#include "RoomAdminRequestHandler.h"
+#include "IRequestHandler.h"
+#include "RequestHandlerFactory.h"
 
 class RequestHandlerFactory;
-class RoomMemberRequestHandler : public RoomAdminRequestHandler
+class RoomMemberRequestHandler : public IRequestHandler
 {
 public:
 	RoomMemberRequestHandler(RequestHandlerFactory& factory, LoggedUser user, unsigned int roomID);
 
-	// restrict admin only requests
 	virtual bool isRequestRelevant(RequestInfo);
+	virtual RequestResult handleRequest(RequestInfo);
+
+	virtual void abortSignout();
 protected:
-	// change leave room functionality
-	virtual RequestResult leaveRoom(RequestInfo);
+	virtual RequestResult leaveRoom();
+	virtual RequestResult getRoomState();
 	virtual IRequestHandler* copyHandler();
+
+	RequestHandlerFactory& m_handlerFactory;
+	RoomManager& m_roomManager;
+	LoggedUser m_user;
+	roomID m_roomID;
 };
 
