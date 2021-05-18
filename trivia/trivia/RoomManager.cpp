@@ -1,11 +1,13 @@
 #include "RoomManager.h"
 
-roomID RoomManager::_freeID = 0;
+RoomManager::RoomManager() : _freeID(1)
+{
+}
 
 bool RoomManager::createRoom(LoggedUser user, RoomData data)
 {
 	std::lock_guard<std::mutex> usersLock(this->m_roomsMap_lock);
-	data.id = RoomManager::_freeID++;
+	data.id = this->_freeID++;
 	if (this->m_rooms.find(data.id) != this->m_rooms.end())
 	{
 		return false;

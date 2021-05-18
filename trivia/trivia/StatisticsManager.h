@@ -6,10 +6,10 @@
 class StatisticsManager
 {
 public:
-	StatisticsManager(IDatabase* database) : m_database(database) {}
+	StatisticsManager(IDatabase* database);
 
-	std::vector<std::string> getUserStatistics(std::string username) { return std::vector<std::string>(); }
-	std::vector<std::string> getHighScores() { return std::vector<std::string>(); }
+	std::vector<std::string> getUserStatistics(std::string username);
+	std::vector<std::string> getHighScores();
 private:
 	IDatabase* m_database;
 };

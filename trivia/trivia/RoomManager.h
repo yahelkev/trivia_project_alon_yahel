@@ -7,8 +7,9 @@ class RoomManager
 	std::map<roomID, Room> m_rooms;
 	std::mutex m_roomsMap_lock;
 
-	static roomID _freeID;
+	roomID _freeID;
 public:
+	RoomManager();
 	//creats a room
 	bool createRoom(LoggedUser, RoomData);
 	//deletes a room
