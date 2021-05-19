@@ -8,7 +8,7 @@ LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& factory):
 
 bool LoginRequestHandler::isRequestRelevant(RequestInfo rqstInfo)
 {
-	return rqstInfo.id == 1 || rqstInfo.id == 2;
+	return rqstInfo.id == LOGIN || rqstInfo.id == SIGNUP;
 }
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo requesrInfo)
@@ -25,7 +25,7 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo requesrInfo)
 		{
 			std::cout << "Loged in user: " << requestData.username << " -- " << requestData.password << std::endl;
 			result.response = JsonResponsePacketSerializer::serializeResponse(LoginResponse{ 1 });
-			result.newHandler = this->m_handlerFactory.createMenuRequestHandler();
+			result.newHandler = this->m_handlerFactory.createMenuRequestHandler(LoggedUser(requestData.username));
 		}
 		else
 		{
