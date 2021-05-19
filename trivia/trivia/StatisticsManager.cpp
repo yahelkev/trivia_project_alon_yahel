@@ -1,5 +1,9 @@
 #include "StatisticsManager.h"
 
+StatisticsManager::StatisticsManager(IDatabase* database) : m_database(database)
+{
+}
+
 float StatisticsManager::scoreFormula(float averageAnswerTime, int correctAnswers, int totalAnswers, int gameCount)
 {
 	if (totalAnswers == 0)
