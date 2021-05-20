@@ -36,7 +36,10 @@ namespace Client
 			JOIN_ROOM,
 			CREATE_ROOM,
 			HIGH_SCORE,
-			USER_STATISTICS
+			USER_STATISTICS,
+			LEAVE_ROOM,
+			START_GAME,
+			GET_ROOM_STATE
 		}
 		private byte[] sendMsg(int code, byte[] msg)
 		{
@@ -54,13 +57,13 @@ namespace Client
 			_clientStream.Read(msgCode, 0, REQUEST_CODE_BYTES);
 			_clientStream.Read(contentLength, 0, CONTENT_LENGTH_BYTES);
 			buffer = new byte[BitConverter.ToInt32(contentLength, 0)];
-			_clientStream.Read(buffer,0, BitConverter.ToInt32(contentLength, 0));
+			_clientStream.Read(buffer, 0, BitConverter.ToInt32(contentLength, 0));
 			//if somthing whent wrong
-			if(msgCode[0] == (int)MSG_CODES.ERROR_CODE)
-            {
-				
+			if (msgCode[0] == (int)MSG_CODES.ERROR_CODE)
+			{
+
 				throw new Exception(Deserializer.deserializeResponse<ErrorResponse>(buffer).message);
-            }
+			}
 			return buffer;
 		}
 		public LoginResponse login(string username, string password)
@@ -119,6 +122,30 @@ namespace Client
 		public GetRoomsResponse getRooms()
 		{
 			return Deserializer.deserializeResponse<GetRoomsResponse>(sendMsg((int)MSG_CODES.GET_ROOMS, new byte[] { }));
+		}
+		public LeaveRoomResponse leaveRoom()
+		{
+			return Deserializer.deserializeResponse<LeaveRoomResponse>(sendMsg((int)MSG_CODES.LEAVE_ROOM, new byte[] { }));
+		}
+		public StartGameResponse startGame()
+		{
+			return Deserializer.deserializeResponse<StartGameResponse>(sendMsg((int)MSG_CODES.START_GAME, new byte[] { }));
+		}
+		public object getRoomState()
+		{
+			byte[] response = sendMsg((int)MSG_CODES.GET_ROOM_STATE, new byte[] { });
+			switch(response[0])
+			{ 	
+			case (byte)MSG_CODES.LEAVE_ROOM:
+				return Deserializer.deserializeResponse<LeaveRoomResponse>(response);
+			case (byte)MSG_CODES.START_GAME:
+				return Deserializer.deserializeResponse<StartGameResponse>(response);
+			case (byte)MSG_CODES.GET_ROOM_STATE:
+				return Deserializer.deserializeResponse<GetRoomStateResponse>(response);
+			default:
+				throw new Exception("invalid response from server!");
+
+			}
 		}
 	}
 }
