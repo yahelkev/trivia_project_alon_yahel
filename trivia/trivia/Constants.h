@@ -6,7 +6,6 @@
 #define CONTENT_LENGTH_BYTES 4
 #define BYTE_SIZE 8
 #define DB_PATH "../TriviaDatabase.sqlite"
-#define QUESTION_FILE_PATH "../questions.json"
 
 #define HIGHSCORES_USER_COUNT "5"
 #define HIGHSCORE_GAME_COUNT_EXPONENT 0.1

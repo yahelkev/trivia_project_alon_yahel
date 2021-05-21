@@ -39,8 +39,6 @@ private:
 	// callback creates one object. Object should have a constructor Object(int argc, char** argv, char** cols) and an assignment operator.
 	template <class Object>
 	static int createObjectCallback(void* data, int argc, char** argv, char** cols);
-	// function inserts questions to database from a json file specified in Constants.h
-	void insertQuestions();
 	// sqlite user defined function to compare high scores
 	static void scoreFunction(sqlite3_context*, int, sqlite3_value**);
 

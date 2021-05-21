@@ -35,8 +35,6 @@ SqliteDatabase::SqliteDatabase(std::string dbPath)
         );
         // enforce foreign key constraint
         this->executeQuery("PRAGMA foreign_keys = ON;");
-        // insert questions from file
-        this->insertQuestions();
     }
     if (!success)
         throw std::exception("Opening Database Failed...");
@@ -143,30 +141,6 @@ std::list<UserStatistics> SqliteDatabase::getHighScores()
         "LIMIT " HIGHSCORES_USER_COUNT ";",
         this->pushCallback<UserStatistics>, &statisticsList);
     return statisticsList;
-}
-
-void SqliteDatabase::insertQuestions()
-{
-    // open file
-    std::ifstream questionFile(QUESTION_FILE_PATH);
-    if (!questionFile.is_open())
-        return;
-    // read json
-    json questionJson;
-    questionFile >> questionJson;
-    questionFile.close();
-    // insert questions into database
-    std::string sql = "INSERT INTO Questions (question, answer0, answer1, answer2, answer3, correct_answer) VALUES ";
-    for (const json& question : questionJson)
-    {
-        sql += '(' + question["question"].dump() + ',';
-        // add answers
-        for (const json& answer : question["answers"])
-            sql += answer.dump() + ',';
-        sql += question["correctAnswer"].dump() + "),";
-    }
-    sql.pop_back();
-    this->executeQuery(sql + ';');
 }
 
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
