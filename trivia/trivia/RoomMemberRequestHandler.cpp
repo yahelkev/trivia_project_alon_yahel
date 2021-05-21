@@ -50,6 +50,9 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 	if (this->m_roomManager.getRoomState(this->m_roomID) == 1)
 	{	// game started
 		Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(StartGameResponse{ 1 });
+		m_roomManager.getRoom(this->m_roomID).removeUser(this->m_user);
+		if (m_roomManager.getRoom(this->m_roomID).getAllUsers().size() == 0)
+			m_roomManager.deleteRoom(this->m_roomID);
 		return RequestResult{ responseBuffer, this->copyHandler() };	// will be game handler in the next version
 	}
 	// return room data and player list
