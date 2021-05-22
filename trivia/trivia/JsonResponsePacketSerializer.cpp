@@ -92,6 +92,56 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatsResponse 
 	return createResponseBuffer(USER_STATISTICS, content);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(GetGameResultsResponse response)
+{
+	//gets the relevant info in a way that will fit json
+	json players_results = json::object();
+	for (auto player : response.results)
+	{
+		players_results.push_back({ player.username,
+			player.correctAnswerCount, player.wrongAnswerCount,
+			player.averageAnswerTime});
+	}
+	json content = {
+		{"status", response.status},
+		{"results", players_results}
+	};
+	return createResponseBuffer(GAME_RESULTS, content);
+
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse response)
+{
+	json content = {
+		{"status", response.status},
+		{"correctAnswerId", response.correctAnswerId}
+	};
+	return createResponseBuffer(SUBMIT_ANSWER, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetQuestionResponse response)
+{
+	//turns the answers map to dict with string type key so it will fit json
+	json answers;
+	for (const auto& answer : response.answers) {
+		answers[std::to_string(answer.first)] = answer.second;
+	}
+	json content = {
+		{"status", response.status},
+		{"question", response.question},
+		{"answers", answers}
+	};
+	return createResponseBuffer(GET_QUESTION, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(LEAVE_GAME, content);
+}
+
 
 Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
 {
