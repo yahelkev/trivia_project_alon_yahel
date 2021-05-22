@@ -4,7 +4,6 @@ void Server::run()
 {
 	// start communication
 	std::thread(&Communicator::startHandleRequests, &this->m_communicator).detach();
-	StatisticsManager sm(this->m_database);
 	// run until "exit" input
 	std::string input = "";
 	while(input != "exit")

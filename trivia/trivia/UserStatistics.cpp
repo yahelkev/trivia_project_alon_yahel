@@ -60,5 +60,6 @@ UserStatistics& UserStatistics::operator=(const UserStatistics& other)
 	this->_correctAnswers = other._correctAnswers;
 	this->_gameCount = other._gameCount;
 	this->_totalAnswers = other._totalAnswers;
+	this->_username = other._username;
 	return *this;
 }
