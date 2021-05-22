@@ -16,7 +16,6 @@
 			<Button Margin="5" Width="80" Name="LeaveButton" Click="Leave_Click">Leave Room</Button>
 			<Button Margin="5" Width="80" Name="CloseButton" Click="Leave_Click">Close Room</Button>
 			<Button Margin="5" Width="80" Name="StartButton" Click="Start_Click">Start Game</Button>
-			<Button Margin="5" Width="80" Name="RefreshButton" Click="Refresh_Click">Refresh</Button>
 		</StackPanel>
 	</DockPanel>
 </Window>

@@ -68,11 +68,11 @@ namespace Client
 	}
 	public struct GetRoomStateResponse
 	{
-		uint status;
-		bool hasGameBegun;
-		string[] players;
-		uint questionCount;
-		uint answerTimeout;
+		public uint status;
+		public bool hasGameBegun;
+		public string[] players;
+		public uint questionCount;
+		public uint answerTimeout;
 	}
 // data public structs
 public struct RoomData
