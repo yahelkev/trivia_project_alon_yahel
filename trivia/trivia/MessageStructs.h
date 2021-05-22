@@ -60,6 +60,13 @@ typedef struct
 	unsigned int answerTimeout;
 } CreateRoomRequest;
 
+//--Game
+typedef struct
+{
+	unsigned int answerId;
+} SubmitAnswerRequest;
+
+
 // responses
 //--Loggin Manager
 typedef struct
