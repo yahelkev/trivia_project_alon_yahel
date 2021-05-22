@@ -18,6 +18,14 @@ typedef struct
 	unsigned int isActive;
 } RoomData;
 
+typedef struct
+{
+	std::vector<Question>::iterator currentQuestion;
+	unsigned int correctAnswerCount;
+	unsigned int wrongAnswerCount;
+	unsigned int averageAnswerTime;
+} GameData;
+
 class IRequestHandler;
 // requests
 //--Loggin manager
