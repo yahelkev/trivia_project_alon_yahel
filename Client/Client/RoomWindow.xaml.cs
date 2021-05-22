@@ -57,7 +57,7 @@ namespace Client
 		}
 		private void LeaveWork(object sender, DoWorkEventArgs e)
 		{
-			// not implemented yet...
+			LeaveRoomResponse response = _communicator.leaveRoom();
 		}
 		private void LeaveComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
@@ -69,11 +69,11 @@ namespace Client
 
 		private void Start_Click(object sender, RoutedEventArgs e)
 		{
-			// not implemented...
+			_worker.Run(StartWork, StartComplete);
 		}
 		private void StartWork(object sender, DoWorkEventArgs e)
 		{
-			// start request not implemented...
+			StartGameResponse response = _communicator.startGame();
 		}
 		private void StartComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
