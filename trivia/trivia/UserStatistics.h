@@ -15,8 +15,6 @@ public:
 	int getTotalAnswers() const;
 	int getGameCount() const;
 	std::string getUsername() const;
-
-	UserStatistics& operator=(const UserStatistics& other);
 private:
 	std::string _username;
 	float _averageAnswerTime;

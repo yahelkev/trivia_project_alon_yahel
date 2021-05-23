@@ -53,13 +53,3 @@ std::string UserStatistics::getUsername() const
 {
 	return this->_username;
 }
-
-UserStatistics& UserStatistics::operator=(const UserStatistics& other)
-{
-	this->_averageAnswerTime = other._averageAnswerTime;
-	this->_correctAnswers = other._correctAnswers;
-	this->_gameCount = other._gameCount;
-	this->_totalAnswers = other._totalAnswers;
-	this->_username = other._username;
-	return *this;
-}
