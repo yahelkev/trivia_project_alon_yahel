@@ -8,9 +8,11 @@
 class GameManager
 {
 public:
-	void createGame(const Room&);
+	GameManager(IDatabase*);
+
+	void createGame(Room&);
 	void deleteGame(const roomID);
-	void getGame(const roomID);
+	Game& getGame(const roomID);
 	void removePlayer(const roomID, const LoggedUser);
 private:
 	IDatabase* m_database;

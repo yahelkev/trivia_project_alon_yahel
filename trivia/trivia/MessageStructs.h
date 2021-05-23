@@ -1,7 +1,9 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <list>
 #include <iostream>
+#include "Question.h"
 
 typedef unsigned int roomID;
 typedef unsigned char Byte;
@@ -20,10 +22,10 @@ typedef struct
 
 typedef struct
 {
-	std::vector<Question>::iterator currentQuestion;
+	std::list<Question>::iterator currentQuestion;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerTime;
+	float averageAnswerTime;
 } GameData;
 
 class IRequestHandler;
