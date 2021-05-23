@@ -133,8 +133,7 @@ namespace Client
 		{
 			MessageBox.Show(((uint)e.Argument).ToString());
 			// get rooms request
-			JoinRoomResponse response;// = _communicator.joinRoom((uint)e.Argument);
-			response.status = 0;
+			JoinRoomResponse response = _communicator.joinRoom((uint)e.Argument);
 			e.Result = response.status;
 		}
 		private void JoinComplete(object sender, RunWorkerCompletedEventArgs e)
