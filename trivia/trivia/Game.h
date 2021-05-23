@@ -8,6 +8,7 @@
 class Game
 {
 public:
+	Game() = default;
 	Game(Room&, std::list<Question>);
 
 	Question getQuestionForUser(LoggedUser);
