@@ -20,6 +20,8 @@ private:
 	std::list<Question> m_questions;
 	std::map<LoggedUser, GameData> m_players;
 
+	unsigned int _timePerQuestion;
+
 	unsigned int _playersPlaying;
 	unsigned int _playersConnected;
 };

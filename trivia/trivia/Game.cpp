@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game(Room& room, std::list<Question> questions): m_questions(questions)
+Game::Game(Room& room, std::list<Question> questions): m_questions(questions), _timePerQuestion(room.getMetaData().timePerQuestion)
 {
 	// set players map
 	for (const LoggedUser& user : room.getAllUsers())
@@ -16,16 +16,18 @@ Question Game::getQuestionForUser(LoggedUser user)
 
 int Game::submitAnswer(LoggedUser user, int answer)
 {
+	time_t currentTime = time(nullptr);
 	GameData& userData = this->m_players[user];
 	int correctAnswer = userData.currentQuestion->getCorrectAnswer();
-	bool isCorrect = correctAnswer == answer;
+	bool isCorrect = correctAnswer == answer && difftime(currentTime, userData.lastQuestionTime) < this->_timePerQuestion;
 	// increment question and check if player finished all questions
 	if (++userData.currentQuestion == this->m_questions.end())
 	{
 		this->_playersPlaying--;	// finished playing
 		// calculate average time
-		userData.averageAnswerTime = difftime(time(nullptr), userData.startTime) / (userData.correctAnswerCount + userData.wrongAnswerCount);
+		userData.averageAnswerTime = difftime(currentTime, userData.startTime) / (userData.correctAnswerCount + userData.wrongAnswerCount);
 	}
+	userData.lastQuestionTime = currentTime;
 	
 	(isCorrect ? userData.correctAnswerCount : userData.wrongAnswerCount)++;	// increment correct/wrong answer count
 	return correctAnswer;
