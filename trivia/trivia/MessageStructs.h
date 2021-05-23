@@ -26,6 +26,7 @@ typedef struct
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
 	float averageAnswerTime;
+	time_t startTime;
 } GameData;
 
 class IRequestHandler;

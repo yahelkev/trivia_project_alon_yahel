@@ -11,8 +11,8 @@ public:
 	Game(Room&, std::list<Question>);
 
 	Question getQuestionForUser(LoggedUser);
-	// submits answer and returns whether it was correct or not
-	bool submitAnswer(LoggedUser, int answer);
+	// submits answer and returns the correct answer
+	int submitAnswer(LoggedUser, int answer);
 	void removePlayer(LoggedUser);
 	bool gameFinished();
 	bool playersLeft();
