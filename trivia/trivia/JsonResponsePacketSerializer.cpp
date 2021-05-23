@@ -98,9 +98,11 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetGameResultsResponse re
 	json players_results = json::object();
 	for (auto player : response.results)
 	{
-		players_results.push_back({ player.username,
-			player.correctAnswerCount, player.wrongAnswerCount,
-			player.averageAnswerTime});
+		players_results.push_back({ player.username, {
+			{ "correctAnswerCount" , player.correctAnswerCount },
+			{ "wrongAnswerCount", player.wrongAnswerCount },
+			{ "averageAnswerTime", player.averageAnswerTime }}
+			});
 	}
 	json content = {
 		{"status", response.status},

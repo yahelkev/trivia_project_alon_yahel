@@ -30,18 +30,7 @@ int checkLeak()
 int main()
 {
 	srand(time(NULL));
-	std::map<unsigned int, std::string> answers;
-	answers[2] = "lol";
-	answers[4] = "1232lol";
-	json dict;
-	for (const auto& answer : answers) {
-		dict[std::to_string(answer.first)] = answer.second;
-	}
-	json content = {
-	{"answers", dict}
-	};
-	std::cout << content;
-	//checkLeak();
+	checkLeak();
 	if (_CrtDumpMemoryLeaks())
 	{
 		std::cout << "Memory leaks!\n";
