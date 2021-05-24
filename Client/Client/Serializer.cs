@@ -40,4 +40,8 @@ namespace Client
 		public uint questionCount;
 		public uint questionTimeout;
 	}
+	public struct SubmitAnswerRequest
+	{
+		public uint answer;
+	}
 }
