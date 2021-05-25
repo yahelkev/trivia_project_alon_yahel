@@ -15,10 +15,10 @@ public:
     //incase he disconnected in a game
     virtual void abortSignout();
 private:
-    RequestResult getQuestion(RequestInfo);
+    RequestResult getQuestion();
     RequestResult submitAnswer(RequestInfo);
-    RequestResult getGameResults(RequestInfo);
-    RequestResult leaveGame(RequestInfo);
+    RequestResult getGameResults();
+    RequestResult leaveGame();
 
     roomID m_game;
     LoggedUser m_user;
