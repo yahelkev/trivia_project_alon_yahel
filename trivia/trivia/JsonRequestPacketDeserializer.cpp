@@ -57,3 +57,11 @@ CreateRoomRequest JsonRequestPacketDeserializer::deserializeCreateRoomRequest(Bu
 	result.roomName = jsonData["roomName"];
 	return result;
 }
+
+SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerRequest(Buffer msg)
+{
+	json jsonData = json::parse(msg);
+	SubmitAnswerRequest result;
+	result.answerId = jsonData["answerId"];
+	return result;
+}
