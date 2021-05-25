@@ -99,6 +99,9 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GameRequestHandler.cpp">
+      <Filter>Source Files\RequestHandlers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Objects</Filter>
+    </ClInclude>
+    <ClInclude Include="GameRequestHandler.h">
+      <Filter>Header Files\RequestHandlers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
