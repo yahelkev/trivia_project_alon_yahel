@@ -12,7 +12,8 @@ public:
 
     bool isRequestRelevant(RequestInfo);
     RequestResult handleRequest(RequestInfo);
-
+    //incase he disconnected in a game
+    virtual void abortSignout();
 private:
     RequestResult getQuestion(RequestInfo);
     RequestResult submitAnswer(RequestInfo);
