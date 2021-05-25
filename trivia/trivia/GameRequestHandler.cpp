@@ -10,23 +10,23 @@ bool GameRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 	return GAME_RESULTS <= requestInfo.id && requestInfo.id <= LEAVE_GAME;
 }
 
-RequestResult GameRequestHandler::handleRequest(RequestInfo)
+RequestResult GameRequestHandler::handleRequest(RequestInfo requestInfo)
 {
 
 	switch (requestInfo.id)
 	{
 	case GAME_RESULTS:
-		return this.();
+		return getGameResults(requestInfo);
 	case SUBMIT_ANSWER:
-		return getRooms();
+		return submitAnswer(requestInfo);
 	case GET_QUESTION:
-		return getPlayersInRoom(requestInfo);
+		return getQuestion(requestInfo);
 	case LEAVE_GAME:
-		return joinRoom(requestInfo);
+		return leaveGame(requestInfo);
 	default:
 	{
 		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });
-		return RequestResult{ buffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
+		return RequestResult{ buffer, this->m_handlerFacroty.createMenuRequestHandler(this->m_user) };
 	}
 	}
 }
