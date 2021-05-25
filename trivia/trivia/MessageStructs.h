@@ -72,6 +72,13 @@ typedef struct
 	unsigned int answerTimeout;
 } CreateRoomRequest;
 
+//--Game
+typedef struct
+{
+	unsigned int answerId;
+} SubmitAnswerRequest;
+
+
 // responses
 //--Loggin Manager
 typedef struct
@@ -133,3 +140,36 @@ typedef struct
 {
 	unsigned int status;
 } CreateRoomResponse;
+
+//--Game
+typedef struct
+{
+	unsigned int status;
+} LeaveGameResponse;
+
+typedef struct
+{
+	unsigned int status;
+	std::string question;
+	std::map<unsigned int, std::string> answers;
+} GetQuestionResponse;
+
+typedef struct
+{
+	unsigned int status;
+	unsigned int correctAnswerId;
+} SubmitAnswerResponse;
+
+typedef struct
+{
+	std::string username;
+	unsigned int correctAnswerCount;
+	unsigned int wrongAnswerCount;
+	unsigned int averageAnswerTime;
+} PlayerResults;
+
+typedef struct
+{
+	unsigned int status;
+	std::vector<PlayerResults> results;
+} GetGameResultsResponse;
