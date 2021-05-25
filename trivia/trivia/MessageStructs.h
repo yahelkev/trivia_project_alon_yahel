@@ -3,6 +3,7 @@
 #include <vector>
 #include <list>
 #include <iostream>
+#include <map>
 #include "Question.h"
 
 typedef unsigned int roomID;
