@@ -55,3 +55,16 @@ bool Game::playersLeft()
 {
 	return this->_playersConnected != 0;
 }
+
+std::vector<GameResults> Game::getResults()
+{
+	std::vector<GameResults> results;
+	if(!this->gameFinished())	// results available only after game is finished
+		return results;
+	// add results from player map
+	for (auto const& pair : this->m_players)
+		results.push_back(GameResults(pair.first.getUsername(), pair.second.correctAnswerCount, pair.second.wrongAnswerCount, pair.second.averageAnswerTime));
+	std::sort(results.begin(), results.end());
+
+	return results;
+}

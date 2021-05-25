@@ -1,7 +1,7 @@
 #include "LoggedUser.h"
 
 
-const std::string& LoggedUser::getUsername()
+const std::string& LoggedUser::getUsername() const
 {
 	return this->m_username;
 }

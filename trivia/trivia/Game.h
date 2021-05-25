@@ -1,8 +1,10 @@
 #pragma once
+#include <algorithm>
 #include <vector>
 #include <map>
 #include "Room.h"
 #include "Question.h"
+#include "GameResults.h"
 #include "MessageStructs.h"
 
 class Game
@@ -17,6 +19,7 @@ public:
 	void removePlayer(LoggedUser);
 	bool gameFinished();
 	bool playersLeft();
+	std::vector<GameResults> getResults();
 private:
 	std::list<Question> m_questions;
 	std::map<LoggedUser, GameData> m_players;
