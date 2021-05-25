@@ -95,13 +95,14 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatsResponse 
 Buffer JsonResponsePacketSerializer::serializeResponse(GetGameResultsResponse response)
 {
 	//gets the relevant info in a way that will fit json
-	json players_results = json::object();
+	json players_results = json::array();
 	for (auto player : response.results)
 	{
-		players_results.push_back({ player.username, {
+		players_results.push_back({
+			{ "username", player.username},
 			{ "correctAnswerCount" , player.correctAnswerCount },
 			{ "wrongAnswerCount", player.wrongAnswerCount },
-			{ "averageAnswerTime", player.averageAnswerTime }}
+			{ "averageAnswerTime", player.averageAnswerTime }
 			});
 	}
 	json content = {
@@ -123,10 +124,10 @@ Buffer JsonResponsePacketSerializer::serializeResponse(SubmitAnswerResponse resp
 
 Buffer JsonResponsePacketSerializer::serializeResponse(GetQuestionResponse response)
 {
-	//turns the answers map to dict with string type key so it will fit json
-	json answers;
+	//turns the answers map to array
+	json answers = json::array();
 	for (const auto& answer : response.answers) {
-		answers[std::to_string(answer.first)] = answer.second;
+		answers.push_back(answer.second);
 	}
 	json content = {
 		{"status", response.status},
