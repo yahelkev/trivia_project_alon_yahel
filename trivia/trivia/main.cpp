@@ -26,6 +26,7 @@ int checkLeak()
 }
 int main()
 {
+	srand(time(NULL));
 	checkLeak();
 	if (_CrtDumpMemoryLeaks())
 	{

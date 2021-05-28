@@ -92,6 +92,42 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatsResponse 
 	return createResponseBuffer(USER_STATISTICS, content);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(CloseRoomResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(LEAVE_ROOM, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(StartGameResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(START_GAME, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomStateResponse response)
+{
+	json content = {
+		{"status", response.status},
+		{"hasGameBegun", response.hasGameBegun},
+		{"questionCount", response.questionCount},
+		{"answerTimeout", response.answerTimeout},
+		{"players", response.players}
+	};
+	return createResponseBuffer(GET_ROOM_STATE, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(LEAVE_ROOM, content);
+}
+
 
 Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
 {
