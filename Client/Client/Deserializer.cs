@@ -67,6 +67,5 @@ namespace Client
 		public uint maxPlayers;
 		public uint numOfQuestions;
 		public uint timePerQuestion;
-		public uint isActive;
 	}
 }

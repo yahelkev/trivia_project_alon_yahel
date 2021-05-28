@@ -34,13 +34,19 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse response)
 
 Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse response)
 {
-	json rooms_data = json::object();
+	json rooms_data = json::array();
 	for (auto room : response.rooms)
 	{
-		rooms_data.push_back({ room.name , room.id });
+		rooms_data.push_back({{ "name", room.name },
+			{"id", room.id},
+			{"maxPlayers", room.maxPlayers},
+			{"numOfQuestions", room.numOfQuestionsInGame},
+			{"timePerQuestion", room.timePerQuestion},
+			});
 	}
 
 	json content = {
+		{"status", response.status},
 		{ "Rooms", rooms_data }
 	};
 	return createResponseBuffer(GET_ROOMS, content);
