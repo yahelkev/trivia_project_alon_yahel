@@ -19,7 +19,7 @@
 				<Bold>Main Menu</Bold>
 			</TextBlock>
 			<Button Click="JoinRoom_Click">Join Room</Button>
-			<Button Name="CreateRoom">Create Room</Button>
+			<Button Click="CreateRoom_Click">Create Room</Button>
 			<Button Click="UserStats_Click">My Stats</Button>
 			<Button Click="HighScores_Click">High Scores</Button>
 			<Button Margin="5,5,5,15" Click="Logout_Click">Logout</Button>

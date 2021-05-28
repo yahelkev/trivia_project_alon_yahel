@@ -104,7 +104,7 @@ namespace Client
 			msgData.roomName = name;
 			msgData.maxUsers = maxUsers;
 			msgData.questionCount = questionCount;
-			msgData.questionTimeout = answerTimeout;
+			msgData.answerTimeout = answerTimeout;
 			byte[] json = Serializer.serializeRequest<CreateRoomRequest>(msgData);
 			return Deserializer.deserializeResponse<CreateRoomResponse>(sendMsg((int)MSG_CODES.CREATE_ROOM, json));
 		}

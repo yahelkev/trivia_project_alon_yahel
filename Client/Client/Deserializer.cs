@@ -47,12 +47,12 @@ namespace Client
 	public struct GetHighScoresResponse
 	{
 		public uint status;
-		public string[] statistics;
+		public string[] HighScores;
 	}
 	public struct GetPersonalStatisticsResponse
 	{
 		public uint status;
-		public string[] statistics;
+		public string[] UserStatistics;
 	}
 	public struct ErrorResponse
 	{
