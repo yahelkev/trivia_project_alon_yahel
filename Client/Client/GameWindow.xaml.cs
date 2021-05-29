@@ -1,16 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 using System.ComponentModel;
 using System.Threading;
@@ -60,7 +51,7 @@ namespace Client
 		private void SubmitAnswerWork(object sender, DoWorkEventArgs e)
 		{
 			uint answer = (uint)e.Argument;
-			SubmitAnswerResponse response = new SubmitAnswerResponse { status = 1, correctAnswer = 1 };// = _communicator.submitAnswer((uint)e.Argument);
+			SubmitAnswerResponse response = _communicator.submitAnswer((uint)e.Argument);
 			// show result
 			_worker.ReportProgress(new uint[] { answer, response.correctAnswer });
 			// next question
@@ -127,9 +118,7 @@ namespace Client
 		private void NextQuestionWork(object sender, DoWorkEventArgs e)
 		{
 			// get question from server
-			GetQuestionResponse response = new GetQuestionResponse();// = _communicator.getQuestion();
-			response.question = "question?";
-			response.answers = new string[] { "answer1", "answer2", "answer3", "answer4" };
+			GetQuestionResponse response = _communicator.getQuestion();
 			e.Result = response;
 		}
 		private void NextQuestionComplete(object sender, RunWorkerCompletedEventArgs e)
@@ -143,6 +132,13 @@ namespace Client
 			}
 			// question counter
 			_currentQuestion++;
+			if(_currentQuestion > _questionCount)
+			{   // finished game, move to game results window
+				Window window = new GameResultsWindow(_communicator);
+				Close();
+				window.ShowDialog();
+				return;
+			}
 			QuestionCount.Text = _currentQuestion + " / " + _questionCount;
 			// set timer's fields and UI
 			_timeLeft = _timePerQuestion;
