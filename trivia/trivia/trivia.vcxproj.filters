@@ -98,6 +98,8 @@
     </ClCompile>
     <ClCompile Include="RoomMemberRequestHandler.cpp">
       <Filter>Source Files\RequestHandlers</Filter>
+    <ClCompile Include="UserStatistics.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -169,6 +171,8 @@
     </ClInclude>
     <ClInclude Include="RoomMemberRequestHandler.h">
       <Filter>Header Files\RequestHandlers</Filter>
+    <ClInclude Include="UserStatistics.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
