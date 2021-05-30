@@ -1,0 +1,24 @@
+﻿<Window x:Class="Client.JoinRoomWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        mc:Ignorable="d"
+        Title="JoinRoomWindow" Height="400" Width="300">
+	<DockPanel LastChildFill="False">
+		<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,0" DockPanel.Dock="Top">Room List:</TextBlock>
+		<TextBlock HorizontalAlignment="Center" Visibility="Collapsed" Name="NoRoomText" DockPanel.Dock="Top">No room found...</TextBlock>
+		<ListBox Margin="10" FontSize="14" Name="RoomList" DockPanel.Dock="Top" Height="Auto" SelectionChanged="RoomList_SelectionChanged"/>
+		<TextBlock DockPanel.Dock="Top" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Center" Name="PlayersTitle" Visibility="Collapsed">PLayers:</TextBlock>
+		<Border Margin="10,5,10,10" DockPanel.Dock="Top" Background="GhostWhite" BorderBrush="#bbb" BorderThickness="1" Name="PlayerBorder" Visibility="Collapsed">
+			<StackPanel Margin="5,2,0,2" Name="PlayerList" DockPanel.Dock="Top" Height="Auto">
+			</StackPanel>
+		</Border>
+		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+			<Button Margin="5" Width="80" FontSize="14" Click="Return_Click">Return</Button>
+			<Button Margin="5" Width="80" FontSize="14" Click="Refresh_Click">Refresh</Button>
+			<Button Margin="5" Width="80" FontSize="14" Name="JoinButton" Click="Join_Click" Visibility="Hidden">Join</Button>
+		</StackPanel>
+	</DockPanel>
+</Window>

@@ -34,13 +34,19 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LogoutResponse response)
 
 Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse response)
 {
-	json rooms_data = json::object();
+	json rooms_data = json::array();
 	for (auto room : response.rooms)
 	{
-		rooms_data.push_back({ room.name , room.id });
+		rooms_data.push_back({{ "name", room.name },
+			{"id", room.id},
+			{"maxPlayers", room.maxPlayers},
+			{"numOfQuestions", room.numOfQuestionsInGame},
+			{"timePerQuestion", room.timePerQuestion},
+			});
 	}
 
 	json content = {
+		{"status", response.status},
 		{ "Rooms", rooms_data }
 	};
 	return createResponseBuffer(GET_ROOMS, content);
@@ -55,7 +61,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse 
 	}
 
 	json content = {
-		{ "PlayersInRoom", players_names }
+		{ "players", players_names }
 	};
 	return createResponseBuffer(GET_PLAYERS_IN_ROOM, content);
 }
@@ -79,6 +85,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse respon
 Buffer JsonResponsePacketSerializer::serializeResponse(GetHighScoreResponse response)
 {
 	json content = {
+		{"status", response.status},
 		{"HighScores", response.statistics}
 	};
 	return createResponseBuffer(HIGH_SCORE, content);
@@ -87,6 +94,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetHighScoreResponse resp
 Buffer JsonResponsePacketSerializer::serializeResponse(GetPersonalStatsResponse response)
 {
 	json content = {
+		{"status", response.status},
 		{"UserStatistics", response.statistics}
 	};
 	return createResponseBuffer(USER_STATISTICS, content);
