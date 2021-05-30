@@ -58,7 +58,6 @@ namespace Client
 			//if somthing whent wrong
 			if(msgCode[0] == (int)MSG_CODES.ERROR_CODE)
             {
-				
 				throw new Exception(Deserializer.deserializeResponse<ErrorResponse>(buffer).message);
             }
 			return buffer;

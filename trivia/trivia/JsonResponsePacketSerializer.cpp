@@ -61,7 +61,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetPlayersInRoomResponse 
 	}
 
 	json content = {
-		{ "PlayersInRoom", players_names }
+		{ "players", players_names }
 	};
 	return createResponseBuffer(GET_PLAYERS_IN_ROOM, content);
 }

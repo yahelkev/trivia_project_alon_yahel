@@ -13,6 +13,7 @@ bool RoomManager::createRoom(LoggedUser user, RoomData data)
 		return false;
 	}
 	this->m_rooms[data.id] = Room(data);
+	this->m_rooms[data.id].addUser(user);
 	return true;
 }
 
