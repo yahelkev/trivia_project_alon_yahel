@@ -59,9 +59,8 @@ namespace Client
 			buffer = new byte[BitConverter.ToInt32(contentLength, 0)];
 			_clientStream.Read(buffer, 0, BitConverter.ToInt32(contentLength, 0));
 			//if somthing whent wrong
-			if (msgCode[0] == (int)MSG_CODES.ERROR_CODE)
-			{
-
+			if(msgCode[0] == (int)MSG_CODES.ERROR_CODE)
+            {
 				throw new Exception(Deserializer.deserializeResponse<ErrorResponse>(buffer).message);
 			}
 			return buffer;
@@ -107,7 +106,7 @@ namespace Client
 			msgData.roomName = name;
 			msgData.maxUsers = maxUsers;
 			msgData.questionCount = questionCount;
-			msgData.questionTimeout = answerTimeout;
+			msgData.answerTimeout = answerTimeout;
 			byte[] json = Serializer.serializeRequest<CreateRoomRequest>(msgData);
 			return Deserializer.deserializeResponse<CreateRoomResponse>(sendMsg((int)MSG_CODES.CREATE_ROOM, json));
 		}
