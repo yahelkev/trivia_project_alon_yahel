@@ -58,9 +58,24 @@ namespace Client
 	{
 		public string message;
 	}
-	
-	// data public structs
-	public struct RoomData
+	public struct LeaveRoomResponse
+	{
+		public uint status;
+	}
+	public struct StartGameResponse
+	{
+		public uint status;
+	}
+	public struct GetRoomStateResponse
+	{
+		public uint status;
+		public bool hasGameBegun;
+		public string[] players;
+		public uint questionCount;
+		public uint answerTimeout;
+	}
+// data public structs
+public struct RoomData
 	{
 		public string name;
 		public uint id;

@@ -1,17 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 using System.ComponentModel;
+using System.Threading;
 
 namespace Client
 {
@@ -19,14 +10,15 @@ namespace Client
 	{
 		private Communicator _communicator;
 		private RequestWorker _worker = new RequestWorker();
+		private BackgroundWorker _refreshWorker = new BackgroundWorker();
 		private uint _id;
+		private const int REFRESH_TIME = 3000;
 		public RoomWindow(Communicator communicator, uint roomId, string roomName, bool isAdmin)
 		{
 			InitializeComponent();
 			_communicator = communicator;
 			_id = roomId;
 			RoomName.Text = "Room: \"" + roomName + "\"";
-			Refresh();
 			// setup buttons
 			if (isAdmin)
 			{
@@ -37,6 +29,11 @@ namespace Client
 				CloseButton.Visibility = Visibility.Collapsed;
 				StartButton.Visibility = Visibility.Collapsed;
 			}
+			// setup refresh worker
+			_refreshWorker.WorkerReportsProgress = true;
+			_refreshWorker.DoWork += RefreshThread;
+			_refreshWorker.ProgressChanged += RefreshReport;
+			_refreshWorker.RunWorkerAsync();
 		}
 
 		private void updatePlayerList(string[] players)
@@ -57,7 +54,7 @@ namespace Client
 		}
 		private void LeaveWork(object sender, DoWorkEventArgs e)
 		{
-			// not implemented yet...
+			LeaveRoomResponse response = _communicator.leaveRoom();
 		}
 		private void LeaveComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
@@ -69,35 +66,49 @@ namespace Client
 
 		private void Start_Click(object sender, RoutedEventArgs e)
 		{
-			// not implemented...
+			_worker.Run(StartWork, StartComplete);
 		}
 		private void StartWork(object sender, DoWorkEventArgs e)
 		{
-			// start request not implemented...
+			StartGameResponse response = _communicator.startGame();
 		}
 		private void StartComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
 			// game window not implemented...
 		}
 
-		private void Refresh_Click(object sender, RoutedEventArgs e)
+		private void RefreshThread(object sender, DoWorkEventArgs e)
 		{
-			Refresh();
+			while (true)
+			{
+				Thread.Sleep(REFRESH_TIME);
+				// get updated room state
+				object response = _communicator.getRoomState();
+				_refreshWorker.ReportProgress(0, response);
+			}
 		}
-		private void Refresh()
+		private void RefreshReport(object sender, ProgressChangedEventArgs e)
 		{
-			_worker.Run(RefreshWork, RefreshComplete);
-		}
-		private void RefreshWork(object sender, DoWorkEventArgs e)
-		{
-			// get players list
-			GetPlayersInRoomResponse response = _communicator.getPlayersInRoom(_id);
-			e.Result = response;
-		}
-		private void RefreshComplete(object sender, RunWorkerCompletedEventArgs e)
-		{
-			GetPlayersInRoomResponse response = (GetPlayersInRoomResponse)e.Result;
-			updatePlayerList(response.players);
+			object response = e.UserState;
+			Type responseType = response.GetType();
+			// check possible responses
+			if(responseType == typeof(GetRoomStateResponse))
+			{
+				// update player list
+				updatePlayerList(((GetRoomStateResponse)response).players);
+			}
+			else if(responseType == typeof(LeaveRoomResponse))
+			{
+				MessageBox.Show("Room Closed...");
+				// go to menu
+				Window window = new MenuWindow(_communicator);
+				Close();
+				window.ShowDialog();
+			}
+			else if(responseType == typeof(StartGameResponse))
+			{
+				// game window not implemented...
+			}
 		}
 	}
 }
