@@ -99,10 +99,10 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetGameResultsResponse re
 	for (auto player : response.results)
 	{
 		players_results.push_back({
-			{ "username", player.username},
-			{ "correctAnswerCount" , player.correctAnswerCount },
-			{ "wrongAnswerCount", player.wrongAnswerCount },
-			{ "averageAnswerTime", player.averageAnswerTime }
+			{ "username", player.getUsername()},
+			{ "correctAnswerCount" , player.getCorrectAnswerCount() },
+			{ "wrongAnswerCount", player.getWrongAnswerCount() },
+			{ "averageAnswerTime", player.getAverageAnswerTime() }
 			});
 	}
 	json content = {

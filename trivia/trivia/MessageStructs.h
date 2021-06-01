@@ -5,6 +5,9 @@
 #include <map>
 #include <iostream>
 #include "Question.h"
+#include "GameResults.h"
+
+class GameResults;
 
 typedef unsigned int roomID;
 typedef unsigned char Byte;
@@ -172,5 +175,5 @@ typedef struct
 typedef struct
 {
 	unsigned int status;
-	std::vector<PlayerResults> results;
+	std::vector<GameResults> results;
 } GetGameResultsResponse;

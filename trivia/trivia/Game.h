@@ -17,7 +17,7 @@ public:
 	void removePlayer(LoggedUser);
 	bool gameFinished();
 	bool playersLeft();
-	std::vector<PlayerResults> getResults();
+	std::vector<GameResults> getResults();
 private:
 	std::list<Question> m_questions;
 	std::map<LoggedUser, GameData> m_players;
