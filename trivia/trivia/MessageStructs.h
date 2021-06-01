@@ -121,3 +121,28 @@ typedef struct
 {
 	unsigned int status;
 } CreateRoomResponse;
+
+// waiting room
+typedef struct
+{
+	unsigned int status;
+} CloseRoomResponse;
+
+typedef struct
+{
+	unsigned int status;
+} LeaveRoomResponse;
+
+typedef struct
+{
+	unsigned int status;
+} StartGameResponse;
+
+typedef struct
+{
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<std::string> players;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+} GetRoomStateResponse;

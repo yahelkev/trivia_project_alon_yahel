@@ -47,12 +47,12 @@ namespace Client
 	public struct GetHighScoresResponse
 	{
 		public uint status;
-		public string[] statistics;
+		public string[] HighScores;
 	}
 	public struct GetPersonalStatisticsResponse
 	{
 		public uint status;
-		public string[] statistics;
+		public string[] UserStatistics;
 	}
 	public struct ErrorResponse
 	{
@@ -82,6 +82,5 @@ public struct RoomData
 		public uint maxPlayers;
 		public uint numOfQuestions;
 		public uint timePerQuestion;
-		public uint isActive;
 	}
 }

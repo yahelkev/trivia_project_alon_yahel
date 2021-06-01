@@ -38,6 +38,6 @@ namespace Client
 		public string roomName;
 		public uint maxUsers;
 		public uint questionCount;
-		public uint questionTimeout;
+		public uint answerTimeout;
 	}
 }

@@ -1,14 +1,20 @@
 #include "RoomManager.h"
 
-bool RoomManager::creatRoom(LoggedUser user, RoomData data)
+RoomManager::RoomManager() : _freeID(1)
+{
+}
+
+roomID RoomManager::createRoom(LoggedUser user, RoomData data)
 {
 	std::lock_guard<std::mutex> usersLock(this->m_roomsMap_lock);
+	data.id = this->_freeID++;
 	if (this->m_rooms.find(data.id) != this->m_rooms.end())
 	{
-		return false;
+		return 0;
 	}
 	this->m_rooms[data.id] = Room(data);
-	return true;
+	this->m_rooms[data.id].addUser(user);
+	return data.id;
 }
 
 bool RoomManager::deleteRoom(int ID)
@@ -42,3 +48,14 @@ std::vector<RoomData> RoomManager::getRooms()
 	}
 	return result;
 }
+
+Room& RoomManager::getRoom(roomID id)
+{
+	return this->m_rooms[id];
+}
+
+bool RoomManager::doesRoomExist(roomID id)
+{
+	return this->m_rooms.find(id) != this->m_rooms.end();
+}
+
