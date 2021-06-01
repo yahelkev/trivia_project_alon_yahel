@@ -164,11 +164,17 @@
     <ClInclude Include="GameManager.h">
       <Filter>Header Files\Managers</Filter>
     </ClInclude>
+    <ClInclude Include="Question.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GameManager.h">
+      <Filter>Header Files\Managers</Filter>
+    </ClInclude>
     <ClInclude Include="Game.h">
       <Filter>Header Files\Objects</Filter>
     </ClInclude>
-    <ClInclude Include="GameResults.h">
-      <Filter>Header Files\Objects</Filter>
+    <ClInclude Include="GameRequestHandler.h">
+      <Filter>Header Files\RequestHandlers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
