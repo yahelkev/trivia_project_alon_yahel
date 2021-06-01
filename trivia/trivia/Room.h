@@ -19,6 +19,8 @@ public:
 	//gets all userss names in the room
 	std::vector<std::string> getAllUsers();
 
+	void setActive();
+
 	RoomData getMetaData();
 
 	//copies the m_metadata's fields

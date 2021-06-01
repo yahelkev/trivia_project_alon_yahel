@@ -4,17 +4,17 @@ RoomManager::RoomManager() : _freeID(1)
 {
 }
 
-bool RoomManager::createRoom(LoggedUser user, RoomData data)
+roomID RoomManager::createRoom(LoggedUser user, RoomData data)
 {
 	std::lock_guard<std::mutex> usersLock(this->m_roomsMap_lock);
 	data.id = this->_freeID++;
 	if (this->m_rooms.find(data.id) != this->m_rooms.end())
 	{
-		return false;
+		return 0;
 	}
 	this->m_rooms[data.id] = Room(data);
 	this->m_rooms[data.id].addUser(user);
-	return true;
+	return data.id;
 }
 
 bool RoomManager::deleteRoom(int ID)
