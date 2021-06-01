@@ -13,6 +13,7 @@ roomID RoomManager::createRoom(LoggedUser user, RoomData data)
 		return 0;
 	}
 	this->m_rooms[data.id] = Room(data);
+	this->m_rooms[data.id].addUser(user);
 	return data.id;
 }
 
