@@ -34,6 +34,7 @@ namespace Client
 	public struct CreateRoomResponse
 	{
 		public uint status;
+		public uint roomId;
 	}
 	public struct GetRoomsResponse
 	{

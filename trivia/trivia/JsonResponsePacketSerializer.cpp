@@ -77,7 +77,8 @@ Buffer JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse response
 Buffer JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse response)
 {
 	json content = {
-		{"status", response.status}
+		{"status", response.status},
+		{"roomId", response.roomId}
 	};
 	return createResponseBuffer(CREATE_ROOM, content);
 }

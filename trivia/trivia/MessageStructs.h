@@ -120,6 +120,7 @@ typedef struct
 typedef struct
 {
 	unsigned int status;
+	roomID roomId;
 } CreateRoomResponse;
 
 // waiting room

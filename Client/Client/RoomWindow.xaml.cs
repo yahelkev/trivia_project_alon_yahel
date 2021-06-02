@@ -81,10 +81,10 @@ namespace Client
 		{
 			while (true)
 			{
-				Thread.Sleep(REFRESH_TIME);
 				// get updated room state
 				object response = _communicator.getRoomState();
 				_refreshWorker.ReportProgress(0, response);
+				Thread.Sleep(REFRESH_TIME);
 			}
 		}
 		private void RefreshReport(object sender, ProgressChangedEventArgs e)

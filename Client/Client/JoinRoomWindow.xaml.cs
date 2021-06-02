@@ -131,7 +131,6 @@ namespace Client
 		}
 		private void JoinWork(object sender, DoWorkEventArgs e)
 		{
-			MessageBox.Show(((uint)e.Argument).ToString());
 			// get rooms request
 			JoinRoomResponse response = _communicator.joinRoom((uint)e.Argument);
 			e.Result = response.status;

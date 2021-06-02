@@ -41,7 +41,16 @@ namespace Client
 			START_GAME,
 			GET_ROOM_STATE
 		}
+		public struct ResponseStruct
+        {
+			public byte[] data;
+			public byte code;
+		}
 		private byte[] sendMsg(int code, byte[] msg)
+		{
+			return sendMsgGetCode(code, msg).data;
+		}
+		private ResponseStruct sendMsgGetCode(int code, byte[] msg)
 		{
 			//creates the msg
 			byte[] buffer = new byte[REQUEST_CODE_BYTES + CONTENT_LENGTH_BYTES + msg.Length];
@@ -63,7 +72,7 @@ namespace Client
 			{
 				throw new Exception(Deserializer.deserializeResponse<ErrorResponse>(buffer).message);
 			}
-			return buffer;
+			return new ResponseStruct{data = buffer, code = msgCode[0] };
 		}
 		public LoginResponse login(string username, string password)
 		{
@@ -132,15 +141,15 @@ namespace Client
 		}
 		public object getRoomState()
 		{
-			byte[] response = sendMsg((int)MSG_CODES.GET_ROOM_STATE, new byte[] { });
-			switch(response[0])
+			ResponseStruct response = sendMsgGetCode((int)MSG_CODES.GET_ROOM_STATE, new byte[] { });
+			switch(response.code)
 			{ 	
 			case (byte)MSG_CODES.LEAVE_ROOM:
-				return Deserializer.deserializeResponse<LeaveRoomResponse>(response);
+				return Deserializer.deserializeResponse<LeaveRoomResponse>(response.data);
 			case (byte)MSG_CODES.START_GAME:
-				return Deserializer.deserializeResponse<StartGameResponse>(response);
+				return Deserializer.deserializeResponse<StartGameResponse>(response.data);
 			case (byte)MSG_CODES.GET_ROOM_STATE:
-				return Deserializer.deserializeResponse<GetRoomStateResponse>(response);
+				return Deserializer.deserializeResponse<GetRoomStateResponse>(response.data);
 			default:
 				throw new Exception("invalid response from server!");
 
