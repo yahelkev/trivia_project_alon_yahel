@@ -50,10 +50,9 @@ namespace Client
 			CreateRoomResponse response = _communicator.createRoom(room.name, room.maxPlayers, room.numOfQuestions, room.timePerQuestion);
 			if (response.status == 0)   // not created
 				throw new Exception("Can't create room");
-			// get new room id
-			foreach (RoomData roomData in _communicator.getRooms().rooms)
-				if (roomData.name == room.name)
-					e.Result = roomData;
+
+			room.id = response.roomId;
+			e.Result = room;
 		}
 		private void CreateComplete(object sender, RunWorkerCompletedEventArgs e)
 		{

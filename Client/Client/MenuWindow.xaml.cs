@@ -58,7 +58,7 @@ namespace Client
 		{
 			GetHighScoresResponse response = (GetHighScoresResponse)e.Result;
 			if (response.status == 1)
-				OpenWindow(new StatisticsWindow("High Scores", response.statistics));
+				OpenWindow(new StatisticsWindow("High Scores", response.HighScores));
 			else
 				MessageBox.Show("Failed to get High Scores", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
@@ -77,7 +77,7 @@ namespace Client
 		{
 			GetPersonalStatisticsResponse response = (GetPersonalStatisticsResponse)e.Result;
 			if (response.status == 1)
-				OpenWindow(new StatisticsWindow("Your Statistics", response.statistics));
+				OpenWindow(new StatisticsWindow("Your Statistics", response.UserStatistics));
 			else
 				MessageBox.Show("Failed to get your statistics", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
@@ -90,10 +90,6 @@ namespace Client
 		private void JoinRoomWork(object sender, DoWorkEventArgs e)
 		{
 			GetRoomsResponse response = _communicator.getRooms();
-			response.status = 1;
-			response.rooms = new RoomData[2];
-			response.rooms[0] = new RoomData { id = 1, isActive = 0, maxPlayers = 5, numOfQuestions = 10, timePerQuestion = 3, name="room1" };
-			response.rooms[1] = new RoomData { id = 3, isActive = 0, maxPlayers = 7, numOfQuestions = 15, timePerQuestion = 6, name="room2" };
 			e.Result = response;
 		}
 		private void JoinRoomComplete(object sender, RunWorkerCompletedEventArgs e)
@@ -118,5 +114,9 @@ namespace Client
 			Close();
 			window.ShowDialog();
 		}
-	}
+        private void CreateRoom_Click(object sender, RoutedEventArgs e)
+        {
+			SwitchWindow(new CreateRoomWindow(_communicator));
+        }
+    }
 }

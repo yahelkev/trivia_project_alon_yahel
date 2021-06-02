@@ -106,19 +106,22 @@ RequestInfo Communicator::getRequest(SOCKET clientSocket)
 	{
 		throw std::exception();
 	}
-	// read content
-	char* content = new char[contentLength];
-	socketResult = recv(clientSocket, content, contentLength, 0);
-	if (socketResult == INVALID_SOCKET || !socketResult)
+	if (contentLength != 0)
 	{
-		delete [] content;
-		throw std::exception();
+		// read content (if there is)
+		char* content = new char[contentLength];
+		socketResult = recv(clientSocket, content, contentLength, 0);
+		if (socketResult == INVALID_SOCKET || !socketResult)
+		{
+			delete[] content;
+			throw std::exception();
+		}
+		// set content in buffer
+		requestInfo.jsonBuffer.insert(requestInfo.jsonBuffer.end(), content, content + contentLength);
+		// set time
+		delete[] content;
 	}
-	// set content in buffer
-	requestInfo.jsonBuffer.insert(requestInfo.jsonBuffer.end(), content, content + contentLength);
-	// set time
 	requestInfo.receivalTime = time(nullptr);
-	delete [] content;
 	return requestInfo;
 }
 

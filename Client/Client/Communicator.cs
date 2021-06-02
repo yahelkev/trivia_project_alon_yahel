@@ -40,9 +40,21 @@ namespace Client
 			GAME_RESULTS,
 			SUBMIT_ANSWER,
 			GET_QUESTION,
-			LEAVE_GAME
+			LEAVE_GAME,
+			LEAVE_ROOM,
+			START_GAME,
+			GET_ROOM_STATE
+		}
+		public struct ResponseStruct
+        {
+			public byte[] data;
+			public byte code;
 		}
 		private byte[] sendMsg(int code, byte[] msg)
+		{
+			return sendMsgGetCode(code, msg).data;
+		}
+		private ResponseStruct sendMsgGetCode(int code, byte[] msg)
 		{
 			//creates the msg
 			byte[] buffer = new byte[REQUEST_CODE_BYTES + CONTENT_LENGTH_BYTES + msg.Length];
@@ -58,14 +70,13 @@ namespace Client
 			_clientStream.Read(msgCode, 0, REQUEST_CODE_BYTES);
 			_clientStream.Read(contentLength, 0, CONTENT_LENGTH_BYTES);
 			buffer = new byte[BitConverter.ToInt32(contentLength, 0)];
-			_clientStream.Read(buffer,0, BitConverter.ToInt32(contentLength, 0));
+			_clientStream.Read(buffer, 0, BitConverter.ToInt32(contentLength, 0));
 			//if somthing whent wrong
-			if(msgCode[0] == (int)MSG_CODES.ERROR_CODE)
-            {
-				
+			if (msgCode[0] == (int)MSG_CODES.ERROR_CODE)
+			{
 				throw new Exception(Deserializer.deserializeResponse<ErrorResponse>(buffer).message);
-            }
-			return buffer;
+			}
+			return new ResponseStruct{data = buffer, code = msgCode[0] };
 		}
 		public LoginResponse login(string username, string password)
 		{
@@ -108,7 +119,7 @@ namespace Client
 			msgData.roomName = name;
 			msgData.maxUsers = maxUsers;
 			msgData.questionCount = questionCount;
-			msgData.questionTimeout = answerTimeout;
+			msgData.answerTimeout = answerTimeout;
 			byte[] json = Serializer.serializeRequest<CreateRoomRequest>(msgData);
 			return Deserializer.deserializeResponse<CreateRoomResponse>(sendMsg((int)MSG_CODES.CREATE_ROOM, json));
 		}
@@ -141,6 +152,30 @@ namespace Client
 		public LeaveGameResponse leaveGame()
 		{
 			return Deserializer.deserializeResponse<LeaveGameResponse>(sendMsg((int)MSG_CODES.LEAVE_GAME, new byte[] { }));
+		}
+		public LeaveRoomResponse leaveRoom()
+		{
+			return Deserializer.deserializeResponse<LeaveRoomResponse>(sendMsg((int)MSG_CODES.LEAVE_ROOM, new byte[] { }));
+		}
+		public StartGameResponse startGame()
+		{
+			return Deserializer.deserializeResponse<StartGameResponse>(sendMsg((int)MSG_CODES.START_GAME, new byte[] { }));
+		}
+		public object getRoomState()
+		{
+			ResponseStruct response = sendMsgGetCode((int)MSG_CODES.GET_ROOM_STATE, new byte[] { });
+			switch(response.code)
+			{ 	
+			case (byte)MSG_CODES.LEAVE_ROOM:
+				return Deserializer.deserializeResponse<LeaveRoomResponse>(response.data);
+			case (byte)MSG_CODES.START_GAME:
+				return Deserializer.deserializeResponse<StartGameResponse>(response.data);
+			case (byte)MSG_CODES.GET_ROOM_STATE:
+				return Deserializer.deserializeResponse<GetRoomStateResponse>(response.data);
+			default:
+				throw new Exception("invalid response from server!");
+
+			}
 		}
 	}
 }

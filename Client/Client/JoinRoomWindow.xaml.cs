@@ -1,6 +1,8 @@
 ﻿using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
+using System.Threading;
+using System.Linq;
 
 namespace Client
 {
@@ -9,7 +11,9 @@ namespace Client
 		private Communicator _communicator;
 		private RoomData[] _roomData;
 		private RequestWorker _worker = new RequestWorker();
+		private BackgroundWorker _refreshWorker = new BackgroundWorker();
 		private string _lastSelection;
+		private const int REFRESH_TIME = 3000;
 
 		public JoinRoomWindow(Communicator communicator, RoomData[] rooms)
 		{
@@ -17,6 +21,11 @@ namespace Client
 			_communicator = communicator;
 			_roomData = rooms;
 			updateRoomList();
+			// set up refresh worker
+			_refreshWorker.WorkerReportsProgress = true;
+			_refreshWorker.DoWork += RefreshWork;
+			_refreshWorker.ProgressChanged += RefreshReport;
+			_refreshWorker.RunWorkerAsync();
 		}
 
 		private uint getRoomId(string roomName)
@@ -29,16 +38,30 @@ namespace Client
 
 		private void updateRoomList()
 		{
-			RoomList.Items.Clear();
+			// set UI
 			if (_roomData.Length == 0)
 			{   // no available rooms
 				RoomList.Visibility = Visibility.Collapsed;
 				NoRoomText.Visibility = Visibility.Visible;
 				return;
 			}
+			RoomList.Visibility = Visibility.Visible;
 			NoRoomText.Visibility = Visibility.Collapsed;
-			foreach (RoomData room in _roomData)
-				RoomList.Items.Add(room.name);
+			// update list
+			// order data in arrays
+			string[] finalRoomNames = new string[_roomData.Length];
+			for (int i = 0; i < _roomData.Length; i++)
+				finalRoomNames[i] = _roomData[i].name;
+			string[] currentRoomNames = RoomList.Items.OfType<string>().ToArray();
+			// get difference in arrays current and final
+			string[] toRemove = currentRoomNames.Except(finalRoomNames).ToArray();  // remove elements which are in the list currently but not in the final list
+			string[] toAdd = finalRoomNames.Except(currentRoomNames).ToArray(); // add elements which are in the final list but not in the current list
+
+			// change the list
+			foreach (string room in toRemove)
+				RoomList.Items.Remove(room);
+			foreach (string room in toAdd)
+				RoomList.Items.Add(room);
 		}
 
 		private void Return_Click(object sender, RoutedEventArgs e)
@@ -49,25 +72,19 @@ namespace Client
 			window.ShowDialog();
 		}
 
-		private void Refresh_Click(object sender, RoutedEventArgs e)
-		{
-			_worker.Run(RefreshWork, RefreshComplete);
-		}
 		private void RefreshWork(object sender, DoWorkEventArgs e)
 		{
-			// get rooms request
-			GetRoomsResponse response = _communicator.getRooms();
-			e.Result = response;
-		}
-		private void RefreshComplete(object sender, RunWorkerCompletedEventArgs e)
-		{
-			GetRoomsResponse response = (GetRoomsResponse)e.Result;
-			if(response.status == 0)
+			while (true)
 			{
-				MessageBox.Show("Refresh Failed", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-				return;
+				Thread.Sleep(REFRESH_TIME);
+				// send request and update UI for rooms
+				GetRoomsResponse response = _communicator.getRooms();
+				_roomData = response.rooms;
+				_refreshWorker.ReportProgress(0, null);
 			}
-			_roomData = response.rooms;
+		}
+		private void RefreshReport(object sender, ProgressChangedEventArgs e)
+		{
 			updateRoomList();
 		}
 

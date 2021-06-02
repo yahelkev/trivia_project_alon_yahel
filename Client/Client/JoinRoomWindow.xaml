@@ -17,7 +17,6 @@
 		</Border>
 		<StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
 			<Button Margin="5" Width="80" FontSize="14" Click="Return_Click">Return</Button>
-			<Button Margin="5" Width="80" FontSize="14" Click="Refresh_Click">Refresh</Button>
 			<Button Margin="5" Width="80" FontSize="14" Name="JoinButton" Click="Join_Click" Visibility="Hidden">Join</Button>
 		</StackPanel>
 	</DockPanel>

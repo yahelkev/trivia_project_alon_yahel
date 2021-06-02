@@ -14,11 +14,44 @@ EXIT_INPUT = ["exit", "quit"]
 REQUESTS = {
 	"login": {
 		"keys": ["username", "password"],
+		"types": {},
 		"code": 1
 	},
 	"signup": {
 		"keys": ["username", "password", "email"],
+		"types": {},
 		"code": 2
+	},
+	"logout": {
+		"keys": [],
+		"code": 3
+	},
+	"get rooms": {
+		"keys": [],
+		"code": 4
+	},
+	"get players in room": {
+		"keys": ["roomId"],
+		"types": {"roomId": int},
+		"code": 5
+	},
+	"join room": {
+		"keys": ["roomId"],
+		"types": {"roomId": int},
+		"code": 6
+	},
+	"create room": {
+		"keys": ["answerTimeout", "maxUsers", "questionCount", "roomName"],
+		"types": {"answerTimeout": float, "maxUsers": int, "questionCount": int},
+		"code": 7
+	},
+	"get high scores": {
+		"keys": [],
+		"code": 8
+	},
+	"get statistics": {
+		"keys": [],
+		"code": 9
 	},
 }
 # class for exit input exception
@@ -66,6 +99,8 @@ def getMassage():
 	request_input = []
 	for key in REQUESTS[request]["keys"]:
 		request_input += [input("Enter %s: " % key)]
+		if key in REQUESTS[request]["types"]:	# cast to type
+			request_input[-1] = REQUESTS[request]["types"][key](request_input[-1])
 	# return message info
 	return (REQUESTS[request]["code"], fillJson(REQUESTS[request]["keys"], request_input))
 
