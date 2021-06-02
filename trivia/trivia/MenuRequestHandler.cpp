@@ -109,14 +109,14 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 	{	// room doesn't exists, return error
 		responseBuffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Room doesn't exist!" });
 	}
-	return RequestResult{ responseBuffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
+	return RequestResult{ responseBuffer, (IRequestHandler*)this->m_handlerFactory.createRoomMemberRequestHandler(this->m_user, request.roomId) };
 }
 
 RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 {
 	CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(requestInfo.jsonBuffer);
 	// create room and return response
-	bool res = this->m_roomManager.createRoom(this->m_user, RoomData{0, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false});
-	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse{ res ? (unsigned int)1 : 0 });
-	return RequestResult{ responseBuffer, this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
+	roomID room = this->m_roomManager.createRoom(this->m_user, RoomData{0, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false});
+	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse{ room == INVALID_ROOM ? 0u : 1u, room });
+	return RequestResult{ responseBuffer, (IRequestHandler*)this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, room) };
 }

@@ -1,4 +1,5 @@
 #include "RequestHandlerFactory.h"
+#include "RoomAdminRequestHandler.h"
 
 LoginRequestHandler* RequestHandlerFactory::createLoginRequestHandler()
 {
@@ -13,6 +14,16 @@ MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser u
 GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(roomID roomID, LoggedUser user)
 {
     return new GameRequestHandler(*this, roomID, user);
+}
+
+RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(LoggedUser user, roomID room)
+{
+    return new RoomAdminRequestHandler(*this, user, room);
+}
+
+RoomMemberRequestHandler* RequestHandlerFactory::createRoomMemberRequestHandler(LoggedUser user, roomID room)
+{
+    return new RoomMemberRequestHandler(*this, user, room);
 }
 
 LoginManager& RequestHandlerFactory::getLoginManager()
