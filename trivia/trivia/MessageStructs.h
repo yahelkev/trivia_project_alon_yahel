@@ -121,6 +121,7 @@ typedef struct
 typedef struct
 {
 	unsigned int status;
+	roomID roomId;
 } CreateRoomResponse;
 
 //--Game
@@ -128,6 +129,11 @@ typedef struct
 {
 	unsigned int status;
 } LeaveGameResponse;
+// waiting room
+typedef struct
+{
+	unsigned int status;
+} CloseRoomResponse;
 
 typedef struct
 {
@@ -135,6 +141,11 @@ typedef struct
 	std::string question;
 	std::map<unsigned int, std::string> answers;
 } GetQuestionResponse;
+
+typedef struct
+{
+	unsigned int status;
+} LeaveRoomResponse;
 
 typedef struct
 {
@@ -153,5 +164,19 @@ typedef struct
 typedef struct
 {
 	unsigned int status;
+} StartGameResponse;
+
+typedef struct
+{
+	unsigned int status;
 	std::vector<PlayerResults> results;
 } GetGameResultsResponse;
+
+typedef struct
+{
+	unsigned int status;
+	bool hasGameBegun;
+	std::vector<std::string> players;
+	unsigned int questionCount;
+	unsigned int answerTimeout;
+} GetRoomStateResponse;
