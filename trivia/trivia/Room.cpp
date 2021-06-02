@@ -35,6 +35,11 @@ std::vector<std::string> Room::getAllUsers()
     return result;
 }
 
+void Room::setActive()
+{
+    this->m_metadata.isActive = 1;
+}
+
 RoomData Room::getMetaData()
 {
     return this->m_metadata;

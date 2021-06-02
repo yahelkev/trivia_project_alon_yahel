@@ -11,7 +11,7 @@ class RoomManager
 public:
 	RoomManager();
 	//creats a room
-	bool createRoom(LoggedUser, RoomData);
+	roomID createRoom(LoggedUser, RoomData);
 	//deletes a room
 	bool deleteRoom(int ID);
 	//returns room state (game is on or not)

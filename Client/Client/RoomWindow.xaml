@@ -1,0 +1,21 @@
+﻿<Window x:Class="Client.RoomWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        mc:Ignorable="d"
+        Title="RoomWindow" Height="300" Width="300">
+    <DockPanel LastChildFill="False">
+		<TextBlock Margin="5" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Name="RoomName" DockPanel.Dock="Top">Room: "room name"</TextBlock>
+		<Border Margin="10,5,10,10" DockPanel.Dock="Top" Background="GhostWhite" BorderBrush="#bbb" BorderThickness="1" Name="PlayerBorder">
+			<StackPanel Margin="5,2,0,2" Name="PlayerList" DockPanel.Dock="Top" Height="Auto">
+			</StackPanel>
+		</Border>
+		<StackPanel DockPanel.Dock="Bottom" Margin="10" Orientation="Horizontal" HorizontalAlignment="Center">
+			<Button Margin="5" Width="80" Name="LeaveButton" Click="Leave_Click">Leave Room</Button>
+			<Button Margin="5" Width="80" Name="CloseButton" Click="Leave_Click">Close Room</Button>
+			<Button Margin="5" Width="80" Name="StartButton" Click="Start_Click">Start Game</Button>
+		</StackPanel>
+	</DockPanel>
+</Window>
