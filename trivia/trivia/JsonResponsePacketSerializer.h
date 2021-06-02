@@ -19,6 +19,11 @@ public:
 	static Buffer serializeResponse(CreateRoomResponse);
 	static Buffer serializeResponse(GetHighScoreResponse);
 	static Buffer serializeResponse(GetPersonalStatsResponse);
+	//3.0.0 waiting room
+	static Buffer serializeResponse(CloseRoomResponse);
+	static Buffer serializeResponse(StartGameResponse);
+	static Buffer serializeResponse(GetRoomStateResponse);
+	static Buffer serializeResponse(LeaveRoomResponse);
 
 	//4.0.0
 	static Buffer serializeResponse(GetGameResultsResponse);

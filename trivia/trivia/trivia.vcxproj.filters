@@ -104,6 +104,15 @@
     </ClCompile>
     <ClCompile Include="GameResults.cpp">
       <Filter>Source Files</Filter>
+	</ClCompile>
+    <ClCompile Include="RoomAdminRequestHandler.cpp">
+      <Filter>Source Files\RequestHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="RoomMemberRequestHandler.cpp">
+      <Filter>Source Files\RequestHandlers</Filter>
+	</ClCompile>
+    <ClCompile Include="UserStatistics.cpp">
+      <Filter>Source Files\Objects</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -181,6 +190,15 @@
     </ClInclude>
     <ClInclude Include="GameResults.h">
       <Filter>Header Files</Filter>
+	</ClInclude>
+    <ClInclude Include="RoomAdminRequestHandler.h">
+      <Filter>Header Files\RequestHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="RoomMemberRequestHandler.h">
+      <Filter>Header Files\RequestHandlers</Filter>
+	</ClInclude>
+    <ClInclude Include="UserStatistics.h">
+      <Filter>Header Files\Objects</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

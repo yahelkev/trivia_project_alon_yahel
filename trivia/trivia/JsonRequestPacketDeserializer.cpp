@@ -35,7 +35,7 @@ GetPlayersInRoomRequest JsonRequestPacketDeserializer::deserializeGetPlayersRequ
 {
 	json jsonData = json::parse(msg);
 	GetPlayersInRoomRequest result;
-	result.roomId = jsonData["roomId"];
+	result.roomId = jsonData["roomID"];
 	return result;
 }
 
@@ -43,7 +43,7 @@ JoinRoomRequest JsonRequestPacketDeserializer::deserializeJoinRoomRequest(Buffer
 {
 	json jsonData = json::parse(msg);
 	JoinRoomRequest result;
-	result.roomId = jsonData["roomId"];
+	result.roomId = jsonData["roomID"];
 	return result;
 }
 
