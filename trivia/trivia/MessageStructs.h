@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <map>
 #include <iostream>
 
 typedef unsigned int roomID;
@@ -123,6 +124,11 @@ typedef struct
 	roomID roomId;
 } CreateRoomResponse;
 
+//--Game
+typedef struct
+{
+	unsigned int status;
+} LeaveGameResponse;
 // waiting room
 typedef struct
 {
@@ -132,12 +138,39 @@ typedef struct
 typedef struct
 {
 	unsigned int status;
+	std::string question;
+	std::map<unsigned int, std::string> answers;
+} GetQuestionResponse;
+
+typedef struct
+{
+	unsigned int status;
 } LeaveRoomResponse;
 
 typedef struct
 {
 	unsigned int status;
+	unsigned int correctAnswerId;
+} SubmitAnswerResponse;
+
+typedef struct
+{
+	std::string username;
+	unsigned int correctAnswerCount;
+	unsigned int wrongAnswerCount;
+	unsigned int averageAnswerTime;
+} PlayerResults;
+
+typedef struct
+{
+	unsigned int status;
 } StartGameResponse;
+
+typedef struct
+{
+	unsigned int status;
+	std::vector<PlayerResults> results;
+} GetGameResultsResponse;
 
 typedef struct
 {
