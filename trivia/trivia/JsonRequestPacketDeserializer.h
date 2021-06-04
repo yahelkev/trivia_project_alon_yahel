@@ -19,5 +19,8 @@ public:
 	static JoinRoomRequest deserializeJoinRoomRequest(Buffer);
 	static CreateRoomRequest deserializeCreateRoomRequest(Buffer);
 
+	//4.0.0
+	static SubmitAnswerRequest deserializeSubmitAnswerRequest(Buffer);
+
 };
 
