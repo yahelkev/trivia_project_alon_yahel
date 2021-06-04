@@ -37,6 +37,10 @@ namespace Client
 			CREATE_ROOM,
 			HIGH_SCORE,
 			USER_STATISTICS,
+			GAME_RESULTS,
+			SUBMIT_ANSWER,
+			GET_QUESTION,
+			LEAVE_GAME,
 			LEAVE_ROOM,
 			START_GAME,
 			GET_ROOM_STATE
@@ -130,6 +134,24 @@ namespace Client
 		public GetRoomsResponse getRooms()
 		{
 			return Deserializer.deserializeResponse<GetRoomsResponse>(sendMsg((int)MSG_CODES.GET_ROOMS, new byte[] { }));
+		}
+		public GetGameResultsResponse getGameResults()
+		{
+			return Deserializer.deserializeResponse<GetGameResultsResponse>(sendMsg((int)MSG_CODES.GAME_RESULTS, new byte[] { }));
+		}
+		public SubmitAnswerResponse submitAnswer(uint answer)
+		{
+			SubmitAnswerRequest msgData = new SubmitAnswerRequest { answer = answer };
+			byte[] json = Serializer.serializeRequest(msgData);
+			return Deserializer.deserializeResponse<SubmitAnswerResponse>(sendMsg((int)MSG_CODES.SUBMIT_ANSWER, json));
+		}
+		public GetQuestionResponse getQuestion()
+		{
+			return Deserializer.deserializeResponse<GetQuestionResponse>(sendMsg((int)MSG_CODES.GET_QUESTION, new byte[] { }));
+		}
+		public LeaveGameResponse leaveGame()
+		{
+			return Deserializer.deserializeResponse<LeaveGameResponse>(sendMsg((int)MSG_CODES.LEAVE_GAME, new byte[] { }));
 		}
 		public LeaveRoomResponse leaveRoom()
 		{
