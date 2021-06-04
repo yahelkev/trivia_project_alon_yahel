@@ -68,8 +68,8 @@ namespace Client
 			buffer = new byte[BitConverter.ToInt32(contentLength, 0)];
 			_clientStream.Read(buffer, 0, BitConverter.ToInt32(contentLength, 0));
 			//if somthing whent wrong
-			if (msgCode[0] == (int)MSG_CODES.ERROR_CODE)
-			{
+			if(msgCode[0] == (int)MSG_CODES.ERROR_CODE)
+            {
 				throw new Exception(Deserializer.deserializeResponse<ErrorResponse>(buffer).message);
 			}
 			return new ResponseStruct{data = buffer, code = msgCode[0] };
