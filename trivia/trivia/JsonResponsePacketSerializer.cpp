@@ -154,22 +154,6 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse respons
 	return createResponseBuffer(LEAVE_GAME, content);
 }
 
-
-Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
-{
-	std::string jsonDump = content.dump();
-	// get content length as bytes
-	int contentLengthInt = jsonDump.size();
-	Byte* contentLengthBytes = (Byte*)&contentLengthInt;
-	// create buffer
-	Buffer buffer;
-	buffer.push_back(code);
-	buffer.insert(buffer.end(), contentLengthBytes, contentLengthBytes + CONTENT_LENGTH_BYTES);
-	buffer.insert(buffer.end(), jsonDump.begin(), jsonDump.end());
-
-	return buffer;
-}
-
 Buffer JsonResponsePacketSerializer::serializeResponse(CloseRoomResponse response)
 {
 	json content = {
@@ -204,4 +188,20 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse respons
 		{"status", response.status}
 	};
 	return createResponseBuffer(LEAVE_ROOM, content);
+}
+
+
+Buffer JsonResponsePacketSerializer::createResponseBuffer(Byte code, json& content)
+{
+	std::string jsonDump = content.dump();
+	// get content length as bytes
+	int contentLengthInt = jsonDump.size();
+	Byte* contentLengthBytes = (Byte*)&contentLengthInt;
+	// create buffer
+	Buffer buffer;
+	buffer.push_back(code);
+	buffer.insert(buffer.end(), contentLengthBytes, contentLengthBytes + CONTENT_LENGTH_BYTES);
+	buffer.insert(buffer.end(), jsonDump.begin(), jsonDump.end());
+
+	return buffer;
 }

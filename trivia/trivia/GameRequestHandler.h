@@ -1,0 +1,29 @@
+#pragma once
+#include "IRequestHandler.h"
+#include "GameManager.h"
+#include "RequestHandlerFactory.h"
+
+class RequestHandlerFactory;
+class GameRequestHandler :
+    public IRequestHandler
+{
+public:
+    GameRequestHandler(RequestHandlerFactory& factory, roomID roomId, LoggedUser user);
+
+    bool isRequestRelevant(RequestInfo);
+    RequestResult handleRequest(RequestInfo);
+    //incase he disconnected in a game
+    virtual void abortSignout();
+private:
+    RequestResult getQuestion();
+    RequestResult submitAnswer(RequestInfo);
+    RequestResult getGameResults();
+    RequestResult leaveGame();
+
+    roomID m_game;
+    LoggedUser m_user;
+    GameManager& m_gameManager;
+    RequestHandlerFactory& m_handlerFacroty;
+
+};
+

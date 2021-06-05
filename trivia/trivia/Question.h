@@ -9,8 +9,8 @@ public:
 	Question(int argc, char** argv, char** cols);
 	// getters
 	std::string getQuestion() const;
-	std::string getPossibleAnswers() const;
-	std::string getCorrectAnswer() const;
+	std::vector<std::string> getPossibleAnswers() const;
+	int getCorrectAnswer() const;
 private:
 	std::string m_question;
 	std::vector<std::string> m_possibleAnswers;

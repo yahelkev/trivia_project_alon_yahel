@@ -11,6 +11,11 @@ MenuRequestHandler* RequestHandlerFactory::createMenuRequestHandler(LoggedUser u
     return new MenuRequestHandler(*this, user);
 }
 
+GameRequestHandler* RequestHandlerFactory::createGameRequestHandler(roomID roomID, LoggedUser user)
+{
+    return new GameRequestHandler(*this, roomID, user);
+}
+
 RoomAdminRequestHandler* RequestHandlerFactory::createRoomAdminRequestHandler(LoggedUser user, roomID room)
 {
     return new RoomAdminRequestHandler(*this, user, room);
@@ -34,4 +39,10 @@ StatisticsManager& RequestHandlerFactory::getStatisticsManager()
 RoomManager& RequestHandlerFactory::getRoomManager()
 {
     return this->m_roomManager;
+}
+
+
+GameManager& RequestHandlerFactory::getGameManager()
+{
+    return this->m_gameManager;
 }

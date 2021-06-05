@@ -1,8 +1,10 @@
 #pragma once
 #include <string>
 #include <vector>
-#include <map>
+#include <list>
 #include <iostream>
+#include <map>
+#include "Question.h"
 
 typedef unsigned int roomID;
 typedef unsigned char Byte;
@@ -18,6 +20,16 @@ typedef struct
 	unsigned int timePerQuestion;
 	unsigned int isActive;
 } RoomData;
+
+typedef struct
+{
+	std::list<Question>::iterator currentQuestion;
+	unsigned int correctAnswerCount;
+	unsigned int wrongAnswerCount;
+	float averageAnswerTime;
+	time_t startTime;
+	time_t lastQuestionTime;
+} GameData;
 
 class IRequestHandler;
 // requests
@@ -136,6 +148,7 @@ typedef struct
 {
 	unsigned int status;
 } LeaveGameResponse;
+
 // waiting room
 typedef struct
 {
