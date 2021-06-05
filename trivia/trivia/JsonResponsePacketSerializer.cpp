@@ -187,7 +187,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveRoomResponse respons
 	json content = {
 		{"status", response.status}
 	};
-	return createResponseBuffer(LEAVE_GAME, content);
+	return createResponseBuffer(LEAVE_ROOM, content);
 }
 
 

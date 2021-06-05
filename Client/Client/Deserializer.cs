@@ -59,6 +59,28 @@ namespace Client
 	{
 		public string message;
 	}
+	public struct LeaveGameResponse
+	{
+		public uint status;
+	}
+	public struct GetQuestionResponse
+	{
+		public uint status;
+		public string question;
+		public string[] answers;
+	}
+	public struct SubmitAnswerResponse
+	{
+		public uint status;
+		public uint correctAnswer;
+	}
+	public struct GetGameResultsResponse
+	{
+		public uint status;
+		public PlayerResults[] results;
+	}
+
+	// data public structs
 	public struct LeaveRoomResponse
 	{
 		public uint status;
@@ -75,8 +97,7 @@ namespace Client
 		public uint questionCount;
 		public uint answerTimeout;
 	}
-// data public structs
-public struct RoomData
+	public struct RoomData
 	{
 		public string name;
 		public uint id;
@@ -84,4 +105,12 @@ public struct RoomData
 		public uint numOfQuestions;
 		public uint timePerQuestion;
 	}
+	public struct PlayerResults
+	{
+		public string username;
+		public uint correctAnswerCount;
+		public uint wrongAnswerCount;
+		public uint averageAnswerTime;
+	}
+
 }
