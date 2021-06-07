@@ -96,6 +96,12 @@
     <ClCompile Include="Game.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="GameRequestHandler.cpp">
+      <Filter>Source Files\RequestHandlers</Filter>
+    </ClCompile>
+    <ClCompile Include="GameResults.cpp">
+      <Filter>Source Files</Filter>
+	</ClCompile>
     <ClCompile Include="GameResults.cpp">
 		<Filter>Source Files\Objects</Filter>
     </ClCompile>
@@ -187,6 +193,9 @@
     </ClInclude>
     <ClInclude Include="GameRequestHandler.h">
       <Filter>Header Files\RequestHandlers</Filter>
+    </ClInclude>
+    <ClInclude Include="GameResults.h">
+      <Filter>Header Files</Filter>
 	</ClInclude>
     <ClInclude Include="RoomAdminRequestHandler.h">
       <Filter>Header Files\RequestHandlers</Filter>

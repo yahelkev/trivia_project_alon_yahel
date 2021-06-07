@@ -13,3 +13,23 @@ bool GameResults::operator<(const GameResults& other) const
 {
 	return this->score() < other.score();
 }
+
+std::string GameResults::getUsername()
+{
+	return this->_username;
+}
+
+unsigned int GameResults::getCorrectAnswerCount()
+{
+	return this->_correctAnswerCount;
+}
+
+unsigned int GameResults::getWrongAnswerCount()
+{
+	return this->_wrongAnswerCount;
+}
+
+float GameResults::getAverageAnswerTime()
+{
+	return this->_averageAnswerTime;
+}
