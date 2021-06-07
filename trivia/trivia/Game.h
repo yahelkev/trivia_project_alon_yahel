@@ -1,8 +1,10 @@
 #pragma once
+#include <algorithm>
 #include <vector>
 #include <map>
 #include "Room.h"
 #include "Question.h"
+#include "GameResults.h"
 #include "MessageStructs.h"
 
 class Game

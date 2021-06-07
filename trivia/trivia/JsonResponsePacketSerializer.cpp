@@ -150,7 +150,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse respons
 {
 	json content = {
 		{"status", response.status}
-	}; 
+	};
 	return createResponseBuffer(LEAVE_GAME, content);
 }
 

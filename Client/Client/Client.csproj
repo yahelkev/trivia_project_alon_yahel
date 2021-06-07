@@ -62,6 +62,12 @@
       <DependentUpon>CreateRoomWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="Deserializer.cs" />
+    <Compile Include="GameResultsWindow.xaml.cs">
+      <DependentUpon>GameResultsWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="GameWindow.xaml.cs">
+      <DependentUpon>GameWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="JoinRoomWindow.xaml.cs">
       <DependentUpon>JoinRoomWindow.xaml</DependentUpon>
     </Compile>
@@ -79,6 +85,14 @@
     <Page Include="CreateRoomWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameResultsWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="GameWindow.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="JoinRoomWindow.xaml">
       <SubType>Designer</SubType>

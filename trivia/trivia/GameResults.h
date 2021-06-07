@@ -2,7 +2,6 @@
 #include <string>
 #include "Constants.h"
 
-class Constant;
 class GameResults
 {
 public:
@@ -15,7 +14,6 @@ public:
 	unsigned int getCorrectAnswerCount();
 	unsigned int getWrongAnswerCount();
 	float getAverageAnswerTime();
-
 private:
 	std::string _username;
 	unsigned int _correctAnswerCount;
