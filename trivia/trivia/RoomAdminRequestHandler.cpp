@@ -37,6 +37,10 @@ RequestResult RoomAdminRequestHandler::startGame()
 	// change state to active
 	this->m_handlerFactory.getGameManager().createGame(m_roomManager.getRoom(m_roomID));
 	this->m_roomManager.getRoom(this->m_roomID).setActive();
+	//gets out of room and deletes it if needed
+	m_roomManager.getRoom(this->m_roomID).removeUser(this->m_user);
+	if (m_roomManager.getRoom(this->m_roomID).getAllUsers().size() == 0)
+		m_roomManager.deleteRoom(this->m_roomID);
 	// return response
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(StartGameResponse{ 1 });
 	return RequestResult{ responseBuffer, this->m_handlerFactory.createGameRequestHandler(m_roomID, m_user) };	

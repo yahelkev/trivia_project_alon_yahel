@@ -30,7 +30,6 @@ typedef struct
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
 	float averageAnswerTime;
-	time_t startTime;
 	time_t lastQuestionTime;
 } GameData;
 

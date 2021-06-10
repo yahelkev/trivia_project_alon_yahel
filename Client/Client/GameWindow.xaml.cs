@@ -24,7 +24,7 @@ namespace Client
 		private Button[] _answers;
 
 		private const uint COLOR_ANIMATION_DURATION = 200;
-		private const int TIME_BETWEEN_QUESTIONS = 5000;
+		private const int TIME_BETWEEN_QUESTIONS = 2000;
 		private Color LIGHT_RED = Color.FromRgb(255, 150, 150);
 
 		public GameWindow(Communicator communicator, uint id, uint timePerQuestion, uint questionCount)

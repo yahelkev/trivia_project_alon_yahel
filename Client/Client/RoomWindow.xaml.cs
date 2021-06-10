@@ -121,6 +121,11 @@ namespace Client
 			}
 			else if(responseType == typeof(StartGameResponse))
 			{
+				//waits for the refresh thread to finish
+				lock (_communicator)
+				{
+					_refreshWorker.CancelAsync();
+				}
 				Window window = new GameWindow(_communicator, _id, _roomState.answerTimeout, _roomState.questionCount);
 				Close();
 				window.ShowDialog();

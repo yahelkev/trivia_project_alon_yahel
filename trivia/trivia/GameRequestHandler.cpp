@@ -28,7 +28,7 @@ RequestResult GameRequestHandler::handleRequest(RequestInfo requestInfo)
 		break;
 	default:
 	{
-		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });
+		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state! - " + std::to_string(requestInfo.id) });
 		return RequestResult{ buffer, this->m_handlerFacroty.createMenuRequestHandler(this->m_user) };
 	}
 	}
@@ -65,7 +65,8 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 
 RequestResult GameRequestHandler::getGameResults()
 {
-	GetGameResultsResponse response = { 1, m_gameManager.getGame(m_game).getResults()};
+	Game& game = m_gameManager.getGame(m_game);
+	GetGameResultsResponse response = {(int)game.gameFinished(),game.getResults()};
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(response);
 	return  RequestResult{ responseBuffer , m_handlerFacroty.createGameRequestHandler(m_game, m_user) };
 }

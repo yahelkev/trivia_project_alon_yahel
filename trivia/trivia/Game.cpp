@@ -46,7 +46,7 @@ void Game::removePlayer(LoggedUser user)
 	if (userData.correctAnswerCount + userData.wrongAnswerCount == 0)
 		userData.averageAnswerTime = 0;
 	else
-		userData.averageAnswerTime = difftime(time(nullptr), userData.startTime) / (userData.correctAnswerCount + userData.wrongAnswerCount);
+		userData.averageAnswerTime /= (userData.correctAnswerCount + userData.wrongAnswerCount);
 }
 
 bool Game::gameFinished()
