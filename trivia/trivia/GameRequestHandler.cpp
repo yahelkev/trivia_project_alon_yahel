@@ -1,7 +1,7 @@
 #include "GameRequestHandler.h"
 
 GameRequestHandler::GameRequestHandler(RequestHandlerFactory& factory, roomID roomId, LoggedUser user) :
-	 m_handlerFacroty(factory), m_game(roomId), m_user(user), m_gameManager(m_handlerFacroty.getGameManager())
+	 m_handlerFacroty(factory), m_game(roomId), m_user(user), m_gameManager(factory.getGameManager())
 {
 }
 
@@ -12,17 +12,20 @@ bool GameRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 
 RequestResult GameRequestHandler::handleRequest(RequestInfo requestInfo)
 {
-
 	switch (requestInfo.id)
 	{
 	case GAME_RESULTS:
 		return getGameResults();
+		break;
 	case SUBMIT_ANSWER:
 		return submitAnswer(requestInfo);
+		break;
 	case GET_QUESTION:
 		return getQuestion();
+		break;
 	case LEAVE_GAME:
 		return leaveGame();
+		break;
 	default:
 	{
 		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });

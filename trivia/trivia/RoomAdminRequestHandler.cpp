@@ -35,8 +35,9 @@ IRequestHandler* RoomAdminRequestHandler::copyHandler()
 RequestResult RoomAdminRequestHandler::startGame()
 {
 	// change state to active
+	this->m_handlerFactory.getGameManager().createGame(m_roomManager.getRoom(m_roomID));
 	this->m_roomManager.getRoom(this->m_roomID).setActive();
 	// return response
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(StartGameResponse{ 1 });
-	return RequestResult{ responseBuffer, this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, this->m_roomID) };	// will be game handler in the next version
+	return RequestResult{ responseBuffer, this->m_handlerFactory.createGameRequestHandler(m_roomID, m_user) };	
 }

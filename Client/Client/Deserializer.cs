@@ -72,7 +72,7 @@ namespace Client
 	public struct SubmitAnswerResponse
 	{
 		public uint status;
-		public uint correctAnswer;
+		public uint correctAnswerId;
 	}
 	public struct GetGameResultsResponse
 	{

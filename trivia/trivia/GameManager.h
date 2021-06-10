@@ -8,7 +8,6 @@
 class GameManager
 {
 public:
-	GameManager();
 	GameManager(IDatabase*);
 
 	void createGame(Room&);

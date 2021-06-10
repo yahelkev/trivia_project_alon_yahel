@@ -67,7 +67,7 @@ namespace Client
 			//gets response (only the json)
 			byte[] msgCode = new byte[REQUEST_CODE_BYTES];
 			byte[] contentLength = new byte[CONTENT_LENGTH_BYTES];
-			_clientStream.Read(msgCode, 0, REQUEST_CODE_BYTES);
+				_clientStream.Read(msgCode, 0, REQUEST_CODE_BYTES);
 			_clientStream.Read(contentLength, 0, CONTENT_LENGTH_BYTES);
 			buffer = new byte[BitConverter.ToInt32(contentLength, 0)];
 			_clientStream.Read(buffer, 0, BitConverter.ToInt32(contentLength, 0));
@@ -141,7 +141,7 @@ namespace Client
 		}
 		public SubmitAnswerResponse submitAnswer(uint answer)
 		{
-			SubmitAnswerRequest msgData = new SubmitAnswerRequest { answer = answer };
+			SubmitAnswerRequest msgData = new SubmitAnswerRequest { answerId = answer };
 			byte[] json = Serializer.serializeRequest(msgData);
 			return Deserializer.deserializeResponse<SubmitAnswerResponse>(sendMsg((int)MSG_CODES.SUBMIT_ANSWER, json));
 		}

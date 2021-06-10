@@ -13,6 +13,7 @@ namespace Client
 		private BackgroundWorker _refreshWorker = new BackgroundWorker();
 		private uint _id;
 		private const int REFRESH_TIME = 3000;
+		private GetRoomStateResponse _roomState;
 		public RoomWindow(Communicator communicator, uint roomId, string roomName, bool isAdmin)
 		{
 			InitializeComponent();
@@ -33,6 +34,7 @@ namespace Client
 			_refreshWorker.WorkerReportsProgress = true;
 			_refreshWorker.DoWork += RefreshThread;
 			_refreshWorker.ProgressChanged += RefreshReport;
+			_refreshWorker.WorkerSupportsCancellation = true;
 			_refreshWorker.RunWorkerAsync();
 		}
 
@@ -70,11 +72,18 @@ namespace Client
 		}
 		private void StartWork(object sender, DoWorkEventArgs e)
 		{
-			StartGameResponse response = _communicator.startGame();
+			lock (_communicator)
+			{
+				//stopping the refresh thread
+				_refreshWorker.CancelAsync();
+				StartGameResponse response = _communicator.startGame();
+			}
 		}
 		private void StartComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
-			// game window not implemented...
+			Window window = new GameWindow(_communicator, _id, _roomState.answerTimeout, _roomState.questionCount);
+			Close();
+			window.ShowDialog();
 		}
 
 		private void RefreshThread(object sender, DoWorkEventArgs e)
@@ -82,8 +91,12 @@ namespace Client
 			while (true)
 			{
 				// get updated room state
-				object response = _communicator.getRoomState();
-				_refreshWorker.ReportProgress(0, response);
+				lock (_communicator)
+				{
+					if(_refreshWorker.CancellationPending) { return; };
+					object response = _communicator.getRoomState();
+					_refreshWorker.ReportProgress(0, response);
+				}
 				Thread.Sleep(REFRESH_TIME);
 			}
 		}
@@ -95,7 +108,8 @@ namespace Client
 			if(responseType == typeof(GetRoomStateResponse))
 			{
 				// update player list
-				updatePlayerList(((GetRoomStateResponse)response).players);
+				_roomState = (GetRoomStateResponse)response;
+				updatePlayerList(_roomState.players);
 			}
 			else if(responseType == typeof(LeaveRoomResponse))
 			{
@@ -107,7 +121,9 @@ namespace Client
 			}
 			else if(responseType == typeof(StartGameResponse))
 			{
-				// game window not implemented...
+				Window window = new GameWindow(_communicator, _id, _roomState.answerTimeout, _roomState.questionCount);
+				Close();
+				window.ShowDialog();
 			}
 		}
 	}

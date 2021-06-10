@@ -42,6 +42,6 @@ namespace Client
 	}
 	public struct SubmitAnswerRequest
 	{
-		public uint answer;
+		public uint answerId;
 	}
 }

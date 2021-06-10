@@ -53,7 +53,7 @@ RequestResult RoomMemberRequestHandler::getRoomState()
 		m_roomManager.getRoom(this->m_roomID).removeUser(this->m_user);
 		if (m_roomManager.getRoom(this->m_roomID).getAllUsers().size() == 0)
 			m_roomManager.deleteRoom(this->m_roomID);
-		return RequestResult{ responseBuffer, this->copyHandler() };	// will be game handler in the next version
+		return RequestResult{ responseBuffer,  m_handlerFactory.createGameRequestHandler(m_roomID, m_user) };
 	}
 	// return room data and player list
 	RoomData roomData = this->m_roomManager.getRoom(this->m_roomID).getMetaData();

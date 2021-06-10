@@ -18,6 +18,7 @@ namespace Client
 		private uint _timePerQuestion;
 		private uint _questionCount;
 		private uint _currentQuestion = 0;
+		private bool _gameEnded = false;
 		private RequestWorker _worker = new RequestWorker();
 		private DispatcherTimer _timer;
 		private Button[] _answers;
@@ -53,9 +54,14 @@ namespace Client
 			uint answer = (uint)e.Argument;
 			SubmitAnswerResponse response = _communicator.submitAnswer((uint)e.Argument);
 			// show result
-			_worker.ReportProgress(new uint[] { answer, response.correctAnswer });
+			_worker.ReportProgress(new uint[] { answer, response.correctAnswerId });
 			// next question
 			Thread.Sleep(TIME_BETWEEN_QUESTIONS);
+			if (_currentQuestion >= _questionCount)
+			{   // finished game, move to game results window
+				_gameEnded = true;
+				return;
+			}
 			NextQuestionWork(sender, e);
 		}
 		private void SubmitAnswerReport(object sender, ProgressChangedEventArgs e)
@@ -78,6 +84,13 @@ namespace Client
 		}
 		private void SubmitAnswerComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
+			if (_gameEnded)
+			{
+				Window window = new GameResultsWindow(_communicator);
+				Close();
+				window.ShowDialog();
+				return;
+			}
 			// reset colors
 			ColorAnimation animation;
 			for (int i = 0; i < _answers.Length; i++)
@@ -132,13 +145,7 @@ namespace Client
 			}
 			// question counter
 			_currentQuestion++;
-			if(_currentQuestion > _questionCount)
-			{   // finished game, move to game results window
-				Window window = new GameResultsWindow(_communicator);
-				Close();
-				window.ShowDialog();
-				return;
-			}
+	
 			QuestionCount.Text = _currentQuestion + " / " + _questionCount;
 			// set timer's fields and UI
 			_timeLeft = _timePerQuestion;
