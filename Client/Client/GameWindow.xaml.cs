@@ -136,7 +136,7 @@ namespace Client
 		}
 		private void NextQuestionComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
-			GetQuestionResponse response = (GetQuestionResponse)e.Result;
+				GetQuestionResponse response = (GetQuestionResponse)e.Result;
 			// set question UI
 			Question.Text = response.question;
 			for(int i = 0; i < _answers.Length; i++)

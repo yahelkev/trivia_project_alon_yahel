@@ -11,6 +11,7 @@ Game::Game(Room& room, std::list<Question> questions): m_questions(questions), _
 
 Question Game::getQuestionForUser(LoggedUser user)
 {
+	m_players[user].lastQuestionTime = time(nullptr);
 	return *this->m_players[user].currentQuestion;
 }
 
@@ -19,17 +20,19 @@ int Game::submitAnswer(LoggedUser user, int answer)
 	time_t currentTime = time(nullptr);
 	GameData& userData = this->m_players[user];
 	int correctAnswer = userData.currentQuestion->getCorrectAnswer();
-	bool isCorrect = correctAnswer == answer && difftime(currentTime, userData.lastQuestionTime) < this->_timePerQuestion;
+	int timeTaken = difftime(currentTime, userData.lastQuestionTime);
+	if (timeTaken > _timePerQuestion) { timeTaken = _timePerQuestion; };
+	bool isCorrect = (correctAnswer == answer) && timeTaken < this->_timePerQuestion;
+	(isCorrect ? userData.correctAnswerCount : userData.wrongAnswerCount)++;	// increment correct/wrong answer count
+	userData.averageAnswerTime += timeTaken;
 	// increment question and check if player finished all questions
 	if (++userData.currentQuestion == this->m_questions.end())
 	{
 		this->_playersPlaying--;	// finished playing
 		// calculate average time
-		userData.averageAnswerTime = difftime(currentTime, userData.startTime) / (userData.correctAnswerCount + userData.wrongAnswerCount);
+		userData.averageAnswerTime /= (userData.correctAnswerCount + userData.wrongAnswerCount);
 	}
-	userData.lastQuestionTime = currentTime;
 	
-	(isCorrect ? userData.correctAnswerCount : userData.wrongAnswerCount)++;	// increment correct/wrong answer count
 	return correctAnswer;
 }
 

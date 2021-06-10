@@ -146,7 +146,7 @@ namespace Client
 			return Deserializer.deserializeResponse<SubmitAnswerResponse>(sendMsg((int)MSG_CODES.SUBMIT_ANSWER, json));
 		}
 		public GetQuestionResponse getQuestion()
-		{
+		{ 
 			return Deserializer.deserializeResponse<GetQuestionResponse>(sendMsg((int)MSG_CODES.GET_QUESTION, new byte[] { }));
 		}
 		public LeaveGameResponse leaveGame()
