@@ -99,9 +99,10 @@ namespace Client
 	}
 	public struct RoomData
 	{
-		public string name;
+		public string name { get; set; }
 		public uint id;
-		public uint maxPlayers;
+		public uint playerCount { get; set; }
+		public uint maxPlayers { get; set; }
 		public uint numOfQuestions;
 		public uint timePerQuestion;
 	}
