@@ -4,7 +4,8 @@ bool Room::addUser(LoggedUser newUser)
 {
     std::lock_guard<std::mutex> usersLock(this->m_users_lock);
     //add if not exists
-    if (std::find(m_users.begin(), m_users.end(), newUser) == m_users.end())
+    if (std::find(m_users.begin(), m_users.end(), newUser) == m_users.end() && // player not in room
+        this->m_users.size() != this->m_metadata.maxPlayers)    // room not full
     {
         m_users.push_back(newUser);
         return true;

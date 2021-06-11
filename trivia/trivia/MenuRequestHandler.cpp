@@ -99,17 +99,23 @@ RequestResult MenuRequestHandler::joinRoom(RequestInfo requestInfo)
 {
 	JoinRoomRequest request = JsonRequestPacketDeserializer::deserializeJoinRoomRequest(requestInfo.jsonBuffer);
 	Buffer responseBuffer;
+	IRequestHandler* newHandler = nullptr;
 	// join room and return response
 	if (this->m_roomManager.doesRoomExist(request.roomId))
 	{	// add user
 		bool res = this->m_roomManager.getRoom(request.roomId).addUser(this->m_user);
 		responseBuffer = JsonResponsePacketSerializer::serializeResponse(JoinRoomResponse{ res ? (unsigned int)1 : 0 });
+		if (!res)	// failed to join
+			newHandler = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
+		else	// joined successfully
+			newHandler = (IRequestHandler*)this->m_handlerFactory.createRoomMemberRequestHandler(this->m_user, request.roomId);
 	}
 	else
 	{	// room doesn't exists, return error
 		responseBuffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Room doesn't exist!" });
+		newHandler = this->m_handlerFactory.createMenuRequestHandler(this->m_user);
 	}
-	return RequestResult{ responseBuffer, (IRequestHandler*)this->m_handlerFactory.createRoomMemberRequestHandler(this->m_user, request.roomId) };
+	return RequestResult{ responseBuffer, newHandler };
 }
 
 RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
