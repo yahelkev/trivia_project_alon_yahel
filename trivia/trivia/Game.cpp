@@ -59,6 +59,11 @@ bool Game::playersLeft()
 	return this->_playersConnected != 0;
 }
 
+GameData& Game::getGameData(LoggedUser user)
+{
+	return this->m_players[user];
+}
+
 std::vector<GameResults> Game::getResults()
 {
 	std::vector<GameResults> results;

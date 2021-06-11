@@ -8,7 +8,7 @@ float StatisticsManager::scoreFormula(float averageAnswerTime, int correctAnswer
 {
 	if (totalAnswers == 0)
 		return 0;	// haven't played yet
-	return (correctAnswers / totalAnswers) * pow(gameCount, HIGHSCORE_GAME_COUNT_EXPONENT) / (averageAnswerTime + HIGHSCORE_ANSWER_TIME_OFFSET);
+	return ((float)correctAnswers / totalAnswers) * pow(gameCount, HIGHSCORE_GAME_COUNT_EXPONENT) / (averageAnswerTime + HIGHSCORE_ANSWER_TIME_OFFSET);
 }
 
 float StatisticsManager::scoreFormula(const UserStatistics& statistics)

@@ -132,12 +132,38 @@ UserStatistics SqliteDatabase::getUserStatistics(const std::string& username)
     return statistics;
 }
 
+void SqliteDatabase::updateUserStatistics(const std::string& username, GameData results)
+{
+    unsigned int totalAnswers;
+    unsigned int newAnswers = results.correctAnswerCount + results.wrongAnswerCount;
+    float newAverageTime, totalAnswerTime;
+    UserStatistics statistics = this->getUserStatistics(username);
+    // calculating updated statistics
+    totalAnswers = statistics.getTotalAnswers() + newAnswers;
+    if (newAnswers == 0)
+        newAverageTime = statistics.getAverageAnswerTime();
+    else
+    {
+        totalAnswerTime = statistics.getAverageAnswerTime() * statistics.getTotalAnswers() + results.averageAnswerTime * newAnswers;
+        newAverageTime = totalAnswerTime / totalAnswers;
+    }
+    // update in database
+    this->executeQuery(
+        "UPDATE Statistics "
+        "SET correct_answers = " + std::to_string(statistics.getCorrectAnswers() + results.correctAnswerCount) + ", "
+        "total_answers = " + std::to_string(totalAnswers) + ", "
+        "game_count = " + std::to_string(statistics.getGameCount() + 1) + ", "
+        "average_answer_time = " + std::to_string(newAverageTime) +
+        " WHERE user_id = (SELECT id FROM Users WHERE username = \"" + statistics.getUsername() + "\");"
+    );
+}
+
 std::list<UserStatistics> SqliteDatabase::getHighScores()
 {
     std::list<UserStatistics> statisticsList;
     // get random questions
     this->executeQuery("SELECT statistics.*, Users.username FROM Statistics INNER JOIN Users ON Statistics.user_id = Users.id "
-        "ORDER BY SCORE(average_answer_time, correct_answers, total_answers, game_count) "
+        "ORDER BY SCORE(average_answer_time, correct_answers, total_answers, game_count) DESC "
         "LIMIT " HIGHSCORES_USER_COUNT ";",
         this->pushCallback<UserStatistics>, &statisticsList);
     return statisticsList;
@@ -146,7 +172,8 @@ std::list<UserStatistics> SqliteDatabase::getHighScores()
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
-    int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, nullptr);
+    char* errorMessage;
+    int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, &errorMessage);
     return res == SQLITE_OK;
 }
 

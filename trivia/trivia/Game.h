@@ -19,6 +19,7 @@ public:
 	void removePlayer(LoggedUser);
 	bool gameFinished();
 	bool playersLeft();
+	GameData& getGameData(LoggedUser username);
 	std::vector<GameResults> getResults();
 private:
 	std::list<Question> m_questions;

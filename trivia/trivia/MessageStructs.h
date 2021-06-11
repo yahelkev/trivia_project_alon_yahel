@@ -180,7 +180,7 @@ typedef struct
 	std::string username;
 	unsigned int correctAnswerCount;
 	unsigned int wrongAnswerCount;
-	unsigned int averageAnswerTime;
+	float averageAnswerTime;
 } PlayerResults;
 
 typedef struct

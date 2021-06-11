@@ -4,6 +4,7 @@
 #include "Question.h"
 #include "UserStatistics.h"
 #include "StatisticsManager.h"
+#include "MessageStructs.h"
 
 class IDatabase
 {
@@ -20,5 +21,6 @@ public:
 	virtual int getNumOfTotalAnswers(const std::string& username) = 0;
 	virtual int getNumOfPlayerGames(const std::string& username) = 0;
 	virtual UserStatistics getUserStatistics(const std::string& username) = 0;
+	virtual void updateUserStatistics(const std::string& username, GameData results) = 0;
 	virtual std::list<UserStatistics> getHighScores() = 0;
 };

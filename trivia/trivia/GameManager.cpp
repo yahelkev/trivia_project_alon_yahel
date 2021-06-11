@@ -24,6 +24,9 @@ Game& GameManager::getGame(const roomID room)
 void GameManager::removePlayer(const roomID room, const LoggedUser user)
 {
 	Game& game = this->getGame(room);
+	// update database
+	this->m_database->updateUserStatistics(user.getUsername(), game.getGameData(user));
+	// remove player
 	game.removePlayer(user);
 	// check if all players were removed
 	if (!game.playersLeft())

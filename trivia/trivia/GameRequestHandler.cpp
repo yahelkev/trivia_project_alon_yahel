@@ -66,9 +66,9 @@ RequestResult GameRequestHandler::submitAnswer(RequestInfo requestInfo)
 RequestResult GameRequestHandler::getGameResults()
 {
 	Game& game = m_gameManager.getGame(m_game);
-	GetGameResultsResponse response = {(int)game.gameFinished(),game.getResults()};
+	GetGameResultsResponse response = { (int)game.gameFinished(), game.getResults() };
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(response);
-	return  RequestResult{ responseBuffer , m_handlerFacroty.createGameRequestHandler(m_game, m_user) };
+	return RequestResult{ responseBuffer , m_handlerFacroty.createGameRequestHandler(m_game, m_user) };
 }
 
 RequestResult GameRequestHandler::leaveGame()

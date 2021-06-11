@@ -110,7 +110,7 @@ namespace Client
 		public string username;
 		public uint correctAnswerCount;
 		public uint wrongAnswerCount;
-		public uint averageAnswerTime;
+		public float averageAnswerTime;
 	}
 
 }

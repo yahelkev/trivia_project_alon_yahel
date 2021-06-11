@@ -27,6 +27,7 @@ public:
 	virtual int getNumOfTotalAnswers(const std::string& username);
 	virtual int getNumOfPlayerGames(const std::string& username);
 	virtual UserStatistics getUserStatistics(const std::string& username);
+	virtual void updateUserStatistics(const std::string& username, GameData results);
 	virtual std::list<UserStatistics> getHighScores();
 private:
 	// function executes a sql query in the opened database. throws exception on error.

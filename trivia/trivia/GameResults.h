@@ -8,7 +8,7 @@ public:
 	GameResults(std::string usernam, unsigned int correctAnswerCount, unsigned int wrongAnswerCount, float averageAnswerTime);
 
 	// compare two results by scoring function
-	int score() const;
+	float score() const;
 	bool operator<(const GameResults& other) const;
 	std::string getUsername();
 	unsigned int getCorrectAnswerCount();

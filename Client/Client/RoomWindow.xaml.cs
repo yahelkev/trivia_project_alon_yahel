@@ -61,6 +61,10 @@ namespace Client
 		private void LeaveComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
 			// switch to menu
+			lock (_communicator)
+			{
+				_refreshWorker.CancelAsync();
+			}
 			Window window = new MenuWindow(_communicator);
 			Close();
 			window.ShowDialog();
@@ -115,6 +119,10 @@ namespace Client
 			{
 				MessageBox.Show("Room Closed...");
 				// go to menu
+				lock (_communicator)
+				{
+					_refreshWorker.CancelAsync();
+				}
 				Window window = new MenuWindow(_communicator);
 				Close();
 				window.ShowDialog();
