@@ -112,5 +112,8 @@ namespace Client
 		public uint wrongAnswerCount;
 		public float averageAnswerTime;
 	}
-
+	public struct AddQuestionResponse
+	{
+		public uint status;
+	}
 }
