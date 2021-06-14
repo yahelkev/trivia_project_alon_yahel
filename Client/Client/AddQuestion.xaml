@@ -1,0 +1,44 @@
+﻿<Window x:Class="Client.AddQuestion"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Client"
+        mc:Ignorable="d"
+        Title="AddQuestion" Height="450" Width="800">
+    <Grid Margin="10">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">Add Question</TextBlock>
+
+        <TextBlock Grid.Row="1" Grid.Column="0" Text="Question:"/>
+        <TextBox Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="QuestionInput"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Text="Correct Answer:"/>
+        <TextBox Grid.Row="2" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="CorrectAnswerInput"/>
+
+        <TextBlock Grid.Row="3" Grid.Column="0" Text="Answer 1:"/>
+        <TextBox Grid.Row="3" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="AnswerOneInput"/>
+
+        <TextBlock Grid.Row="4" Grid.Column="0" Text="Answer 2:"/>
+        <TextBox Grid.Row="4" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="AnswerTwoInput"/>
+
+        <TextBlock Grid.Row="5" Grid.Column="0" Text="Answer 3:"/>
+        <TextBox Grid.Row="5" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="AnswerThreeInput"/>
+
+        <Button Grid.Row="6" Grid.Column="0" Width="80" Height="24" HorizontalAlignment="Center" FontSize="14" Click="Add_Click">Add</Button>
+        <Button Grid.Row="6" Grid.Column="1" Width="80" Height="24" HorizontalAlignment="Center" FontSize="14" Click="Return_Click">Return</Button>
+    </Grid>
+</Window>
