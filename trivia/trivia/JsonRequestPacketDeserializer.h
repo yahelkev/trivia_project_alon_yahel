@@ -22,5 +22,8 @@ public:
 	//4.0.0
 	static SubmitAnswerRequest deserializeSubmitAnswerRequest(Buffer);
 
+	// bonus
+	static AddQuestionRequest deserializeAddQuestionRequest(Buffer);
+
 };
 

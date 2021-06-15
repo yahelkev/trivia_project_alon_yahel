@@ -7,6 +7,7 @@ class Question
 public:
 	// constructor from database
 	Question(int argc, char** argv, char** cols);
+	Question(int correctAnswer, std::string question, std::vector<std::string> answers);
 	// getters
 	std::string getQuestion() const;
 	std::vector<std::string> getPossibleAnswers() const;

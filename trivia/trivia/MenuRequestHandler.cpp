@@ -7,7 +7,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& factory, LoggedUse
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 {
-	return LOGOUT <= requestInfo.id && requestInfo.id <= USER_STATISTICS;
+	return LOGOUT <= requestInfo.id && requestInfo.id <= USER_STATISTICS || requestInfo.id == ADD_QUESTION;
 }
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
@@ -28,6 +28,8 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 		return getHighScores();
 	case USER_STATISTICS:
 		return getPersonalStatistics();
+	case ADD_QUESTION:
+		return addQuestion(requestInfo);
 	default:
 	{
 		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });
@@ -125,4 +127,12 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	roomID room = this->m_roomManager.createRoom(this->m_user, RoomData{0, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false});
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse{ room == INVALID_ROOM ? 0u : 1u, room });
 	return RequestResult{ responseBuffer, (IRequestHandler*)this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, room) };
+}
+
+RequestResult MenuRequestHandler::addQuestion(RequestInfo requestInfo)
+{
+	AddQuestionRequest request = JsonRequestPacketDeserializer::deserializeAddQuestionRequest(requestInfo.jsonBuffer);
+	this->m_handlerFactory.getQuestionManager().addQuestion(Question(request.correctAnswer, request.question, request.answers));
+	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(AddQuestionResponse{ 1u });
+	return RequestResult{ responseBuffer, (IRequestHandler*)this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
 }

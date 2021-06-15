@@ -92,6 +92,12 @@ std::list<Question> SqliteDatabase::getQuestions(int questionCount)
         this->pushCallback<Question>, &questionList);
     return questionList;
 }
+void SqliteDatabase::addQuestion(Question question)
+{
+    std::vector<std::string> answers = question.getPossibleAnswers();
+    this->executeQuery("INSERT Question VALUES (NULL, \"" + question.getQuestion() + "\",\"" +
+        answers[0] + "\",\"" + answers[1] + "\",\"" + answers[2] + "\",\"" + answers[3] + "\"," + std::to_string(question.getCorrectAnswer()) + ")");
+}
 float SqliteDatabase::getAverageAnswerTime(const std::string& username)
 {
     return std::stof(this->valueQuery(

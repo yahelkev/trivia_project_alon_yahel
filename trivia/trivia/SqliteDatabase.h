@@ -21,6 +21,7 @@ public:
 	virtual bool doesPasswordMatch(std::string username, std::string password);
 	virtual bool addNewUser(std::string username, std::string password, std::string email);
 	virtual std::list<Question> getQuestions(int questionCount);
+	virtual void addQuestion(Question question);
 
 	virtual float getAverageAnswerTime(const std::string& username);
 	virtual int getNumOfCorrectAnswers(const std::string& username);

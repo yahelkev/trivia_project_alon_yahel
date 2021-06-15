@@ -81,6 +81,13 @@ typedef struct
 	unsigned int answerId;
 } SubmitAnswerRequest;
 
+// question
+typedef struct
+{
+	unsigned int correctAnswer;
+	std::string question;
+	std::vector<std::string> answers;
+} AddQuestionRequest;
 
 // responses
 //--Loggin Manager
@@ -202,3 +209,9 @@ typedef struct
 	unsigned int questionCount;
 	unsigned int answerTimeout;
 } GetRoomStateResponse;
+
+// question
+typedef struct
+{
+	unsigned int status;
+} AddQuestionResponse;
