@@ -112,5 +112,12 @@ namespace Client
 		public uint wrongAnswerCount;
 		public float averageAnswerTime;
 	}
-
+	public struct ResetPasswordResponse
+	{
+		public uint status;
+	}
+	public struct ChangePasswordResponse
+	{
+		public uint status;
+	}
 }

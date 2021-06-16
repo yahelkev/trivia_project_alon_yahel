@@ -44,4 +44,12 @@ namespace Client
 	{
 		public uint answerId;
 	}
+	public struct ResetPasswordRequest
+	{
+		public string userName;
+	}
+	public struct ChangePasswordRequest
+	{
+		public string password;
+	}
 }
