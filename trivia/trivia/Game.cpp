@@ -72,7 +72,7 @@ std::vector<GameResults> Game::getResults()
 	// add results from player map
 	for (auto const& pair : this->m_players)
 		results.push_back(GameResults(pair.first.getUsername(), pair.second.correctAnswerCount, pair.second.wrongAnswerCount, pair.second.averageAnswerTime));
-	std::sort(results.begin(), results.end());
+	std::sort(results.rbegin(), results.rend());
 
 	return results;
 }

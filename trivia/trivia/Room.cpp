@@ -8,6 +8,7 @@ bool Room::addUser(LoggedUser newUser)
         this->m_users.size() != this->m_metadata.maxPlayers)    // room not full
     {
         m_users.push_back(newUser);
+        this->m_metadata.playerCount++;
         return true;
     }
     return false;
@@ -20,6 +21,7 @@ bool Room::removeUser(LoggedUser user)
     if ((std::find(m_users.begin(), m_users.end(), LoggedUser(user)) != m_users.end()))
     {
         m_users.erase(std::remove(m_users.begin(), m_users.end(), LoggedUser(user)), m_users.end());
+        this->m_metadata.playerCount--;
         return true;
     }
     return false;
@@ -50,6 +52,7 @@ Room& Room::operator=(const Room& other)
 {
     this->m_metadata.id = other.m_metadata.id;
     this->m_metadata.isActive = other.m_metadata.isActive;
+    this->m_metadata.playerCount = other.m_metadata.playerCount;
     this->m_metadata.maxPlayers = other.m_metadata.maxPlayers;
     this->m_metadata.name = other.m_metadata.name;
     this->m_metadata.numOfQuestionsInGame = other.m_metadata.numOfQuestionsInGame;

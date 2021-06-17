@@ -2,6 +2,8 @@
 #include "IDatabase.h"
 #include "UserStatistics.h"
 #include "Constants.h"
+#include <sstream>
+#include <iomanip>
 
 class IDatabase;
 class StatisticsManager
@@ -16,5 +18,7 @@ public:
 	std::vector<std::string> getUserStatistics(const std::string& username);
 private:
 	IDatabase* m_database;
+
+	std::string statisticToString(float statistic, int precision);
 };
 
