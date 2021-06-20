@@ -12,7 +12,7 @@ namespace Client
 		private RoomData[] _roomData;
 		private RequestWorker _worker = new RequestWorker();
 		private BackgroundWorker _refreshWorker = new BackgroundWorker();
-		private string _lastSelection;
+		private RoomData _lastSelection;
 		private const int REFRESH_TIME = 3000;
 
 		public JoinRoomWindow(Communicator communicator, RoomData[] rooms)
@@ -28,14 +28,6 @@ namespace Client
 			_refreshWorker.RunWorkerAsync();
 		}
 
-		private uint getRoomId(string roomName)
-		{
-			foreach (RoomData room in _roomData)
-				if (room.name == roomName)
-					return room.id;
-			return uint.MaxValue;
-		}
-
 		private void updateRoomList()
 		{
 			// set UI
@@ -43,25 +35,22 @@ namespace Client
 			{   // no available rooms
 				RoomList.Visibility = Visibility.Collapsed;
 				NoRoomText.Visibility = Visibility.Visible;
+				PlayersTitle.Visibility = Visibility.Collapsed;
+				PlayerBorder.Visibility = Visibility.Collapsed;
+				JoinButton.Visibility = Visibility.Collapsed;
 				return;
 			}
 			RoomList.Visibility = Visibility.Visible;
 			NoRoomText.Visibility = Visibility.Collapsed;
 			// update list
-			// order data in arrays
-			string[] finalRoomNames = new string[_roomData.Length];
-			for (int i = 0; i < _roomData.Length; i++)
-				finalRoomNames[i] = _roomData[i].name;
-			string[] currentRoomNames = RoomList.Items.OfType<string>().ToArray();
-			// get difference in arrays current and final
-			string[] toRemove = currentRoomNames.Except(finalRoomNames).ToArray();  // remove elements which are in the list currently but not in the final list
-			string[] toAdd = finalRoomNames.Except(currentRoomNames).ToArray(); // add elements which are in the final list but not in the current list
-
-			// change the list
-			foreach (string room in toRemove)
-				RoomList.Items.Remove(room);
-			foreach (string room in toAdd)
+			uint selectedRoomId = RoomList.SelectedItem == null ? ~0u : ((RoomData)RoomList.SelectedItem).id;
+			RoomList.Items.Clear();
+			foreach (RoomData room in _roomData)
+			{
 				RoomList.Items.Add(room);
+				if (room.id == selectedRoomId)
+					RoomList.SelectedItem = room;
+			}
 		}
 
 		private void Return_Click(object sender, RoutedEventArgs e)
@@ -90,13 +79,14 @@ namespace Client
 
 		private void RoomList_SelectionChanged(object sender, SelectionChangedEventArgs e)
 		{
+			if (RoomList.SelectedItem == null)
+				return;
 			// get room id
-			string roomName = (string)RoomList.SelectedItem;
-			uint id = getRoomId(roomName);
+			RoomData room = (RoomData)RoomList.SelectedItem;
 			// get player list
-			bool canRun = _worker.Run(PlayerListWork, PlayerListComplete, id);
+			bool canRun = _worker.Run(PlayerListWork, PlayerListComplete, room.id);
 			if (canRun) // wasn't already in progress
-				_lastSelection = roomName;
+				_lastSelection = room;
 		}
 		private void PlayerListWork(object sender, DoWorkEventArgs e)
 		{
@@ -107,11 +97,11 @@ namespace Client
 		private void PlayerListComplete(object sender, RunWorkerCompletedEventArgs e)
 		{
 			GetPlayersInRoomResponse response = (GetPlayersInRoomResponse)e.Result;
-			// set list visible
+			// set list
 			PlayersTitle.Visibility = Visibility.Visible;
 			PlayerBorder.Visibility = Visibility.Visible;
 			JoinButton.Visibility = Visibility.Visible;
-			// set list
+
 			PlayerList.Children.Clear();
 			foreach (string player in response.players)
 			{
@@ -120,14 +110,14 @@ namespace Client
 				PlayerList.Children.Add(textBlock);
 			}
 			// check if selection was changed again while sending request
-			if (_lastSelection != (string)RoomList.SelectedItem)
+			if (_lastSelection.id != ((RoomData)RoomList.SelectedItem).id)
 				RoomList_SelectionChanged(null, null);	// update again
 		}
 
 		// join room request
 		private void Join_Click(object sender, RoutedEventArgs e)
 		{
-			_worker.Run(JoinWork, JoinComplete, getRoomId(_lastSelection));
+			_worker.Run(JoinWork, JoinComplete, _lastSelection.id);
 		}
 		private void JoinWork(object sender, DoWorkEventArgs e)
 		{
@@ -143,7 +133,7 @@ namespace Client
 				return;
 			}
 			// change window
-			Window window = new RoomWindow(_communicator, getRoomId(_lastSelection), _lastSelection, false);
+			Window window = new RoomWindow(_communicator, _lastSelection.id, _lastSelection.name, false);
 			Close();
 			window.ShowDialog();
 		}

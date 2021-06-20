@@ -120,9 +120,6 @@
     <ClCompile Include="Question.cpp">
       <Filter>Source Files\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="QuestionManager.cpp">
-      <Filter>Source Files\Managers</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="WSAInitializer.h">
@@ -214,9 +211,6 @@
     </ClInclude>
     <ClInclude Include="Question.h">
       <Filter>Header Files\Objects</Filter>
-    </ClInclude>
-    <ClInclude Include="QuestionManager.h">
-      <Filter>Header Files\Managers</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

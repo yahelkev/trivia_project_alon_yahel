@@ -39,6 +39,7 @@ Buffer JsonResponsePacketSerializer::serializeResponse(GetRoomsResponse response
 	{
 		rooms_data.push_back({{ "name", room.name },
 			{"id", room.id},
+			{"playerCount", room.playerCount},
 			{"maxPlayers", room.maxPlayers},
 			{"numOfQuestions", room.numOfQuestionsInGame},
 			{"timePerQuestion", room.timePerQuestion},

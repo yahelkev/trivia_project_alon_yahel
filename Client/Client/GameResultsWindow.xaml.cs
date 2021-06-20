@@ -39,12 +39,15 @@ namespace Client
 		{
 			PlayerResults[] results = (PlayerResults[])e.Result;
 			// display result list
+			ResultsPanel.Items.Add(new ResultsRow { place = "", name = "name", correctAnswers = "correct", averageTime = "time" });
 			for (int i = 0; i < results.Length; i++)
-			{
-				TextBlock text = new TextBlock();
-				text.Text = (i + 1) + ". " + results[i].username + ": " + results[i].correctAnswerCount + ", " + results[i].averageAnswerTime.ToString("N1") + "s";
-				ResultsPanel.Children.Add(text);
-			}
+				ResultsPanel.Items.Add(new ResultsRow
+				{
+					place = (i + 1).ToString(),
+					name = results[i].username,
+					correctAnswers = results[i].correctAnswerCount.ToString(),
+					averageTime = results[i].averageAnswerTime.ToString("0.00")
+				});
 			// set list visible
 			ResultsPanel.Visibility = Visibility.Visible;
 			NotAvailableText.Visibility = Visibility.Collapsed;
@@ -63,6 +66,14 @@ namespace Client
 			Window window = new MenuWindow(_communicator);
 			Close();
 			window.ShowDialog();
+		}
+
+		struct ResultsRow
+		{
+			public string place { get; set; }
+			public string name { get; set; }
+			public string correctAnswers { get; set; }
+			public string averageTime { get; set; }
 		}
 	}
 }

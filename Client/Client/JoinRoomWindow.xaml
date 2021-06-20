@@ -9,7 +9,18 @@
 	<DockPanel LastChildFill="False">
 		<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,0" DockPanel.Dock="Top">Room List:</TextBlock>
 		<TextBlock HorizontalAlignment="Center" Visibility="Collapsed" Name="NoRoomText" DockPanel.Dock="Top">No room found...</TextBlock>
-		<ListBox Margin="10" FontSize="14" Name="RoomList" DockPanel.Dock="Top" Height="Auto" SelectionChanged="RoomList_SelectionChanged"/>
+		<ListBox Margin="10" FontSize="14" Name="RoomList" DockPanel.Dock="Top" Height="Auto" SelectionChanged="RoomList_SelectionChanged" HorizontalContentAlignment="Stretch">
+			<ListBox.ItemTemplate>
+				<DataTemplate>
+					<DockPanel>
+						<TextBlock TextAlignment="Right" DockPanel.Dock="Right">
+							<Run Text="{Binding playerCount}"/>/<Run Text="{Binding maxPlayers}"/>
+						</TextBlock>
+						<TextBlock TextAlignment="Left" DockPanel.Dock="Left" Text="{Binding name}"/>
+					</DockPanel>
+				</DataTemplate>
+			</ListBox.ItemTemplate>
+		</ListBox>
 		<TextBlock DockPanel.Dock="Top" FontSize="14" FontWeight="DemiBold" HorizontalAlignment="Center" Name="PlayersTitle" Visibility="Collapsed">PLayers:</TextBlock>
 		<Border Margin="10,5,10,10" DockPanel.Dock="Top" Background="GhostWhite" BorderBrush="#bbb" BorderThickness="1" Name="PlayerBorder" Visibility="Collapsed">
 			<StackPanel Margin="5,2,0,2" Name="PlayerList" DockPanel.Dock="Top" Height="Auto">

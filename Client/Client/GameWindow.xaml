@@ -17,7 +17,7 @@
 			</Grid>
 		</StackPanel>
 
-		<TextBlock Name="Question" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" DockPanel.Dock="Top"/>
+		<TextBlock Name="Question" HorizontalAlignment="Center" FontSize="24" FontWeight="Bold" Margin="0,0,0,20" DockPanel.Dock="Top" TextWrapping="Wrap"/>
 
 		<Button Margin="20,3,20,3" FontSize="16" DockPanel.Dock="Top" Name="Answer0" Tag="0" Click="Answer_Click" Background="LightGray"/>
 		<Button Margin="20,3,20,3" FontSize="16" DockPanel.Dock="Top" Name="Answer1" Tag="1" Click="Answer_Click" Background="LightGray"/>
