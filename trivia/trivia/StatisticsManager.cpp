@@ -23,7 +23,7 @@ std::vector<std::string> StatisticsManager::getHighScores()
 	// add rows of all highscores
 	for (const UserStatistics& statistics : highscores)
 	{
-		highscoresDisplay.push_back(statistics.getUsername() + ": " + std::to_string(this->scoreFormula(statistics)));
+		highscoresDisplay.push_back(statistics.getUsername() + ": " + statisticToString(this->scoreFormula(statistics) * SCORE_MULTIPLIER, 3));
 	}
 	return highscoresDisplay;
 }
@@ -36,11 +36,18 @@ std::vector<std::string> StatisticsManager::getUserStatistics(const std::string&
 	UserStatistics statistics = this->m_database->getUserStatistics(username);
 	std::vector<std::string> statisticsDisplay;
 	// add rows of info
-	statisticsDisplay.push_back("Game Count:      " + std::to_string(statistics.getGameCount()));
-	statisticsDisplay.push_back("Total Answers:   " + std::to_string(statistics.getTotalAnswers()));
+	statisticsDisplay.push_back("Game Count: " + std::to_string(statistics.getGameCount()));
+	statisticsDisplay.push_back("Total Answers: " + std::to_string(statistics.getTotalAnswers()));
 	statisticsDisplay.push_back("Correct Answers: " + std::to_string(statistics.getCorrectAnswers()));
-	statisticsDisplay.push_back("Average Time:    " + std::to_string(statistics.getAverageAnswerTime()) + "s per question");
-	statisticsDisplay.push_back("Score:           " + std::to_string(this->scoreFormula(statistics)));
+	statisticsDisplay.push_back("Average Time: " + statisticToString(statistics.getAverageAnswerTime(), 2) + "s");
+	statisticsDisplay.push_back("Score: " + statisticToString(this->scoreFormula(statistics) * SCORE_MULTIPLIER, 3));
 
 	return statisticsDisplay;
+}
+
+std::string StatisticsManager::statisticToString(float statistic, int precision)
+{
+	std::ostringstream stream;
+	stream << std::setprecision(precision) << statistic;
+	return stream.str();
 }

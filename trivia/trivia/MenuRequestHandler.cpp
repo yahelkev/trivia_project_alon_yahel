@@ -122,7 +122,7 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 {
 	CreateRoomRequest request = JsonRequestPacketDeserializer::deserializeCreateRoomRequest(requestInfo.jsonBuffer);
 	// create room and return response
-	roomID room = this->m_roomManager.createRoom(this->m_user, RoomData{0, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false});
+	roomID room = this->m_roomManager.createRoom(this->m_user, RoomData{0, request.roomName, 0, request.maxUsers, request.questionCount, request.answerTimeout, false});
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse{ room == INVALID_ROOM ? 0u : 1u, room });
 	return RequestResult{ responseBuffer, (IRequestHandler*)this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, room) };
 }

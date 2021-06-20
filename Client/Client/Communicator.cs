@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using System.IO;
 
 using System.Net.Sockets;
 using System.Net;
@@ -12,17 +13,38 @@ namespace Client
 {
 	public class Communicator
 	{
-		private const int PORT = 6666;
 		private const int REQUEST_CODE_BYTES = 1;
 		private const int CONTENT_LENGTH_BYTES = 4;
-		private const string SERVER_IP = "127.0.0.1";
 		private NetworkStream _clientStream;
+		private const string CONFIG_PATH = "../../../config.txt";
 		public Communicator()
 		{
+			// get config values
+			Dictionary<string, string> config = GetConfig();
+			// open connection
 			TcpClient client = new TcpClient();
-			IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse(SERVER_IP), PORT);
+			IPEndPoint serverEndPoint = new IPEndPoint(IPAddress.Parse(config["ip"]), int.Parse(config["port"]));
 			client.Connect(serverEndPoint);
 			_clientStream = client.GetStream();
+		}
+		
+		private Dictionary<string, string> GetConfig()
+		{
+			Dictionary<string, string> configDictionary = new Dictionary<string, string>();
+			// read config file
+			using (StreamReader stream = new StreamReader(CONFIG_PATH))
+			{
+				string line;
+				while((line = stream.ReadLine()) != null)
+				{
+					string[] splitString = line.Split('=');
+					if(splitString.Length == 2)  // has name and value
+					{
+						configDictionary[splitString[0]] = splitString[1];
+					}
+				}
+			}
+			return configDictionary;
 		}
 
 		enum MSG_CODES
