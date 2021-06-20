@@ -7,8 +7,7 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& factory, LoggedUse
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 {
-	return LOGOUT <= requestInfo.id && requestInfo.id <= USER_STATISTICS ||
-		requestInfo.id == RESET_PASSWORD || requestInfo.id == CHANGE_PASSWORD;
+	return LOGOUT <= requestInfo.id && requestInfo.id <= USER_STATISTICS || requestInfo.id == CHANGE_PASSWORD;
 }
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
@@ -31,8 +30,6 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 		return getPersonalStatistics();
 	case CHANGE_PASSWORD:
 		return changePassword(requestInfo);
-	case RESET_PASSWORD:
-		return resetPassword(requestInfo);
 	default:
 	{
 		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });
@@ -136,11 +133,6 @@ RequestResult MenuRequestHandler::changePassword(RequestInfo requestInfo)
 {
 	ChangePasswordRequest request = JsonRequestPacketDeserializer::deserializeChangePasswordRequest(requestInfo.jsonBuffer);
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(ChangePasswordResponse{
-		m_handlerFactory.getLoginManager().changePassword(request.password, m_user.getUsername(), request.oldPassword)});
+		m_handlerFactory.getLoginManager().changePassword(request.password, m_user.getUsername())});
 	return RequestResult{ responseBuffer,  this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
-}
-
-RequestResult MenuRequestHandler::resetPassword(RequestInfo requestInfo)
-{
-	return RequestResult();
 }

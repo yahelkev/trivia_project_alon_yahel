@@ -5,8 +5,10 @@ if(len(sys.argv) != 3):
 	print("too few or less ags! ")
 	exit()
 
+print(sys.argv)
 toaddrs  = sys.argv[1]
 msg = sys.argv[2]
+msg = msg.replace("~",'\n')
 fromaddr = 'triviaAlonYahel@gmail.com'
 username = fromaddr
 password = 'triviaAlonYahel12345678'

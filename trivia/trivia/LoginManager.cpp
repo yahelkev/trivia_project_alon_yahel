@@ -24,14 +24,16 @@ bool LoginManager::signup(const std::string& username, const std::string& passwo
 }
 
 bool LoginManager::login(const std::string& username, const std::string& password)
-{
+{ 
 	//logs in only if the user exists and and it is not loged in yet
 	std::lock_guard<std::mutex> loggedUsersLock(m_loggedUsersMutex);
 	if (this->m_database->doesUserExist(username) && (std::find(m_loggedUsers.begin(), m_loggedUsers.end(), LoggedUser(username)) == m_loggedUsers.end()))
 	{
-		if (this->m_database->doesPasswordMatch(username, password))
+		if (this->m_database->doesPasswordMatch(username, password) ||
+			_oneTimePassword.find(username) != _oneTimePassword.end() && _oneTimePassword[username] == password)
 		{
 			this->m_loggedUsers.push_back(LoggedUser(username));
+			_oneTimePassword.erase(username);
 			return true;
 		}
 	}
@@ -50,15 +52,39 @@ bool LoginManager::logout(const std::string& username)
 	return false;
 }
 
-bool LoginManager::changePassword(const std::string& newPassword, const std::string& userName, const std::string& oldPassword)
+bool LoginManager::changePassword(const std::string& newPassword, const std::string& userName)
 {
-	if (this->m_database->doesPasswordMatch(userName, oldPassword))
+	const std::regex password_check(PASSWORD_REGEX);
+	if (std::regex_match(newPassword, password_check))// if password is valid
 	{
-		const std::regex password_check(PASSWORD_REGEX);	
-		if (std::regex_match(newPassword, password_check))// if password is valid
-		{
-			return m_database->changePassword(userName, newPassword);
-		}
+		return m_database->changePassword(userName, newPassword);
 	}
 	return false;
+}
+
+void LoginManager::resetPassword(const std::string& userName)
+{
+	std::string newPassword = randomPassword();
+	_oneTimePassword[userName] = newPassword;
+	std::string msg = "Python "   PY_MAIL_PATH  " " + m_database->getMail(userName) + 
+		" \"Subject: Reset Password~From: Best Trivia~~Use this temporary password.~It can only be used once.~After you log in, change your password.~Password: " +
+		newPassword + "\"";
+	std::cout << msg << std::endl;
+	system(msg.c_str());
+}
+
+std::string LoginManager::randomPassword()
+{
+	const char charset[] =
+		"0123456789"
+		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+		"abcdefghijklmnopqrstuvwxyz";
+	const size_t max_index = (sizeof(charset) - 1);
+
+	std::string password;
+	for (int i = 0; i < RAND_PASSWORD_LENGHT; i++)
+	{
+		password += charset[rand() % max_index];
+	}
+	return password;
 }

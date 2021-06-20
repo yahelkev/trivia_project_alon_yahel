@@ -33,9 +33,9 @@ namespace Client
 		private void Change_Click(object sender, RoutedEventArgs e)
 		{
 			// checks if valid
-			if (oldPassInput.Text != "" && newPassInput.Text != "" && confirmInput.Text == newPassInput.Text)
+			if (newPassInput.Text != "" && confirmInput.Text == newPassInput.Text)
 			{
-				ChangePasswordRequest request = new ChangePasswordRequest { password = newPassInput.Text, oldPassword = oldPassInput.Text };
+				ChangePasswordRequest request = new ChangePasswordRequest { password = newPassInput.Text };
 				_worker.RunWorkerAsync(request);
 			}
 			else

@@ -70,7 +70,6 @@ ChangePasswordRequest JsonRequestPacketDeserializer::deserializeChangePasswordRe
 {
 	json jsonData = json::parse(msg);
 	ChangePasswordRequest result;
-	result.oldPassword = jsonData["oldPassword"];
 	result.password = jsonData["password"];
 	return result;
 }

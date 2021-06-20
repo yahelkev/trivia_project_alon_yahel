@@ -179,6 +179,11 @@ bool SqliteDatabase::changePassword(const std::string& username, const std::stri
     );
 }
 
+std::string SqliteDatabase::getMail(const std::string& username)
+{
+    return valueQuery("SELECT email FROM Users WHERE username = \"" + username + "\";");
+}
+
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);

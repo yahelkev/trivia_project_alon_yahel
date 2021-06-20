@@ -223,5 +223,4 @@ typedef struct
 typedef struct
 {
 	std::string password;
-	std::string oldPassword;
 } ChangePasswordRequest;
