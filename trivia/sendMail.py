@@ -2,7 +2,7 @@ import smtplib
 import sys
 
 if(len(sys.argv) != 3):
-	print("to few or less ags! ")
+	print("too few or less ags! ")
 	exit()
 
 toaddrs  = sys.argv[1]

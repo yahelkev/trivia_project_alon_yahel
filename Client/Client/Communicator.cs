@@ -169,9 +169,8 @@ namespace Client
 			byte[] json = Serializer.serializeRequest(msgData);
 			return Deserializer.deserializeResponse<ResetPasswordResponse>(sendMsg((int)MSG_CODES.RESET_PASSWORD,json));
 		}
-		public ChangePasswordResponse changePassword(string newPassword)
+		public ChangePasswordResponse changePassword(ChangePasswordRequest msgData)
 		{
-			ChangePasswordRequest msgData = new ChangePasswordRequest { password = newPassword };
 			byte[] json = Serializer.serializeRequest(msgData);
 			return Deserializer.deserializeResponse<ChangePasswordResponse>(sendMsg((int)MSG_CODES.CHANGE_PASSWORD, json));
 		}

@@ -51,5 +51,6 @@ namespace Client
 	public struct ChangePasswordRequest
 	{
 		public string password;
+		public string oldPassword;
 	}
 }

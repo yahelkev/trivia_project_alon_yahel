@@ -22,6 +22,7 @@
 			<Button Click="CreateRoom_Click">Create Room</Button>
 			<Button Click="UserStats_Click">My Stats</Button>
 			<Button Click="HighScores_Click">High Scores</Button>
+            <Button Click="ChangePassword_Click">Change Password</Button>
 			<Button Margin="5,5,5,15" Click="Logout_Click">Logout</Button>
 		</StackPanel>
 	</Viewbox>
