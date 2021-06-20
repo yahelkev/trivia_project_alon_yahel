@@ -44,4 +44,10 @@ namespace Client
 	{
 		public uint answerId;
 	}
+	public struct AddQuestionRequest
+	{
+		public uint correctAnswerIndex;
+		public string question;
+		public string[] answers;
+	}
 }

@@ -65,7 +65,8 @@ namespace Client
 			LEAVE_GAME,
 			LEAVE_ROOM,
 			START_GAME,
-			GET_ROOM_STATE
+			GET_ROOM_STATE,
+			ADD_QUESTION
 		}
 		public struct ResponseStruct
         {
@@ -182,6 +183,11 @@ namespace Client
 		public StartGameResponse startGame()
 		{
 			return Deserializer.deserializeResponse<StartGameResponse>(sendMsg((int)MSG_CODES.START_GAME, new byte[] { }));
+		}
+		public AddQuestionResponse addQuestion(AddQuestionRequest requestData)
+		{
+			byte[] json = Serializer.serializeRequest<AddQuestionRequest>(requestData);
+			return Deserializer.deserializeResponse<AddQuestionResponse>(sendMsg((int)MSG_CODES.ADD_QUESTION, json));
 		}
 		public object getRoomState()
 		{
