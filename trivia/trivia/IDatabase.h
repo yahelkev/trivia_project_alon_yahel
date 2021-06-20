@@ -14,6 +14,7 @@ public:
 	virtual bool addNewUser(std::string username, std::string password, std::string email) = 0;
 	// function returns a list of random questions
 	virtual std::list<Question> getQuestions(int questionCount) = 0;
+	virtual void addQuestion(Question question) = 0;
 
 	// statistics
 	virtual float getAverageAnswerTime(const std::string& username) = 0;

@@ -41,6 +41,11 @@ RoomManager& RequestHandlerFactory::getRoomManager()
     return this->m_roomManager;
 }
 
+QuestionManager& RequestHandlerFactory::getQuestionManager()
+{
+    return this->m_questionManager;
+}
+
 
 GameManager& RequestHandlerFactory::getGameManager()
 {

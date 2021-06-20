@@ -155,6 +155,14 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse respons
 	return createResponseBuffer(LEAVE_GAME, content);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(AddQuestionResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(ADD_QUESTION, content);
+}
+
 Buffer JsonResponsePacketSerializer::serializeResponse(CloseRoomResponse response)
 {
 	json content = {

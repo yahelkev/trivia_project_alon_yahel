@@ -26,5 +26,6 @@ private:
 	RequestResult getHighScores();
 	RequestResult joinRoom(RequestInfo);
 	RequestResult createRoom(RequestInfo);
+	RequestResult addQuestion(RequestInfo);
 };
 
