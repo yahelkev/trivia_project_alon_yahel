@@ -1,4 +1,5 @@
 #include "LoginManager.h"
+
 std::mutex m_loggedUsersMutex;
 
 bool LoginManager::signup(const std::string& username, const std::string& password, const std::string& email)
@@ -9,7 +10,7 @@ bool LoginManager::signup(const std::string& username, const std::string& passwo
 	}
 	// check info
 	const std::regex username_check(".+");	// at least one char
-	const std::regex password_check("[a-zA-Z0-9!@#$%^&*]{8,}");	// at least 8 letters, numbers or special symbols
+	const std::regex password_check(PASSWORD_REGEX);// at least 8 letters, numbers or special symbols
 	const std::regex email_check("([a-zA-Z0-9]+[!#$%&'*+-/=?^_`{|]?)*[a-zA-Z0-9]@([a-zA-Z0-9-]+\.)+[a-zA-Z0-9-]+");	// based on "https://help.returnpath.com/hc/en-us/articles/220560587-What-are-the-rules-for-email-address-syntax-"
 	if (!std::regex_match(username, username_check) ||
 		!std::regex_match(password, password_check) ||
@@ -45,6 +46,19 @@ bool LoginManager::logout(const std::string& username)
 	{
 		m_loggedUsers.erase(std::remove(m_loggedUsers.begin(), m_loggedUsers.end(), LoggedUser(username)), m_loggedUsers.end());
 		return true;
+	}
+	return false;
+}
+
+bool LoginManager::changePassword(const std::string& newPassword, const std::string& userName, const std::string& oldPassword)
+{
+	if (this->m_database->doesPasswordMatch(userName, oldPassword))
+	{
+		const std::regex password_check(PASSWORD_REGEX);	
+		if (std::regex_match(newPassword, password_check))// if password is valid
+		{
+			return m_database->changePassword(userName, newPassword);
+		}
 	}
 	return false;
 }

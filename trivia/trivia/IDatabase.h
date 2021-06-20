@@ -23,4 +23,5 @@ public:
 	virtual UserStatistics getUserStatistics(const std::string& username) = 0;
 	virtual void updateUserStatistics(const std::string& username, GameData results) = 0;
 	virtual std::list<UserStatistics> getHighScores() = 0;
+	virtual bool changePassword(const std::string& username , const std::string& newPassword) = 0;
 };

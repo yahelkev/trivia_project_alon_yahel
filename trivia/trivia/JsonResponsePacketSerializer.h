@@ -30,6 +30,9 @@ public:
 	static Buffer serializeResponse(SubmitAnswerResponse);
 	static Buffer serializeResponse(GetQuestionResponse);
 	static Buffer serializeResponse(LeaveGameResponse);
+	//bonus
+	static Buffer serializeResponse(ChangePasswordResponse);
+	static Buffer serializeResponse(ResetPasswordResponse);
 
 private:
 	// function gets response code and json and returns a buffer that can be sent back to the client

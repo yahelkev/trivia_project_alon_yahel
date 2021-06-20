@@ -65,3 +65,20 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 	result.answerId = jsonData["answerId"];
 	return result;
 }
+
+ChangePasswordRequest JsonRequestPacketDeserializer::deserializeChangePasswordRequest(Buffer msg)
+{
+	json jsonData = json::parse(msg);
+	ChangePasswordRequest result;
+	result.oldPassword = jsonData["oldPassword"];
+	result.password = jsonData["password"];
+	return result;
+}
+
+ResetPasswordRequest JsonRequestPacketDeserializer::deserializeResetPasswordRequest(Buffer msg)
+{
+	json jsonData = json::parse(msg);
+	ResetPasswordRequest result;
+	result.userName = jsonData["userName"];
+	return result;
+}

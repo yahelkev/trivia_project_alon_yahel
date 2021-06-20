@@ -7,7 +7,8 @@ MenuRequestHandler::MenuRequestHandler(RequestHandlerFactory& factory, LoggedUse
 
 bool MenuRequestHandler::isRequestRelevant(RequestInfo requestInfo)
 {
-	return LOGOUT <= requestInfo.id && requestInfo.id <= USER_STATISTICS;
+	return LOGOUT <= requestInfo.id && requestInfo.id <= USER_STATISTICS ||
+		requestInfo.id == RESET_PASSWORD || requestInfo.id == CHANGE_PASSWORD;
 }
 
 RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
@@ -28,6 +29,10 @@ RequestResult MenuRequestHandler::handleRequest(RequestInfo requestInfo)
 		return getHighScores();
 	case USER_STATISTICS:
 		return getPersonalStatistics();
+	case CHANGE_PASSWORD:
+		return changePassword(requestInfo);
+	case RESET_PASSWORD:
+		return resetPassword(requestInfo);
 	default:
 	{
 		Buffer buffer = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });
@@ -125,4 +130,17 @@ RequestResult MenuRequestHandler::createRoom(RequestInfo requestInfo)
 	roomID room = this->m_roomManager.createRoom(this->m_user, RoomData{0, request.roomName, request.maxUsers, request.questionCount, request.answerTimeout, false});
 	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(CreateRoomResponse{ room == INVALID_ROOM ? 0u : 1u, room });
 	return RequestResult{ responseBuffer, (IRequestHandler*)this->m_handlerFactory.createRoomAdminRequestHandler(this->m_user, room) };
+}
+
+RequestResult MenuRequestHandler::changePassword(RequestInfo requestInfo)
+{
+	ChangePasswordRequest request = JsonRequestPacketDeserializer::deserializeChangePasswordRequest(requestInfo.jsonBuffer);
+	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(ChangePasswordResponse{
+		m_handlerFactory.getLoginManager().changePassword(request.password, m_user.getUsername(), request.oldPassword)});
+	return RequestResult{ responseBuffer,  this->m_handlerFactory.createMenuRequestHandler(this->m_user) };
+}
+
+RequestResult MenuRequestHandler::resetPassword(RequestInfo requestInfo)
+{
+	return RequestResult();
 }

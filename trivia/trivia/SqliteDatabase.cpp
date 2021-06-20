@@ -169,6 +169,16 @@ std::list<UserStatistics> SqliteDatabase::getHighScores()
     return statisticsList;
 }
 
+bool SqliteDatabase::changePassword(const std::string& username, const std::string& newPassword)
+{
+    // update in database
+    return this->executeQuery(
+        "UPDATE Users "
+        "SET password = \"" + newPassword +
+        "\" WHERE username = \"" + username + "\";"
+    );
+}
+
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
