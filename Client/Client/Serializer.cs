@@ -52,4 +52,10 @@ namespace Client
 	{
 		public string password;
 	}
+	public struct AddQuestionRequest
+	{
+		public uint correctAnswerIndex;
+		public string question;
+		public string[] answers;
+	}
 }

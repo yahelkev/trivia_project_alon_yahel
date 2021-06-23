@@ -35,7 +35,9 @@ namespace Client
 			roomData.name = RoomNameInput.Text;
 			if (RoomNameInput.Text == "")
 				valid = false;
-			valid &= uint.TryParse(PlayerCountInput.Text, out roomData.maxPlayers);
+			uint temp;
+			valid &= uint.TryParse(PlayerCountInput.Text, out temp);
+			roomData.maxPlayers = temp;
 			valid &= uint.TryParse(QuestionCountInput.Text, out roomData.numOfQuestions);
 			valid &= uint.TryParse(QuestionTimeInput.Text, out roomData.timePerQuestion);
 			// check if valid

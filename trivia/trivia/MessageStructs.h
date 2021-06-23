@@ -18,6 +18,7 @@ typedef struct
 {
 	unsigned int id;
 	std::string name;
+	unsigned int playerCount;
 	unsigned int maxPlayers;
 	unsigned int numOfQuestionsInGame;
 	unsigned int timePerQuestion;
@@ -81,6 +82,13 @@ typedef struct
 	unsigned int answerId;
 } SubmitAnswerRequest;
 
+// question
+typedef struct
+{
+	unsigned int correctAnswer;
+	std::string question;
+	std::vector<std::string> answers;
+} AddQuestionRequest;
 
 // responses
 //--Loggin Manager
@@ -224,3 +232,9 @@ typedef struct
 {
 	std::string password;
 } ChangePasswordRequest;
+
+// question
+typedef struct
+{
+	unsigned int status;
+} AddQuestionResponse;

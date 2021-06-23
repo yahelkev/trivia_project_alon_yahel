@@ -25,6 +25,11 @@ Question::Question(int argc, char** argv, char** cols) : m_possibleAnswers{"", "
 	}
 }
 
+Question::Question(int correctAnswer, std::string question, std::vector<std::string> answers) : m_correctAnswer(correctAnswer), m_question(question), m_possibleAnswers(answers)
+{
+
+}
+
 std::string Question::getQuestion() const
 {
 	return this->m_question;

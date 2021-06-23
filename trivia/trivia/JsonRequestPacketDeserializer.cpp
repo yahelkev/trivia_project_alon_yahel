@@ -81,3 +81,12 @@ ResetPasswordRequest JsonRequestPacketDeserializer::deserializeResetPasswordRequ
 	result.userName = jsonData["userName"];
 	return result;
 }
+AddQuestionRequest JsonRequestPacketDeserializer::deserializeAddQuestionRequest(Buffer msg)
+{
+	json jsonData = json::parse(msg);
+	AddQuestionRequest result;
+	result.question = jsonData["question"];
+	result.correctAnswer = jsonData["correctAnswerIndex"];
+	result.answers = std::vector<std::string>(jsonData["answers"].begin(), jsonData["answers"].end());
+	return result;
+}

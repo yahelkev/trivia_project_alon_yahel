@@ -34,6 +34,9 @@ public:
 	static Buffer serializeResponse(ChangePasswordResponse);
 	static Buffer serializeResponse(ResetPasswordResponse);
 
+	// bonus
+	static Buffer serializeResponse(AddQuestionResponse);
+
 private:
 	// function gets response code and json and returns a buffer that can be sent back to the client
 	static Buffer createResponseBuffer(Byte code, json& content);

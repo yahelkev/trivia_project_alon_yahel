@@ -27,5 +27,6 @@ private:
 	RequestResult joinRoom(RequestInfo);
 	RequestResult createRoom(RequestInfo);
 	RequestResult changePassword(RequestInfo);
+	RequestResult addQuestion(RequestInfo);
 };
 

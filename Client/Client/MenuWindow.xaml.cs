@@ -25,7 +25,11 @@ namespace Client
 			InitializeComponent();
 			_communicator = communicator;
 		}
-
+		//add question butten
+		private void AddQuestion_Click(object sender, RoutedEventArgs e)
+		{
+			SwitchWindow(new AddQuestionWindow(_communicator));
+		}
 		// logout button
 		private void Logout_Click(object sender, RoutedEventArgs e)
 		{
