@@ -8,14 +8,12 @@ LoginRequestHandler::LoginRequestHandler(RequestHandlerFactory& factory):
 
 bool LoginRequestHandler::isRequestRelevant(RequestInfo rqstInfo)
 {
-	return rqstInfo.id == LOGIN || rqstInfo.id == SIGNUP;
+	return rqstInfo.id == LOGIN || rqstInfo.id == SIGNUP || rqstInfo.id == RESET_PASSWORD;
 }
 
 RequestResult LoginRequestHandler::handleRequest(RequestInfo requesrInfo)
 {
 	RequestResult result = { Buffer(), nullptr };
-	result.response;
-	result.newHandler;
 	switch (requesrInfo.id)
 	{
 	case LOGIN:
@@ -51,10 +49,21 @@ RequestResult LoginRequestHandler::handleRequest(RequestInfo requesrInfo)
 		}
 		break;
 	}
+	case RESET_PASSWORD:
+		result = resetPassword(requesrInfo);
+		break;
 	default:
 		result.response = JsonResponsePacketSerializer::serializeResponse(ErrorResponse{ "Invalid request code for your state!" });
 		result.newHandler = this->m_handlerFactory.createLoginRequestHandler();
 		break;
 	}
 	return result;
+}
+
+RequestResult LoginRequestHandler::resetPassword(RequestInfo requestInfo)
+{
+	ResetPasswordRequest request = JsonRequestPacketDeserializer::deserializeResetPasswordRequest(requestInfo.jsonBuffer);
+	m_loginManager.resetPassword(request.userName);
+	Buffer responseBuffer = JsonResponsePacketSerializer::serializeResponse(ResetPasswordResponse{ 1 });
+	return RequestResult{ responseBuffer,  this->m_handlerFactory.createLoginRequestHandler() };
 }

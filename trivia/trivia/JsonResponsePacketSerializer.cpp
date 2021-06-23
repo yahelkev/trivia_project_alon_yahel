@@ -155,6 +155,22 @@ Buffer JsonResponsePacketSerializer::serializeResponse(LeaveGameResponse respons
 	return createResponseBuffer(LEAVE_GAME, content);
 }
 
+Buffer JsonResponsePacketSerializer::serializeResponse(ChangePasswordResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(CHANGE_PASSWORD, content);
+}
+
+Buffer JsonResponsePacketSerializer::serializeResponse(ResetPasswordResponse response)
+{
+	json content = {
+		{"status", response.status}
+	};
+	return createResponseBuffer(RESET_PASSWORD, content);
+}
+
 Buffer JsonResponsePacketSerializer::serializeResponse(AddQuestionResponse response)
 {
 	json content = {

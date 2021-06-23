@@ -66,7 +66,10 @@ namespace Client
 			else
 				MessageBox.Show("Failed to get High Scores", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
 		}
-
+		private void ChangePassword_Click(object sender, RoutedEventArgs e)
+		{
+			SwitchWindow(new ChangePasswordWindow(_communicator));
+		}
 		// user scores button
 		private void UserStats_Click(object sender, RoutedEventArgs e)
 		{

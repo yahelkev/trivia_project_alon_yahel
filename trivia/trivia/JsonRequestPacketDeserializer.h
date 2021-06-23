@@ -22,8 +22,9 @@ public:
 	//4.0.0
 	static SubmitAnswerRequest deserializeSubmitAnswerRequest(Buffer);
 
-	// bonus
+	//bonus
+	static ChangePasswordRequest deserializeChangePasswordRequest(Buffer);
+	static ResetPasswordRequest deserializeResetPasswordRequest(Buffer);
 	static AddQuestionRequest deserializeAddQuestionRequest(Buffer);
-
 };
 

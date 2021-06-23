@@ -95,8 +95,8 @@ std::list<Question> SqliteDatabase::getQuestions(int questionCount)
 void SqliteDatabase::addQuestion(Question question)
 {
     std::vector<std::string> answers = question.getPossibleAnswers();
-    this->executeQuery("INSERT Question VALUES (NULL, \"" + question.getQuestion() + "\",\"" +
-        answers[0] + "\",\"" + answers[1] + "\",\"" + answers[2] + "\",\"" + answers[3] + "\"," + std::to_string(question.getCorrectAnswer()) + ")");
+    this->executeQuery("INSERT INTO Questions VALUES (NULL, \"" + question.getQuestion() + "\",\"" +
+        answers[0] + "\",\"" + answers[1] + "\",\"" + answers[2] + "\",\"" + answers[3] + "\"," + std::to_string(question.getCorrectAnswer()) + ");");
 }
 float SqliteDatabase::getAverageAnswerTime(const std::string& username)
 {
@@ -175,11 +175,31 @@ std::list<UserStatistics> SqliteDatabase::getHighScores()
     return statisticsList;
 }
 
+bool SqliteDatabase::changePassword(const std::string& username, const std::string& newPassword)
+{
+    // update in database
+    return this->executeQuery(
+        "UPDATE Users "
+        "SET password = \"" + newPassword +
+        "\" WHERE username = \"" + username + "\";"
+    );
+}
+
+std::string SqliteDatabase::getMail(const std::string& username)
+{
+    return valueQuery("SELECT email FROM Users WHERE username = \"" + username + "\";");
+}
+
+unsigned int SqliteDatabase::getNumOfQuestios()
+{
+    return std::stoi(valueQuery("select count(*) from Questions;"));
+}
+
 bool SqliteDatabase::executeQuery(const std::string& sql, callbackFunction callback, void* callbackData)
 {
     std::lock_guard<std::mutex> databaseLock(this->_databaseMutex);
     char* errorMessage;
-    int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, &errorMessage);
+       int res = sqlite3_exec(this->_database, sql.c_str(), callback, callbackData, &errorMessage);
     return res == SQLITE_OK;
 }
 

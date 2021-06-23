@@ -211,6 +211,28 @@ typedef struct
 	unsigned int answerTimeout;
 } GetRoomStateResponse;
 
+// --pasword things
+
+typedef struct
+{
+	unsigned int status;
+} ResetPasswordResponse;
+
+typedef struct
+{
+	unsigned int status;
+} ChangePasswordResponse;
+
+typedef struct
+{
+	std::string userName;
+} ResetPasswordRequest;
+
+typedef struct
+{
+	std::string password;
+} ChangePasswordRequest;
+
 // question
 typedef struct
 {

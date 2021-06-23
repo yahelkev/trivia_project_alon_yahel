@@ -20,28 +20,24 @@ namespace Client
 	public partial class LoginWindow : Window
 	{
 		private Communicator _communicator;
-		private BackgroundWorker _worker = new BackgroundWorker();
+		private RequestWorker _worker = new RequestWorker();
 
 		public LoginWindow(Communicator communicator)
 		{
 			InitializeComponent();
 			_communicator = communicator;
-			_worker.DoWork += do_work;
-			_worker.RunWorkerCompleted += work_complete;
 		}
 		public LoginWindow()
 		{
 			InitializeComponent();
 			_communicator = new Communicator();
-			_worker.DoWork += do_work;
-			_worker.RunWorkerCompleted += work_complete;
 		}
-		private void do_work(object sender, DoWorkEventArgs e)
+		private void login_work(object sender, DoWorkEventArgs e)
         {
 			LoginResponse response = _communicator.login(((string[])e.Argument)[0], ((string[])e.Argument)[1]);
 			e.Result = response.status;
 		}
-		private void work_complete(object sender, RunWorkerCompletedEventArgs e)
+		private void login_complete(object sender, RunWorkerCompletedEventArgs e)
 		{
 			if (e.Error != null)
 			{
@@ -61,12 +57,42 @@ namespace Client
 		}
 		private void login(object sender, RoutedEventArgs e)
 		{
-			_worker.RunWorkerAsync(new string[]{inputUserName.Text, inputPassword.Text});
+			_worker.Run(login_work, login_complete,new string[]{inputUserName.Text, inputPassword.Text});
         }
 		private void signup(object sender, RoutedEventArgs e)
 		{
 			signupWindow menu = new signupWindow(_communicator);
 			menu.ShowDialog();
+		}
+		private void resetPassword(object sender, RoutedEventArgs e)
+		{ 
+			if(inputUserName.Text == "")
+            {
+				MessageBox.Show("please fill 'username' box!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+				return;
+            }
+			_worker.Run(reset_work, reset_complete, inputUserName.Text);
+		}
+		private void reset_work(object sender, DoWorkEventArgs e)
+		{
+			ResetPasswordResponse response = _communicator.resetPassword((string)e.Argument);
+			e.Result = response.status;
+		}
+		private void reset_complete(object sender, RunWorkerCompletedEventArgs e)
+		{
+			if (e.Error != null)
+			{
+				MessageBox.Show(e.Error.Message);
+				return;
+			}
+			if ((uint)e.Result == 1)
+			{
+				MessageBox.Show("check your mail.");
+			}
+			else
+			{
+				MessageBox.Show("Invalid username");
+			}
 		}
 	}
 }

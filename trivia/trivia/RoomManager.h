@@ -1,6 +1,7 @@
 #pragma once
 #include <map>
 #include "Room.h"
+#include "IDataBase.h"
 
 class RoomManager
 {
@@ -8,8 +9,9 @@ class RoomManager
 	std::mutex m_roomsMap_lock;
 
 	roomID _freeID;
+	IDatabase* m_dataBase;
 public:
-	RoomManager();
+	RoomManager(IDatabase* dataBase);
 	//creats a room
 	roomID createRoom(LoggedUser, RoomData);
 	//deletes a room

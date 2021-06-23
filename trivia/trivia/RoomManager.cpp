@@ -1,16 +1,20 @@
 #include "RoomManager.h"
 
-RoomManager::RoomManager() : _freeID(1)
+RoomManager::RoomManager(IDatabase* dataBase) : _freeID(1), m_dataBase (dataBase)
 {
 }
 
 roomID RoomManager::createRoom(LoggedUser user, RoomData data)
 {
+	if (data.numOfQuestionsInGame > m_dataBase->getNumOfQuestios())
+	{
+		return INVALID_ROOM;
+	}
 	std::lock_guard<std::mutex> usersLock(this->m_roomsMap_lock);
 	data.id = this->_freeID++;
 	if (this->m_rooms.find(data.id) != this->m_rooms.end())
 	{
-		return 0;
+		return INVALID_ROOM;
 	}
 	this->m_rooms[data.id] = Room(data);
 	this->m_rooms[data.id].addUser(user);

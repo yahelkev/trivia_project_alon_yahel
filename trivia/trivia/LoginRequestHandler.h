@@ -12,7 +12,10 @@ public:
 	
 	virtual bool isRequestRelevant(RequestInfo);
 	virtual RequestResult handleRequest(RequestInfo);
+
 private:
 	LoginManager& m_loginManager;
 	RequestHandlerFactory& m_handlerFactory;
+
+	RequestResult resetPassword(RequestInfo);
 };

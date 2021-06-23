@@ -30,6 +30,11 @@ public:
 	virtual UserStatistics getUserStatistics(const std::string& username);
 	virtual void updateUserStatistics(const std::string& username, GameData results);
 	virtual std::list<UserStatistics> getHighScores();
+	virtual bool changePassword(const std::string& username, const std::string& newPassword);
+	virtual std::string getMail(const std::string& username);
+	virtual unsigned int getNumOfQuestios();
+
+
 private:
 	// function executes a sql query in the opened database. throws exception on error.
 	bool executeQuery(const std::string& sql, callbackFunction callback = nullptr, void* callbackData = nullptr);

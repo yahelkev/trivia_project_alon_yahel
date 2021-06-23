@@ -3,7 +3,7 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         Title="Login" Height="180" Width="260">
+         Title="Login" Height="180" Width="300">
     <Grid Margin="0,0,0,67">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*" />
@@ -21,11 +21,13 @@
         <Button Content="signup"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                Click="signup" Height="20" Width="75" Grid.ColumnSpan="2" Margin="40,0,0,-45" Grid.Row="1"/>
+                Click="signup" Height="20" Width="75" Margin="8,0,0,-45" Grid.Row="1"/>
         <Button Content="login"
-                HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Click ="login" Height="20" Width="75" Grid.ColumnSpan="2" Margin="0,0,40,-45" Grid.Row="1"/>
+                Click ="login" Height="20" Margin="91,0,123,-45" Grid.Row="1" Grid.ColumnSpan="2"/>
+        <Button Content="Forgot Password"
+                VerticalAlignment="Bottom"
+                Click ="resetPassword" Height="20" Margin="80,0,8,-45" Grid.Row="1" Grid.Column="1"/>
     </Grid>
 
 </Window>

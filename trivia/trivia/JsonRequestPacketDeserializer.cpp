@@ -66,6 +66,21 @@ SubmitAnswerRequest JsonRequestPacketDeserializer::deserializeSubmitAnswerReques
 	return result;
 }
 
+ChangePasswordRequest JsonRequestPacketDeserializer::deserializeChangePasswordRequest(Buffer msg)
+{
+	json jsonData = json::parse(msg);
+	ChangePasswordRequest result;
+	result.password = jsonData["password"];
+	return result;
+}
+
+ResetPasswordRequest JsonRequestPacketDeserializer::deserializeResetPasswordRequest(Buffer msg)
+{
+	json jsonData = json::parse(msg);
+	ResetPasswordRequest result;
+	result.userName = jsonData["userName"];
+	return result;
+}
 AddQuestionRequest JsonRequestPacketDeserializer::deserializeAddQuestionRequest(Buffer msg)
 {
 	json jsonData = json::parse(msg);
@@ -73,5 +88,5 @@ AddQuestionRequest JsonRequestPacketDeserializer::deserializeAddQuestionRequest(
 	result.question = jsonData["question"];
 	result.correctAnswer = jsonData["correctAnswerIndex"];
 	result.answers = std::vector<std::string>(jsonData["answers"].begin(), jsonData["answers"].end());
-	return result; return AddQuestionRequest();
+	return result;
 }

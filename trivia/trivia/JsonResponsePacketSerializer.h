@@ -30,6 +30,9 @@ public:
 	static Buffer serializeResponse(SubmitAnswerResponse);
 	static Buffer serializeResponse(GetQuestionResponse);
 	static Buffer serializeResponse(LeaveGameResponse);
+	//bonus
+	static Buffer serializeResponse(ChangePasswordResponse);
+	static Buffer serializeResponse(ResetPasswordResponse);
 
 	// bonus
 	static Buffer serializeResponse(AddQuestionResponse);

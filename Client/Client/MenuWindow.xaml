@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="MenuWindow" Height="325" Width="300">
+        Title="MenuWindow" Height="350" Width="275">
 	<Viewbox Stretch="Uniform"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="400">
 		<StackPanel Width="120">
 			<!--Children's Style-->
@@ -22,6 +22,7 @@
 			<Button Click="CreateRoom_Click">Create Room</Button>
 			<Button Click="UserStats_Click">My Stats</Button>
 			<Button Click="HighScores_Click">High Scores</Button>
+            <Button Click="ChangePassword_Click">Change Password</Button>
 			<Button Click="AddQuestion_Click">Add Question</Button>
 			<Button Margin="5,5,5,15" Click="Logout_Click">Logout</Button>
 		</StackPanel>
