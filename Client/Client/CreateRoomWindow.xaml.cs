@@ -41,6 +41,9 @@ namespace Client
 			valid &= uint.TryParse(QuestionCountInput.Text, out roomData.numOfQuestions);
 			valid &= uint.TryParse(QuestionTimeInput.Text, out roomData.timePerQuestion);
 			// check if valid
+			valid &= roomData.maxPlayers > 0;
+			valid &= roomData.numOfQuestions > 0;
+			valid &= roomData.timePerQuestion > 0;
 			if(valid)
 				_worker.RunWorkerAsync(roomData);
 			else

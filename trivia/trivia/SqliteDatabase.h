@@ -32,6 +32,7 @@ public:
 	virtual std::list<UserStatistics> getHighScores();
 	virtual bool changePassword(const std::string& username, const std::string& newPassword);
 	virtual std::string getMail(const std::string& username);
+	virtual unsigned int getNumOfQuestios();
 
 
 private:

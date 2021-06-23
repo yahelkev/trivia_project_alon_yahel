@@ -52,7 +52,6 @@ namespace Client
 					RoomList.SelectedItem = room;
 			}
 		}
-
 		private void Return_Click(object sender, RoutedEventArgs e)
 		{
 			// return to menu
