@@ -5,7 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="StatisticsWindow" Height="325" Width="300">
+        Title="StatisticsWindow" Height="400" Width="300">
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/cat.jpg"></ImageBrush>
+	</Window.Background>
 	<StackPanel>
 		<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,5" Name="Title">
 		</TextBlock>

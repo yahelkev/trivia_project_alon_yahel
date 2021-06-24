@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="AddQuestion" Height="350" Width="400">
-    <Grid Margin="10">
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/city.jpg"></ImageBrush>
+	</Window.Background>
+	<Grid Margin="10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*"/>
             <ColumnDefinition Width="*"/>
@@ -19,7 +22,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="2*"/>
         </Grid.RowDefinitions>
 
         <TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">Add Question</TextBlock>

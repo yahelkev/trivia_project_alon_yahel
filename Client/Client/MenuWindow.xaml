@@ -6,8 +6,11 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="MenuWindow" Height="350" Width="275">
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/sea.jpg"></ImageBrush>
+	</Window.Background>
 	<Viewbox Stretch="Uniform"  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" MaxWidth="400">
-		<StackPanel Width="120">
+		<StackPanel>
 			<!--Children's Style-->
 			<StackPanel.Resources>
 				<Style TargetType="Button">

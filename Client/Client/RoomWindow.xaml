@@ -6,7 +6,10 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="RoomWindow" Height="300" Width="300">
-    <DockPanel LastChildFill="False">
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/forest.jpg"></ImageBrush>
+	</Window.Background>
+	<DockPanel LastChildFill="False">
 		<TextBlock Margin="5" FontSize="16" HorizontalAlignment="Center" FontWeight="Bold" Name="RoomName" DockPanel.Dock="Top">Room: "room name"</TextBlock>
 		<Border Margin="10,5,10,10" DockPanel.Dock="Top" Background="GhostWhite" BorderBrush="#bbb" BorderThickness="1" Name="PlayerBorder">
 			<StackPanel Margin="5,2,0,2" Name="PlayerList" DockPanel.Dock="Top" Height="Auto">

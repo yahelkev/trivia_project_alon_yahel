@@ -5,8 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
-        Title="CreateRoomWindow" Height="300" Width="300">
-    <Grid Margin="10">
+        Title="CreateRoomWindow" Height="275" Width="300">
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/moon.png"></ImageBrush>
+	</Window.Background>
+	<Grid Margin="10">
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="*"/>
 			<ColumnDefinition Width="*"/>
@@ -20,18 +23,18 @@
 			<RowDefinition Height="*"/>
 		</Grid.RowDefinitions>
 
-		<TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16">Create Room</TextBlock>
+		<TextBlock Grid.Row="0" Grid.ColumnSpan="2" HorizontalAlignment="Center" FontWeight="Bold" FontSize="16" Foreground="White">Create Room</TextBlock>
 
-		<TextBlock Grid.Row="1" Grid.Column="0">Room Name:</TextBlock>
+		<TextBlock Grid.Row="1" Grid.Column="0" Foreground="White">Room Name:</TextBlock>
 		<TextBox Grid.Row="1" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="RoomNameInput"/>
 
-		<TextBlock Grid.Row="2" Grid.Column="0">Number of Players:</TextBlock>
+		<TextBlock Grid.Row="2" Grid.Column="0" Foreground="White">Number of Players:</TextBlock>
 		<TextBox Grid.Row="2" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="PlayerCountInput"/>
 
-		<TextBlock Grid.Row="3" Grid.Column="0">Number of Questions:</TextBlock>
+		<TextBlock Grid.Row="3" Grid.Column="0" Foreground="White">Number of Questions:</TextBlock>
 		<TextBox Grid.Row="3" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="QuestionCountInput"/>
 
-		<TextBlock Grid.Row="4" Grid.Column="0">Time per Question:</TextBlock>
+		<TextBlock Grid.Row="4" Grid.Column="0"><Run Foreground="White">Time per</Run> Question:</TextBlock>
 		<TextBox Grid.Row="4" Grid.Column="1" Height="20" VerticalAlignment="Top" Name="QuestionTimeInput"/>
 
 		<Button Grid.Row="5" Grid.Column="0" Width="80" Height="24" HorizontalAlignment="Center" FontSize="14" Click="Create_Click">Create</Button>

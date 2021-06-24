@@ -178,5 +178,32 @@
   <ItemGroup>
     <Resource Include="triviaIcon.ico" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\sea.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\forest.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\moon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\paint.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\questionMarks.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\desert.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\meeting.jpg" />
+    <Resource Include="Pictures\cat.jpg" />
+    <Resource Include="Pictures\trophy.jpg" />
+    <Resource Include="Pictures\money.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Pictures\city.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -6,6 +6,9 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="JoinRoomWindow" Height="400" Width="300">
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/paint.jpg"></ImageBrush>
+	</Window.Background>
 	<DockPanel LastChildFill="False">
 		<TextBlock HorizontalAlignment="Center" FontSize="18" FontWeight="Bold" Margin="0,5,0,0" DockPanel.Dock="Top">Room List:</TextBlock>
 		<TextBlock HorizontalAlignment="Center" Visibility="Collapsed" Name="NoRoomText" DockPanel.Dock="Top">No room found...</TextBlock>

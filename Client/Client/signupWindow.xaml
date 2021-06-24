@@ -3,32 +3,35 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-         Title="Signup" Height="180" Width="260">
-    <Grid Margin="0,0,0,67">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*" />
-            <ColumnDefinition Width="2*" />
-        </Grid.ColumnDefinitions>
+         Title="Signup" Height="280" Width="400">
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/meeting.jpg"></ImageBrush>
+	</Window.Background>
+	<Grid Margin="0,0,0,67">
+		<Grid.ColumnDefinitions>
+			<ColumnDefinition Width="1*" />
+			<ColumnDefinition Width="3*" />
+		</Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-            <RowDefinition Height="1*" />
-        </Grid.RowDefinitions>
-        <TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Text="username:"/>
-        <TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Text="password:"/>
-        <TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="email:"/>
-        <TextBox Name= "inputUserName" Grid.Column="1"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
-        <TextBox Name= "inputPassword" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
-        <TextBox Name= "inputEmail" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
-        <Button Content="signup"
+		<Grid.RowDefinitions>
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+			<RowDefinition Height="1*" />
+		</Grid.RowDefinitions>
+		<TextBlock VerticalAlignment="Center" HorizontalAlignment="Right" Text="username:" FontWeight="Bold" FontSize="14"/>
+		<TextBlock Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Right" Text="password:" FontSize="14" FontWeight="Bold"/>
+		<TextBlock Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" Text="email:" FontSize="14" FontWeight="Bold"/>
+		<TextBox Name= "inputUserName" Grid.Column="1"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
+		<TextBox Name= "inputPassword" Grid.Column="1" Grid.Row="1"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
+		<TextBox Name= "inputEmail" Grid.Column="1" Grid.Row="2"  VerticalAlignment="Center" AcceptsReturn="True" Height="20" Width="125"/>
+		<Button Content="signup"
                 HorizontalAlignment="Left"
                 VerticalAlignment="Bottom"
-                Click="signup" Height="20" Width="75" Grid.ColumnSpan="2" Margin="40,0,0,-60" Grid.Row="1"/>
-        <Button Content="cancel"
+                Click="signup" Height="20" Width="75" Grid.ColumnSpan="2" Margin="80,0,0,-30" Grid.Row="2"/>
+		<Button Content="cancel"
                 HorizontalAlignment="Right"
                 VerticalAlignment="Bottom"
-                Click ="cancel" Height="20" Width="75" Grid.ColumnSpan="2" Margin="0,0,40,-60" Grid.Row="1"/>
-    </Grid>
+                Click ="cancel" Height="20" Width="75" Margin="0,0,80,-30" Grid.Row="2" Grid.Column="1"/>
+	</Grid>
 
 </Window>

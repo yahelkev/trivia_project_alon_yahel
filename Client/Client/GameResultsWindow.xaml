@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:Client"
         mc:Ignorable="d"
         Title="GameResultsWindow" Height="400" Width="300">
-    <DockPanel LastChildFill="False">
-		<TextBlock DockPanel.Dock="Top" FontSize="24" HorizontalAlignment="Center" Margin="5">Game Results</TextBlock>
-		<TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Name="NotAvailableText">Not available yet...</TextBlock>
+	<Window.Background>
+		<ImageBrush ImageSource="Pictures/money.jpg"></ImageBrush>
+	</Window.Background>
+	<DockPanel LastChildFill="False">
+		<TextBlock DockPanel.Dock="Top" FontSize="24" HorizontalAlignment="Center" Margin="5" FontWeight="Bold">Game Results</TextBlock>
+		<TextBlock DockPanel.Dock="Top" HorizontalAlignment="Center" Name="NotAvailableText" FontWeight="Bold">Not available yet...</TextBlock>
 		<ListView DockPanel.Dock="Top" Name="ResultsPanel" Margin="10" Visibility="Collapsed" HorizontalContentAlignment="Stretch">
 			<ListView.ItemContainerStyle>
 				<Style TargetType="{x:Type ListViewItem}">
