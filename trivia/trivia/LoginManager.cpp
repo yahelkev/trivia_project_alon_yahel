@@ -79,12 +79,16 @@ std::string LoginManager::randomPassword()
 		"0123456789"
 		"ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 		"abcdefghijklmnopqrstuvwxyz";
-	const size_t max_index = (sizeof(charset) - 1);
+	const size_t max_index = sizeof(charset) - 2;
+
+	std::random_device randomDevice;
+	std::default_random_engine engine(randomDevice());
+	std::uniform_int_distribution<int> distrinution(0, max_index);
 
 	std::string password;
 	for (int i = 0; i < RAND_PASSWORD_LENGHT; i++)
 	{
-		password += charset[rand() % max_index];
+		password += charset[distrinution(engine)];
 	}
 	return password;
 }

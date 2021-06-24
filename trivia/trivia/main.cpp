@@ -4,11 +4,10 @@
 #include "Server.h"
 #include <iostream>
 #include <fstream>
-
-
 #include <string>
 
-int checkLeak()
+
+int main()
 {
 	try
 	{
@@ -24,19 +23,5 @@ int checkLeak()
 	catch (...)
 	{
 		std::cout << "Unknown exception in main !" << std::endl;
-	}
-	return 0;
-}
-int main()
-{
-	srand(time(NULL));
-	checkLeak();
-	if (_CrtDumpMemoryLeaks())
-	{
-		std::cout << "Memory leaks!\n";
-	}
-	else
-	{
-		std::cout << "No leaks\n";
 	}
 }
